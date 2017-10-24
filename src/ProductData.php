@@ -1,7 +1,7 @@
 <?php
 namespace SnowIO\Magento2DataModel;
 
-class Product
+class ProductData
 {
 
     public static function of(string $sku): self
