@@ -13,9 +13,7 @@ class ProductStatus
 
     public static function validateStatus(int $status)
     {
-        $validStatuses = self::ALL;
-
-        if (!in_array($status, $validStatuses)) {
+        if (!in_array($status, self::ALL)) {
             throw new \InvalidArgumentException('Invalid Status');
         }
     }

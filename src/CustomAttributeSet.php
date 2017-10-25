@@ -24,5 +24,4 @@ class CustomAttributeSet implements \IteratorAggregate
     {
         return $customAttribute->equals($otherCustomAttribute);
     }
-
 }

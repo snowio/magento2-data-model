@@ -3,27 +3,13 @@ namespace SnowIO\Magento2DataModel;
 
 class ProductData
 {
-
-    const ENABLED = 1;
-    const DEFAULT_ATTRIBUTE_SET = 'default';
+    const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
 
     public static function of(string $sku): self
     {
         $productData = new self($sku);
-        $productData->status = ProductStatus::ENABLED;
-        $productData->visibility = VisibilityType::CATALOG_SEARCH;
-        $productData->typeId = ProductType::SIMPLE;
-        $productData->extensionAttributes[self::ATTRIBUTE_SET_CODE] = self::DEFAULT_ATTRIBUTE_SET;
         return $productData;
-    }
-
-    public function withVisibility(int $visibility): self
-    {
-        VisibilityType::validateVisibility($visibility);
-        $result = clone $this;
-        $result->visibility = $visibility;
-        return $result;
     }
 
     public function getSku(): string
@@ -41,7 +27,15 @@ class ProductData
         return $this->visibility;
     }
 
-    public function getPrice(): ?float
+    public function withVisibility(int $visibility): self
+    {
+        ProductVisibility::validateVisibility($visibility);
+        $result = clone $this;
+        $result->visibility = $visibility;
+        return $result;
+    }
+
+    public function getPrice(): ?string
     {
         return $this->price;
     }
@@ -60,8 +54,8 @@ class ProductData
     {
         $json = [];
         $json['sku'] = $this->sku;
-        $json['status'] = $this->status;
-        $json['visibility'] = $this->visibility;
+        $json['status'] = (int)$this->status;
+        $json['visibility'] = (int)$this->visibility;
         $json['price'] = $this->price;
         $json['type_id'] = $this->typeId;
         $json['extension_attributes'] = $this->extensionAttributes;
@@ -69,11 +63,13 @@ class ProductData
     }
 
     private $sku;
-    private $status;
-    private $visibility;
+    private $status = ProductStatus::ENABLED;
+    private $visibility = ProductVisibility::CATALOG_SEARCH;
     private $price;
-    private $typeId;
-    private $extensionAttributes = [];
+    private $typeId = ProductTypeId::SIMPLE;
+    private $extensionAttributes = [
+        self::ATTRIBUTE_SET_CODE => self::DEFAULT_ATTRIBUTE_SET_CODE,
+    ];
 
     private function __construct($sku)
     {
