@@ -30,4 +30,21 @@ class ProductDataTest extends TestCase
         self::assertEquals(ProductData::SIMPLE_PRODUCT, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET, $product->getAttributeSetCode());
     }
+
+    /***
+     * Visibility should only be the following
+     * catalog_search -> 4
+     * catalog -> 2
+     * search -> 3
+     * not_visible_individually -> 1
+     * Any other visibility value is invalid
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid Visibility
+     */
+    public function testWithInvalidVisibility()
+    {
+        $product = ProductData::of('snowio-test-product')
+            ->withVisibility(5);
+    }
+
 }
