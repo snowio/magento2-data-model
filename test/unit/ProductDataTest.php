@@ -56,7 +56,7 @@ class ProductDataTest extends TestCase
 
     public function testWithers()
     {
-        $product = ProductData::of('snow-io-test-product')
+        $product = ProductData::of('snowio-test-product')
             ->withStatus(ProductStatus::DISABLED)
             ->withVisibility(ProductVisibility::CATALOG)
             ->withPrice('45.43')
@@ -65,7 +65,7 @@ class ProductDataTest extends TestCase
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
-            ->withCustomAttribute(CustomAttribute::of('density', '800'));;
+            ->withCustomAttribute(CustomAttribute::of('density', '800'));
 
         self::assertEquals([
             'sku' => 'snowio-test-product',
