@@ -19,6 +19,36 @@ class ProductData
         return $productData;
     }
 
+    public function getSku(): string
+    {
+
+    }
+
+    public function getStatus(): int
+    {
+
+    }
+
+    public function getVisibility(): int
+    {
+
+    }
+
+    public function getPrice(): float
+    {
+
+    }
+
+    public function getTypeId(): string
+    {
+
+    }
+
+    public function getAttributeSetCode(): string
+    {
+
+    }
+
     public function toJson(): array
     {
         $json = [];
