@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
+use SnowIO\Magento2DataModel\CustomAttributeSet;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
@@ -34,6 +35,7 @@ class ProductDataTest extends TestCase
         self::assertEquals(null, $product->getPrice());
         self::assertEquals(ProductTypeId::SIMPLE, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
+        self::assertTrue(($product->getCustomAttributes())->isEmpty());
     }
 
     /**
