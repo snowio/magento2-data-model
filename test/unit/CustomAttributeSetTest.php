@@ -58,16 +58,17 @@ class CustomAttributeSetTest extends TestCase
 
         $customAttributeSet = $customAttributeSet
             ->withCustomAttribute(CustomAttribute::of('diameter', '800'))
-            ->withCustomAttribute(CustomAttribute::of('density', '30'));
+            ->withCustomAttribute(CustomAttribute::of('density', '30'))
+            ->withCustomAttribute(CustomAttribute::of('volume', '90'));
 
         self::assertEquals([
             [
-                'attribute_code' => 'diameter',
-                'value' => '800'
+                'attribute_code' => 'volume',
+                'value' => '90'
             ],
             [
-                'attribute_code' => 'volume',
-                'value' => '900'
+                'attribute_code' => 'diameter',
+                'value' => '800'
             ],
             [
                 'attribute_code' => 'density',
@@ -75,17 +76,6 @@ class CustomAttributeSetTest extends TestCase
             ],
         ], array_map([$this, 'getJson'], iterator_to_array($customAttributeSet)));
 
-    }
-
-    /**
-     * @expectedException SnowIO\Magento2DataModel\MagentoDataException
-     * @expectedMessage Each custom attribute code must be unique
-     */
-    public function testInvalidWitherToSet()
-    {
-        CustomAttributeSet::create()
-            ->withCustomAttribute(CustomAttribute::of('volume', '900'))
-            ->withCustomAttribute(CustomAttribute::of('volume', '900'));
     }
 
 
@@ -100,7 +90,7 @@ class CustomAttributeSetTest extends TestCase
             CustomAttribute::of('density', '40'),
         ]);
 
-        $customAttributes->add($otherAttributes);
+        $customAttributes = $customAttributes->add($otherAttributes);
 
         self::assertEquals([
             [
