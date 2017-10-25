@@ -9,6 +9,7 @@ class ProductData
     public static function of(string $sku): self
     {
         $productData = new self($sku);
+        $productData->customAttributes = CustomAttributeSet::create();
         return $productData;
     }
 
@@ -24,7 +25,10 @@ class ProductData
 
     public function withStatus(int $status): self
     {
-
+        ProductStatus::validateStatus($status);
+        $result = clone $this;
+        $result->status = $status;
+        return $result;
     }
 
     public function getVisibility(): int
@@ -47,7 +51,9 @@ class ProductData
 
     public function withPrice(string $price): self
     {
-
+        $result = clone $this;
+        $result->price = $price;
+        return $result;
     }
 
     public function getTypeId(): string
@@ -55,9 +61,12 @@ class ProductData
         return $this->typeId;
     }
 
-    public function withTypeId(int $typeId): self
+    public function withTypeId(string $typeId): self
     {
-
+        ProductTypeId::validateTypeId($typeId);
+        $result = clone $this;
+        $result->typeId = $typeId;
+        return $result;
     }
 
     public function getAttributeSetCode(): string
@@ -67,7 +76,22 @@ class ProductData
 
     public function withAttributeSetCode(string $attributeSetCode): self
     {
+        $result = clone $this;
+        $result->extensionAttributes[self::ATTRIBUTE_SET_CODE] =  $attributeSetCode;
+        return $result;
+    }
 
+    public function getCustomAttributes(): CustomAttributeSet
+    {
+        return $this->customAttributes;
+    }
+
+    public function withCustomAttribute(CustomAttribute $customAttribute)
+    {
+        $result = clone $this;
+        $result->customAttributes = $result->customAttributes
+            ->withCustomAttribute($customAttribute);
+        return $result;
     }
 
     public function toJson(): array
@@ -79,6 +103,9 @@ class ProductData
         $json['price'] = $this->price;
         $json['type_id'] = $this->typeId;
         $json['extension_attributes'] = $this->extensionAttributes;
+        $json['custom_attributes'] = array_map( function (CustomAttribute $customAttribute) {
+            return $customAttribute->toJson();
+        } ,iterator_to_array($this->customAttributes));
         return $json;
     }
 
@@ -90,6 +117,8 @@ class ProductData
     private $extensionAttributes = [
         self::ATTRIBUTE_SET_CODE => self::DEFAULT_ATTRIBUTE_SET_CODE,
     ];
+    /** @var CustomAttributeSet */
+    private $customAttributes;
 
     private function __construct($sku)
     {
