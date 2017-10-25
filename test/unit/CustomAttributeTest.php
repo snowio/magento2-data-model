@@ -14,4 +14,11 @@ class CustomAttributeTest extends TestCase
         ],$customAttribute->toJson());
     }
 
+    public function testAccessors()
+    {
+        $customAttribute = CustomAttribute::of('product_weight', '80');
+        self::assertEquals('product_weight', $customAttribute->getCode());
+        self::assertEquals('80', $customAttribute->getValue());
+    }
+
 }

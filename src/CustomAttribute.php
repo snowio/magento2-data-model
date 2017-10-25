@@ -11,6 +11,16 @@ class CustomAttribute
         return $customAttribute;
     }
 
+    public function getCode(): string
+    {
+
+    }
+
+    public function getValue(): ?string
+    {
+
+    }
+
     private $attributeCode;
     private $value;
 
