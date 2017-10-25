@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
+use SnowIO\Magento2DataModel\CustomAttributeSet;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
@@ -91,6 +92,41 @@ class ProductDataTest extends TestCase
                 [
                     'attribute_code' => 'density',
                     'value' => '800',
+                ],
+            ]
+        ], $product->toJson());
+    }
+
+    public function testWithCustomAttributeSet()
+    {
+        $product = ProductData::of('snowio-test-product')
+            ->withCustomAttributes(CustomAttributeSet::of([
+                CustomAttribute::of('diameter', '900'),
+                CustomAttribute::of('volume', '90'),
+                CustomAttribute::of('density', '40'),
+            ]));
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'type_id' => 'simple',
+            'extension_attributes' => [
+                'attribute_set_code' => 'default'
+            ],
+            'custom_attributes' => [
+                [
+                    'attribute_code' => 'diameter',
+                    'value' => '900'
+                ],
+                [
+                    'attribute_code' => 'volume',
+                    'value' => '90'
+                ],
+                [
+                    'attribute_code' => 'density',
+                    'value' => '40'
                 ],
             ]
         ], $product->toJson());

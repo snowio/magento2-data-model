@@ -94,6 +94,11 @@ class ProductData
         return $result;
     }
 
+    public function withCustomAttributes(CustomAttributeSet $customAttributes): self
+    {
+
+    }
+
     public function toJson(): array
     {
         $json = [];
