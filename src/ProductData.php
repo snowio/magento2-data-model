@@ -5,9 +5,9 @@ class ProductData
 {
 
     const ENABLED = 1;
-    const CATALOG_SEARCH = 4;
     const CATALOG = 2;
     const SEARCH = 3;
+    const CATALOG_SEARCH = 4;
     const NOT_VISIBLE_INDIVIDUALLY = 1;
     const SIMPLE_PRODUCT = 'simple';
     const DEFAULT_ATTRIBUTE_SET = 'default';
