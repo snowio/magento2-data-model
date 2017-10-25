@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\ProductData;
+use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductType;
 use SnowIO\Magento2DataModel\VisibilityType;
 
@@ -26,7 +27,7 @@ class ProductDataTest extends TestCase
     {
         $product = ProductData::of('snowio-test-product');
         self::assertEquals('snowio-test-product', $product->getSku());
-        self::assertEquals(ProductData::ENABLED, $product->getStatus());
+        self::assertEquals(ProductStatus::ENABLED, $product->getStatus());
         self::assertEquals(VisibilityType::CATALOG_SEARCH, $product->getVisibility());
         self::assertEquals(null, $product->getPrice());
         self::assertEquals(ProductType::SIMPLE, $product->getTypeId());
