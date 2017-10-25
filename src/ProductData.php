@@ -111,9 +111,7 @@ class ProductData
         $json['price'] = $this->price;
         $json['type_id'] = $this->typeId;
         $json['extension_attributes'] = $this->extensionAttributes;
-        $json['custom_attributes'] = array_map( function (CustomAttribute $customAttribute) {
-            return $customAttribute->toJson();
-        } ,iterator_to_array($this->customAttributes));
+        $json['custom_attributes'] = $this->customAttributes->toJson();
         return $json;
     }
 

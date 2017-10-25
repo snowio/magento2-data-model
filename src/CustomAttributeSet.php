@@ -20,6 +20,13 @@ class CustomAttributeSet implements \IteratorAggregate
         return $customAttribute->getCode();
     }
 
+    public function toJson(): array
+    {
+        return array_map(function (CustomAttribute $customAttribute) {
+            return $customAttribute->toJson();
+        }, array_values($this->items));
+    }
+
     private static function itemsAreEqual(CustomAttribute $customAttribute, CustomAttribute $otherCustomAttribute): bool
     {
         return $customAttribute->equals($otherCustomAttribute);
