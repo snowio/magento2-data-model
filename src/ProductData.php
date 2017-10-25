@@ -22,6 +22,11 @@ class ProductData
         return $this->status;
     }
 
+    public function withStatus(int $status): self
+    {
+
+    }
+
     public function getVisibility(): int
     {
         return $this->visibility;
@@ -40,14 +45,29 @@ class ProductData
         return $this->price;
     }
 
+    public function withPrice(string $price): self
+    {
+
+    }
+
     public function getTypeId(): string
     {
         return $this->typeId;
     }
 
+    public function withTypeId(int $typeId): self
+    {
+
+    }
+
     public function getAttributeSetCode(): string
     {
         return $this->extensionAttributes[self::ATTRIBUTE_SET_CODE];
+    }
+
+    public function withAttributeSetCode(string $attributeSetCode): self
+    {
+
     }
 
     public function toJson(): array
