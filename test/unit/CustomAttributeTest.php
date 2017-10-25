@@ -21,4 +21,11 @@ class CustomAttributeTest extends TestCase
         self::assertEquals('80', $customAttribute->getValue());
     }
 
+    public function testEquals()
+    {
+        $customAttribute = CustomAttribute::of('product_weight', '80');
+        $otherAttribute = CustomAttribute::of('product_weight', '80');
+        self::assertTrue($customAttribute->equals($otherAttribute));
+    }
+
 }
