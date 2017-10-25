@@ -96,7 +96,10 @@ class ProductData
 
     public function withCustomAttributes(CustomAttributeSet $customAttributes): self
     {
-
+        $result = clone $this;
+        $result->customAttributes = $result->customAttributes
+            ->add($customAttributes);
+        return $result;
     }
 
     public function toJson(): array
