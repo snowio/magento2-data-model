@@ -13,12 +13,12 @@ class CustomAttribute
 
     public function getCode(): string
     {
-        return $this->getCode();
+        return $this->attributeCode;
     }
 
     public function getValue(): ?string
     {
-        return $this->getValue();
+        return $this->value;
     }
 
     public function equals(self $customAttribute): bool
