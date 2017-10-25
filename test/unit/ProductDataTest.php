@@ -12,7 +12,7 @@ class ProductDataTest extends TestCase
             'sku' => 'snowio-test-product',
             'status' => 1,
             'visibility' => 4,
-            'price' => 3.39,
+            'price' => null,
             'type_id' => 'simple',
             'extension_attributes' => [
                 'attribute_set_code' => 'default'
@@ -26,7 +26,7 @@ class ProductDataTest extends TestCase
         self::assertEquals('snowio-test-product', $product->getSku());
         self::assertEquals(1, $product->getStatus());
         self::assertEquals(4, $product->getVisibility());
-        self::assertEquals(3.39, $product->getPrice());
+        self::assertEquals(null, $product->getPrice());
         self::assertEquals(ProductData::SIMPLE_PRODUCT, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET, $product->getAttributeSetCode());
     }
