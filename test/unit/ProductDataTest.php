@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
-use SnowIO\Magento2DataModel\CustomAttributeSet;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
