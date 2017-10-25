@@ -33,7 +33,7 @@ class CustomAttributeSetTest extends TestCase
     }
 
     /**
-     * @expectedException MagentoDataException
+     * @expectedException SnowIO\Magento2DataModel\MagentoDataException
      * @expectedMessage Each custom attribute code must be unique
      */
     public function testInvalidSetAttributesWithSameKey()
@@ -78,7 +78,7 @@ class CustomAttributeSetTest extends TestCase
     }
 
     /**
-     * @expectedException MagentoDataException
+     * @expectedException SnowIO\Magento2DataModel\MagentoDataException
      * @expectedMessage Each custom attribute code must be unique
      */
     public function testInvalidWitherToSet()
@@ -120,7 +120,7 @@ class CustomAttributeSetTest extends TestCase
 
     /**
      * These attributes overlap thus this should throw an exception
-     * @expectedException MagentoDataException
+     * @expectedException SnowIO\Magento2DataModel\MagentoDataException
      * @expectedMessage Each custom attribute code must be unique
      */
     public function testInvalidAddToSet()

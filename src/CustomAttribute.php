@@ -13,16 +13,19 @@ class CustomAttribute
 
     public function getCode(): string
     {
-
+        return $this->getCode();
     }
 
     public function getValue(): ?string
     {
-
+        return $this->getValue();
     }
 
-    private $attributeCode;
-    private $value;
+    public function equals(self $customAttribute): bool
+    {
+        return ($this->attributeCode === $customAttribute->attributeCode)
+        && ($this->value === $customAttribute->value);
+    }
 
     public function toJson(): array
     {
@@ -31,6 +34,9 @@ class CustomAttribute
         $json['value'] = $this->value;
         return $json;
     }
+
+    private $attributeCode;
+    private $value;
 
     private function __construct()
     {
