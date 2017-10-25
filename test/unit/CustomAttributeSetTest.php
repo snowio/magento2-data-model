@@ -78,7 +78,6 @@ class CustomAttributeSetTest extends TestCase
 
     }
 
-
     public function testAddToSet()
     {
         $customAttributes = CustomAttributeSet::of([

@@ -3,35 +3,35 @@
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductStatus;
-use SnowIO\Magento2DataModel\ProductType;
-use SnowIO\Magento2DataModel\VisibilityType;
+use SnowIO\Magento2DataModel\ProductTypeId;
+use SnowIO\Magento2DataModel\ProductVisibility;
 
 class ProductDataTest extends TestCase
 {
-    public function testInitialization()
+    public function testToJson()
     {
         $product = ProductData::of('snowio-test-product');
         self::assertEquals([
             'sku' => 'snowio-test-product',
-            'status' => 1,
-            'visibility' => 4,
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
             'price' => null,
             'type_id' => 'simple',
             'extension_attributes' => [
                 'attribute_set_code' => 'default'
             ]
-        ],$product->toJson());
+        ], $product->toJson());
     }
 
-    public function testAccessors()
+    public function testDefaultValuesAreCorrect()
     {
         $product = ProductData::of('snowio-test-product');
         self::assertEquals('snowio-test-product', $product->getSku());
         self::assertEquals(ProductStatus::ENABLED, $product->getStatus());
-        self::assertEquals(VisibilityType::CATALOG_SEARCH, $product->getVisibility());
+        self::assertEquals(ProductVisibility::CATALOG_SEARCH, $product->getVisibility());
         self::assertEquals(null, $product->getPrice());
-        self::assertEquals(ProductType::SIMPLE, $product->getTypeId());
-        self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET, $product->getAttributeSetCode());
+        self::assertEquals(ProductTypeId::SIMPLE, $product->getTypeId());
+        self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
     }
 
     /**
@@ -49,5 +49,4 @@ class ProductDataTest extends TestCase
         ProductData::of('snowio-test-product')
             ->withVisibility(5);
     }
-
 }
