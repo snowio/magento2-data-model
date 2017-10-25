@@ -20,6 +20,11 @@ class ProductData
         return $productData;
     }
 
+    public function withVisibility(int $visibility): self
+    {
+
+    }
+
     public function getSku(): string
     {
         return $this->sku;
