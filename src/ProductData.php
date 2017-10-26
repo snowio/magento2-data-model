@@ -122,7 +122,7 @@ class ProductData
         ($this->visibility === $otherProductData->visibility) &&
         ($this->price === $otherProductData->price) &&
         ($this->typeId === $otherProductData->typeId) &&
-        ($this->extensionAttributes[self::ATTRIBUTE_SET_CODE] === $otherProductData->extensionAttributes[self::ATTRIBUTE_SET_CODE] ?? null) &&
+        ($this->extensionAttributes == $otherProductData->extensionAttributes) &&
         $this->customAttributes->equals($otherProductData->customAttributes);
     }
 
