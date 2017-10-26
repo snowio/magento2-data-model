@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\ProductData;
