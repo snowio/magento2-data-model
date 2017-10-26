@@ -7,7 +7,7 @@ use SnowIO\Magento2DataModel\ProductData;
 class CustomAttributeTest extends TestCase
 {
 
-    public function testInitialisation()
+    public function testToJson()
     {
         $customAttribute = CustomAttribute::of('product_weight', '80');
         self::assertEquals([

@@ -70,35 +70,18 @@ class ProductDataTest extends TestCase
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
             ->withCustomAttribute(CustomAttribute::of('density', '800'));
 
-        self::assertEquals([
-            'sku' => 'snowio-test-product',
-            'name' => 'Snowio Test Product Updated!!',
-            'status' => ProductStatus::DISABLED,
-            'visibility' => ProductVisibility::CATALOG,
-            'price' => '45.43',
-            'type_id' => ProductTypeId::CONFIGURABLE,
-            'extension_attributes' => [
-                'attribute_set_code' => 'TestAttributeSet'
-            ],
-            'custom_attributes' => [
-                [
-                    'attribute_code' => 'length',
-                    'value' => '100',
-                ],
-                [
-                    'attribute_code' => 'width',
-                    'value' => '300',
-                ],
-                [
-                    'attribute_code' => 'height',
-                    'value' => '250',
-                ],
-                [
-                    'attribute_code' => 'density',
-                    'value' => '800',
-                ],
-            ]
-        ], $product->toJson());
+        self::assertSame('Snowio Test Product Updated!!', $product->getName());
+        self::assertSame(ProductStatus::DISABLED, $product->getStatus());
+        self::assertSame(ProductVisibility::CATALOG, $product->getVisibility());
+        self::assertSame('45.43', $product->getPrice());
+        self::assertSame(ProductTypeId::CONFIGURABLE, $product->getTypeId());
+        self::assertSame('TestAttributeSet', $product->getAttributeSetCode());
+        $expectedCustomAttributes = CustomAttributeSet::create()
+            ->withCustomAttribute(CustomAttribute::of('length', '100'))
+            ->withCustomAttribute(CustomAttribute::of('width', '300'))
+            ->withCustomAttribute(CustomAttribute::of('height', '250'))
+            ->withCustomAttribute(CustomAttribute::of('density', '800'));
+        self::assertTrue($product->getCustomAttributes()->equals($expectedCustomAttributes));
     }
 
     public function testWithCustomAttributeSet()
@@ -110,31 +93,13 @@ class ProductDataTest extends TestCase
                 CustomAttribute::of('density', '40'),
             ]));
 
-        self::assertEquals([
-            'sku' => 'snowio-test-product',
-            'name' => 'Snowio Test Product Updated!!',
-            'status' => ProductStatus::ENABLED,
-            'visibility' => ProductVisibility::CATALOG_SEARCH,
-            'price' => null,
-            'type_id' => 'simple',
-            'extension_attributes' => [
-                'attribute_set_code' => 'default'
-            ],
-            'custom_attributes' => [
-                [
-                    'attribute_code' => 'diameter',
-                    'value' => '900'
-                ],
-                [
-                    'attribute_code' => 'volume',
-                    'value' => '90'
-                ],
-                [
-                    'attribute_code' => 'density',
-                    'value' => '40'
-                ],
-            ]
-        ], $product->toJson());
+        $expectedCustomAttributes = CustomAttributeSet::of([
+            CustomAttribute::of('diameter', '900'),
+            CustomAttribute::of('volume', '90'),
+            CustomAttribute::of('density', '40'),
+        ]);
+
+        self::assertTrue($product->getCustomAttributes()->equals($expectedCustomAttributes));
     }
 
     /**

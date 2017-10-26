@@ -7,7 +7,7 @@ use SnowIO\Magento2DataModel\MagentoDataException;
 
 class CustomAttributeSetTest extends TestCase
 {
-    public function testInitialisation()
+    public function testToJson()
     {
         $customAttributeSet = CustomAttributeSet::of([
             CustomAttribute::of('diameter', '900'),
@@ -28,8 +28,7 @@ class CustomAttributeSetTest extends TestCase
                 'attribute_code' => 'density',
                 'value' => '40'
             ],
-        ], array_map([$this, 'getJson'], iterator_to_array($customAttributeSet)));
-
+        ], $customAttributeSet->toJson());
     }
 
     /**
@@ -61,21 +60,13 @@ class CustomAttributeSetTest extends TestCase
             ->withCustomAttribute(CustomAttribute::of('density', '30'))
             ->withCustomAttribute(CustomAttribute::of('volume', '90'));
 
-        self::assertEquals([
-            [
-                'attribute_code' => 'volume',
-                'value' => '90'
-            ],
-            [
-                'attribute_code' => 'diameter',
-                'value' => '800'
-            ],
-            [
-                'attribute_code' => 'density',
-                'value' => '30'
-            ],
-        ], array_map([$this, 'getJson'], iterator_to_array($customAttributeSet)));
+        $expectedAttributeSet = CustomAttributeSet::of([
+            CustomAttribute::of('diameter', '800'),
+            CustomAttribute::of('density', '30'),
+            CustomAttribute::of('volume', '90'),
+        ]);
 
+        self::assertTrue($expectedAttributeSet->equals($customAttributeSet));
     }
 
     public function testAddToSet()
@@ -90,21 +81,13 @@ class CustomAttributeSetTest extends TestCase
         ]);
 
         $customAttributes = $customAttributes->add($otherAttributes);
+        $expectedAttributeSet = CustomAttributeSet::of([
+            CustomAttribute::of('diameter', '900'),
+            CustomAttribute::of('volume', '90'),
+            CustomAttribute::of('density', '40'),
+        ]);
 
-        self::assertEquals([
-            [
-                'attribute_code' => 'diameter',
-                'value' => '900'
-            ],
-            [
-                'attribute_code' => 'volume',
-                'value' => '90'
-            ],
-            [
-                'attribute_code' => 'density',
-                'value' => '40'
-            ],
-        ], array_map([$this, 'getJson'], iterator_to_array($customAttributes)));
+        self::assertTrue($expectedAttributeSet->equals($customAttributes));
     }
 
     /**
@@ -144,10 +127,5 @@ class CustomAttributeSetTest extends TestCase
         ]);
 
         self::assertTrue($customAttributes->equals($sameAttributes));
-    }
-
-    private function getJson(CustomAttribute $customAttribute)
-    {
-        return $customAttribute->toJson();
     }
 }
