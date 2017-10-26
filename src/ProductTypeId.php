@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class ProductTypeId
+final class ProductTypeId
 {
     const SIMPLE = 'simple';
     const GROUPED = 'grouped';

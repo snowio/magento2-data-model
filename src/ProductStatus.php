@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class ProductStatus
+final class ProductStatus
 {
     const ENABLED = 1;
     const DISABLED = 2;

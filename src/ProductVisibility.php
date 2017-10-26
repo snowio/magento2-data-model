@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class ProductVisibility
+final class ProductVisibility
 {
     const CATALOG = 2;
     const SEARCH = 3;

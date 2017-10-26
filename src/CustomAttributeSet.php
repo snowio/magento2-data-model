@@ -4,7 +4,7 @@ namespace SnowIO\Magento2DataModel;
 
 use SnowIO\Magento2DataModel\Internal\SetTrait;
 
-class CustomAttributeSet implements \IteratorAggregate
+final class CustomAttributeSet implements \IteratorAggregate
 {
     use SetTrait;
 

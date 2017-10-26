@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class ProductData
+final class ProductData
 {
     const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
