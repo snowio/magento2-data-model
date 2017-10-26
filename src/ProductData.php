@@ -116,16 +116,16 @@ class ProductData
 
     public function toJson(): array
     {
-        $json = [];
-        $json['sku'] = $this->sku;
-        $json['name'] = $this->name;
-        $json['status'] = (int)$this->status;
-        $json['visibility'] = (int)$this->visibility;
-        $json['price'] = $this->price;
-        $json['type_id'] = $this->typeId;
-        $json['extension_attributes'] = $this->extensionAttributes;
-        $json['custom_attributes'] = $this->customAttributes->toJson();
-        return $json;
+        return [
+            'sku' => $this->sku,
+            'name' => $this->name,
+            'status' => (int)$this->status,
+            'visibility' => (int)$this->visibility,
+            'price' => $this->price,
+            'type_id' => $this->typeId,
+            'extension_attributes' => $this->extensionAttributes,
+            'custom_attributes' => $this->customAttributes->toJson(),
+        ];
     }
 
     public function equals($otherProductData): bool
