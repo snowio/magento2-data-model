@@ -21,9 +21,10 @@ class CustomAttribute
         return $this->value;
     }
 
-    public function equals(self $customAttribute): bool
+    public function equals($customAttribute): bool
     {
-        return ($this->attributeCode === $customAttribute->attributeCode)
+        return $customAttribute instanceof CustomAttribute &&
+        ($this->attributeCode === $customAttribute->attributeCode)
         && ($this->value === $customAttribute->value);
     }
 
