@@ -1,6 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
+use SnowIO\Magento2DataModel\ProductData;
 
 class CustomAttributeTest extends TestCase
 {
@@ -19,6 +20,7 @@ class CustomAttributeTest extends TestCase
         $customAttribute = CustomAttribute::of('product_weight', '80');
         self::assertEquals('product_weight', $customAttribute->getCode());
         self::assertEquals('80', $customAttribute->getValue());
+        self::assertFalse((CustomAttribute::of('status', 'data'))->equals(ProductData::of('foo-bar')));
     }
 
     public function testEquals()
