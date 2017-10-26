@@ -4,7 +4,7 @@ namespace SnowIO\Magento2DataModel;
 class ProductStatus
 {
     const ENABLED = 1;
-    const DISABLED = 0;
+    const DISABLED = 2;
 
     const ALL = [
         self::ENABLED,
