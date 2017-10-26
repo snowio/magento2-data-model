@@ -8,7 +8,7 @@ class ProductData
 
     public static function of(string $sku, string $name): self
     {
-        $productData = new self($sku);
+        $productData = new self($sku, $name);
         $productData->customAttributes = CustomAttributeSet::create();
         return $productData;
     }
@@ -20,12 +20,14 @@ class ProductData
 
     public function getName(): string
     {
-
+        return $this->name;
     }
 
     public function withName(string $name): self
     {
-
+        $result = clone $this;
+        $result->name = $name;
+        return $result;
     }
 
     public function getStatus(): int
@@ -116,6 +118,7 @@ class ProductData
     {
         $json = [];
         $json['sku'] = $this->sku;
+        $json['name'] = $this->name;
         $json['status'] = (int)$this->status;
         $json['visibility'] = (int)$this->visibility;
         $json['price'] = $this->price;
@@ -129,6 +132,7 @@ class ProductData
     {
         return $otherProductData instanceof ProductData &&
         ($this->sku === $otherProductData->sku) &&
+        ($this->name === $otherProductData->name) &&
         ($this->status === $otherProductData->status) &&
         ($this->visibility === $otherProductData->visibility) &&
         ($this->price === $otherProductData->price) &&
@@ -138,6 +142,7 @@ class ProductData
     }
 
     private $sku;
+    private $name;
     private $status = ProductStatus::ENABLED;
     private $visibility = ProductVisibility::CATALOG_SEARCH;
     private $price;
@@ -148,8 +153,9 @@ class ProductData
     /** @var CustomAttributeSet */
     private $customAttributes;
 
-    private function __construct($sku)
+    private function __construct(string $sku, string $name)
     {
         $this->sku = $sku;
+        $this->name = $name;
     }
 }
