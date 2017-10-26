@@ -160,6 +160,8 @@ class ProductDataTest extends TestCase
         self::assertFalse((ProductData::of('test-product')->withCustomAttribute(CustomAttribute::of('weight',
             '30')))->equals(ProductData::of('test-product')
             ->withCustomAttribute(CustomAttribute::of('weight', '59'))));
+
+        self::assertFalse((ProductData::of('test-product'))->equals(CustomAttribute::of('foo', 'bar')));
     }
 
 }
