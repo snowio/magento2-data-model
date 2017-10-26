@@ -115,6 +115,18 @@ class ProductData
         return $json;
     }
 
+    public function equals($otherProductData): bool
+    {
+        return $otherProductData instanceof ProductData &&
+        ($this->sku === $otherProductData->sku) &&
+        ($this->status === $otherProductData->status) &&
+        ($this->visibility === $otherProductData->visibility) &&
+        ($this->price === $otherProductData->price) &&
+        ($this->typeId === $otherProductData->typeId) &&
+        ($this->extensionAttributes == $otherProductData->extensionAttributes) &&
+        $this->customAttributes->equals($otherProductData->customAttributes);
+    }
+
     private $sku;
     private $status = ProductStatus::ENABLED;
     private $visibility = ProductVisibility::CATALOG_SEARCH;

@@ -152,4 +152,16 @@ class ProductDataTest extends TestCase
             ->withStatus(3);
     }
 
+    public function testEquals()
+    {
+        self::assertTrue((ProductData::of('test-product'))->equals(ProductData::of('test-product')));
+        self::assertFalse((ProductData::of('test-product')->withPrice('100.78'))->equals(ProductData::of('test-product')
+            ->withPrice('89.43')));
+        self::assertFalse((ProductData::of('test-product')->withCustomAttribute(CustomAttribute::of('weight',
+            '30')))->equals(ProductData::of('test-product')
+            ->withCustomAttribute(CustomAttribute::of('weight', '59'))));
+
+        self::assertFalse((ProductData::of('test-product'))->equals(CustomAttribute::of('foo', 'bar')));
+    }
+
 }
