@@ -115,6 +115,11 @@ class ProductData
         return $json;
     }
 
+    public function equals(self $otherProductData): bool
+    {
+
+    }
+
     private $sku;
     private $status = ProductStatus::ENABLED;
     private $visibility = ProductVisibility::CATALOG_SEARCH;
