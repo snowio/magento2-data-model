@@ -6,7 +6,7 @@ class ProductData
     const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
 
-    public static function of(string $sku): self
+    public static function of(string $sku, string $name): self
     {
         $productData = new self($sku);
         $productData->customAttributes = CustomAttributeSet::create();
@@ -16,6 +16,16 @@ class ProductData
     public function getSku(): string
     {
         return $this->sku;
+    }
+
+    public function getName(): string
+    {
+
+    }
+
+    public function withName(string $name): self
+    {
+
     }
 
     public function getStatus(): int

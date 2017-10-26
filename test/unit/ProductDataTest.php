@@ -12,9 +12,10 @@ class ProductDataTest extends TestCase
 {
     public function testToJson()
     {
-        $product = ProductData::of('snowio-test-product');
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product');
         self::assertEquals([
             'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
             'status' => ProductStatus::ENABLED,
             'visibility' => ProductVisibility::CATALOG_SEARCH,
             'price' => null,
@@ -28,8 +29,9 @@ class ProductDataTest extends TestCase
 
     public function testDefaultValuesAreCorrect()
     {
-        $product = ProductData::of('snowio-test-product');
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product');
         self::assertEquals('snowio-test-product', $product->getSku());
+        self::assertEquals('Snowio Test Product', $product->getName());
         self::assertEquals(ProductStatus::ENABLED, $product->getStatus());
         self::assertEquals(ProductVisibility::CATALOG_SEARCH, $product->getVisibility());
         self::assertEquals(null, $product->getPrice());
@@ -50,13 +52,14 @@ class ProductDataTest extends TestCase
      */
     public function testWithInvalidVisibility()
     {
-        ProductData::of('snowio-test-product')
+        ProductData::of('snowio-test-product', 'test')
             ->withVisibility(5);
     }
 
     public function testWithers()
     {
-        $product = ProductData::of('snowio-test-product')
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withName('Snowio Test Product Updated!!')
             ->withStatus(ProductStatus::DISABLED)
             ->withVisibility(ProductVisibility::CATALOG)
             ->withPrice('45.43')
@@ -69,6 +72,7 @@ class ProductDataTest extends TestCase
 
         self::assertEquals([
             'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product Updated!!',
             'status' => ProductStatus::DISABLED,
             'visibility' => ProductVisibility::CATALOG,
             'price' => '45.43',
@@ -99,7 +103,7 @@ class ProductDataTest extends TestCase
 
     public function testWithCustomAttributeSet()
     {
-        $product = ProductData::of('snowio-test-product')
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product Updated!!')
             ->withCustomAttributes(CustomAttributeSet::of([
                 CustomAttribute::of('diameter', '900'),
                 CustomAttribute::of('volume', '90'),
@@ -108,6 +112,7 @@ class ProductDataTest extends TestCase
 
         self::assertEquals([
             'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product Updated!!',
             'status' => ProductStatus::ENABLED,
             'visibility' => ProductVisibility::CATALOG_SEARCH,
             'price' => null,
@@ -138,7 +143,7 @@ class ProductDataTest extends TestCase
      */
     public function testWithInvalidTypeId()
     {
-        ProductData::of('snow-io-test-product')
+        ProductData::of('snow-io-test-product', 'Snowio Test Product Updated')
             ->withTypeId('false_product');
     }
 
@@ -148,20 +153,20 @@ class ProductDataTest extends TestCase
      */
     public function testWithInvalidStatus()
     {
-        ProductData::of('snow-io-test-product')
+        ProductData::of('snow-io-test-product', 'Snowio Test Product Updated')
             ->withStatus(3);
     }
 
     public function testEquals()
     {
-        self::assertTrue((ProductData::of('test-product'))->equals(ProductData::of('test-product')));
-        self::assertFalse((ProductData::of('test-product')->withPrice('100.78'))->equals(ProductData::of('test-product')
+        self::assertTrue((ProductData::of('test-product', 'test'))->equals(ProductData::of('test-product', 'test')));
+        self::assertFalse((ProductData::of('test-product', 'test')->withPrice('100.78'))->equals(ProductData::of('test-product', 'test')
             ->withPrice('89.43')));
-        self::assertFalse((ProductData::of('test-product')->withCustomAttribute(CustomAttribute::of('weight',
-            '30')))->equals(ProductData::of('test-product')
+        self::assertFalse((ProductData::of('test-product', 'test')->withCustomAttribute(CustomAttribute::of('weight',
+            '30')))->equals(ProductData::of('test-product', 'test')
             ->withCustomAttribute(CustomAttribute::of('weight', '59'))));
 
-        self::assertFalse((ProductData::of('test-product'))->equals(CustomAttribute::of('foo', 'bar')));
+        self::assertFalse((ProductData::of('test-product', 'test'))->equals(CustomAttribute::of('foo', 'bar')));
     }
 
 }
