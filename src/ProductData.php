@@ -115,9 +115,10 @@ class ProductData
         return $json;
     }
 
-    public function equals(self $otherProductData): bool
+    public function equals($otherProductData): bool
     {
-        return ($this->sku === $otherProductData->sku) &&
+        return $otherProductData instanceof ProductData &&
+        ($this->sku === $otherProductData->sku) &&
         ($this->status === $otherProductData->status) &&
         ($this->visibility === $otherProductData->visibility) &&
         ($this->price === $otherProductData->price) &&
