@@ -45,10 +45,10 @@ final class AttributeData
         return $this->defaultFrontendLabel;
     }
 
-    public function withDefaultFrontendLabel(string $frontendInput): self
+    public function withDefaultFrontendLabel(string $defaultFrontendLabel): self
     {
         $result = clone $this;
-        $result->frontendInput = $frontendInput;
+        $result->defaultFrontendLabel = $defaultFrontendLabel;
         return $result;
     }
 

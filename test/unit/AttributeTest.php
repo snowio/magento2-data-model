@@ -22,12 +22,13 @@ class AttributeTest extends TestCase
     {
         $attribute = AttributeData::of('diameter', FrontendInput::BOOLEAN, 'Diameter')
             ->withRequired(true)
-            ->withFrontendInput(FrontendInput::TEXT);
+            ->withFrontendInput(FrontendInput::TEXT)
+            ->withDefaultFrontendLabel('Diameter Updated!!!');
 
         self::assertEquals('diameter', $attribute->getCode());
         self::assertEquals(true, $attribute->isRequired());
         self::assertEquals(FrontendInput::TEXT, $attribute->getFrontendInput());
-        self::assertEquals('Diameter', $attribute->getDefaultFrontendLabel());
+        self::assertEquals('Diameter Updated!!!', $attribute->getDefaultFrontendLabel());
     }
 
     public function testEquals()
