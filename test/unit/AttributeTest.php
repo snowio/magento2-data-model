@@ -32,7 +32,7 @@ class AttributeTest extends TestCase
 
         self::assertEquals('diameter', $attribute->getCode());
         self::assertEquals(true, $attribute->isRequired());
-        self::assertEquals(FrontendInput::BOOLEAN, $attribute->getFrontendInput());
+        self::assertEquals(FrontendInput::TEXT, $attribute->getFrontendInput());
         self::assertEquals([
             [
                 'store_id' => 0,
@@ -49,6 +49,16 @@ class AttributeTest extends TestCase
     {
         Attribute::of('gender', 'radio_group', 'Gender');
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidFrontendInputInWither()
+    {
+        Attribute::of('gender', FrontendInput::BOOLEAN, 'Gender')
+            ->withFrontendInput('radio_group');
+    }
+
 
     public function testEquals()
     {
