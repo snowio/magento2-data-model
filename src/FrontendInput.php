@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class FrontendInput
+final class FrontendInput
 {
     const TEXT = 'text';
     const SELECT = 'select';
