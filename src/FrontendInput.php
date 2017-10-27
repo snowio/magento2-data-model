@@ -31,11 +31,4 @@ class FrontendInput
         self::MULTILINE,
         self::MEDIA_IMAGE,
     ];
-
-    public static function validateFrontendInput(string $frontendInput)
-    {
-        if (!in_array($frontendInput, self::ALL)) {
-            throw new \InvalidArgumentException('Invalid Frontend Input');
-        }
-    }
 }
