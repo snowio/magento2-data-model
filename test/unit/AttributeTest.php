@@ -14,12 +14,6 @@ class AttributeTest extends TestCase
             'attribute_code' => 'diameter',
             'is_required' => false,
             'frontend_input' => 'text',
-            'frontend_labels' => [
-                [
-                    'store_id' => 0,
-                    'label' => 'Diameter',
-                ]
-            ],
             'default_frontend_label' => 'Diameter',
         ], $attribute->toJson());
     }
@@ -27,38 +21,14 @@ class AttributeTest extends TestCase
     public function testWithers()
     {
         $attribute = AttributeData::of('diameter', FrontendInput::BOOLEAN, 'Diameter')
-            ->withIsRequired(true)
+            ->withRequired(true)
             ->withFrontendInput(FrontendInput::TEXT);
 
         self::assertEquals('diameter', $attribute->getCode());
         self::assertEquals(true, $attribute->isRequired());
         self::assertEquals(FrontendInput::TEXT, $attribute->getFrontendInput());
-        self::assertEquals([
-            [
-                'store_id' => 0,
-                'label' => 'Diameter',
-            ]
-        ], $attribute->getFrontendLabels());
         self::assertEquals('Diameter', $attribute->getDefaultFrontendLabel());
     }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidFrontendInput()
-    {
-        AttributeData::of('gender', 'radio_group', 'Gender');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidFrontendInputInWither()
-    {
-        AttributeData::of('gender', FrontendInput::BOOLEAN, 'Gender')
-            ->withFrontendInput('radio_group');
-    }
-
 
     public function testEquals()
     {
