@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
-use SnowIO\Magento2DataModel\Attribute;
+use SnowIO\Magento2DataModel\AttributeData;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\FrontendInput;
 
@@ -9,7 +9,7 @@ class AttributeTest extends TestCase
 {
     public function testToJson()
     {
-        $attribute = Attribute::of('diameter', FrontendInput::TEXT, 'Diameter');
+        $attribute = AttributeData::of('diameter', FrontendInput::TEXT, 'Diameter');
         self::assertEquals([
             'attribute_code' => 'diameter',
             'is_required' => false,
@@ -26,7 +26,7 @@ class AttributeTest extends TestCase
 
     public function testWithers()
     {
-        $attribute = Attribute::of('diameter', FrontendInput::BOOLEAN, 'Diameter')
+        $attribute = AttributeData::of('diameter', FrontendInput::BOOLEAN, 'Diameter')
             ->withIsRequired(true)
             ->withFrontendInput(FrontendInput::TEXT);
 
@@ -47,7 +47,7 @@ class AttributeTest extends TestCase
      */
     public function testInvalidFrontendInput()
     {
-        Attribute::of('gender', 'radio_group', 'Gender');
+        AttributeData::of('gender', 'radio_group', 'Gender');
     }
 
     /**
@@ -55,16 +55,16 @@ class AttributeTest extends TestCase
      */
     public function testInvalidFrontendInputInWither()
     {
-        Attribute::of('gender', FrontendInput::BOOLEAN, 'Gender')
+        AttributeData::of('gender', FrontendInput::BOOLEAN, 'Gender')
             ->withFrontendInput('radio_group');
     }
 
 
     public function testEquals()
     {
-        $attribute = Attribute::of('diameter', FrontendInput::TEXT, 'Diameter');
-        self::assertTrue($attribute->equals(Attribute::of('diameter', FrontendInput::TEXT, 'Diameter')));
-        self::assertFalse($attribute->equals(Attribute::of('viscosity', FrontendInput::TEXT, 'Viscosity')));
+        $attribute = AttributeData::of('diameter', FrontendInput::TEXT, 'Diameter');
+        self::assertTrue($attribute->equals(AttributeData::of('diameter', FrontendInput::TEXT, 'Diameter')));
+        self::assertFalse($attribute->equals(AttributeData::of('viscosity', FrontendInput::TEXT, 'Viscosity')));
         self::assertFalse($attribute->equals(CustomAttribute::of('diameter', '300')));
     }
 }

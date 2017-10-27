@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class Attribute
+final class AttributeData
 {
     public static function of(string $attributeCode, string $frontendInput, string $adminLabel): self
     {
@@ -70,7 +70,7 @@ final class Attribute
 
     public function equals($attribute): bool
     {
-        return $attribute instanceof Attribute &&
+        return $attribute instanceof AttributeData &&
         ($this->attributeCode === $attribute->attributeCode) &&
         ($this->isRequired === $attribute->isRequired) &&
         ($this->frontendInput === $attribute->frontendInput) &&
