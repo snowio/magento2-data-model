@@ -4,16 +4,10 @@ namespace SnowIO\Magento2DataModel;
 
 final class AttributeData
 {
-    public static function of(string $attributeCode, string $frontendInput, string $adminLabel): self
+    public static function of(string $attributeCode, string $frontendInput, string $defaultFrontendLabel): self
     {
         $attribute = new self($attributeCode, $frontendInput);
-        $attribute->frontendLabels = [
-            [
-                'store_id' => 0,
-                'label' => $adminLabel,
-            ],
-        ];
-        $attribute->defaultFrontendLabel = $adminLabel;
+        $attribute->defaultFrontendLabel = $defaultFrontendLabel;
         return $attribute;
     }
 
@@ -27,7 +21,7 @@ final class AttributeData
         return $this->isRequired;
     }
 
-    public function withIsRequired(bool $isRequired): self
+    public function withRequired(bool $isRequired): self
     {
         $result = clone $this;
         $result->isRequired = $isRequired;
@@ -41,20 +35,21 @@ final class AttributeData
 
     public function withFrontendInput(string $frontendInput): self
     {
-        FrontendInput::validateFrontendInput($frontendInput);
         $result = clone $this;
         $result->frontendInput = $frontendInput;
         return $result;
     }
 
-    public function getFrontendLabels(): array
-    {
-        return $this->frontendLabels;
-    }
-
     public function getDefaultFrontendLabel()
     {
         return $this->defaultFrontendLabel;
+    }
+
+    public function withDefaultFrontendLabel(string $frontendInput): self
+    {
+        $result = clone $this;
+        $result->frontendInput = $frontendInput;
+        return $result;
     }
 
     public function toJson(): array
@@ -63,7 +58,6 @@ final class AttributeData
             'attribute_code' => $this->attributeCode,
             'is_required' => $this->isRequired,
             'frontend_input' => $this->frontendInput,
-            'frontend_labels' => $this->frontendLabels,
             'default_frontend_label' => $this->defaultFrontendLabel,
         ];
     }
@@ -71,22 +65,19 @@ final class AttributeData
     public function equals($attribute): bool
     {
         return $attribute instanceof AttributeData &&
-        ($this->attributeCode === $attribute->attributeCode) &&
-        ($this->isRequired === $attribute->isRequired) &&
-        ($this->frontendInput === $attribute->frontendInput) &&
-        ($this->frontendLabels == $attribute->frontendLabels) &&
-        ($this->defaultFrontendLabel === $attribute->defaultFrontendLabel);
+            ($this->attributeCode === $attribute->attributeCode) &&
+            ($this->isRequired === $attribute->isRequired) &&
+            ($this->frontendInput === $attribute->frontendInput) &&
+            ($this->defaultFrontendLabel === $attribute->defaultFrontendLabel);
     }
 
     private $attributeCode;
     private $isRequired = false;
     private $frontendInput;
-    private $frontendLabels = [];
     private $defaultFrontendLabel;
 
     private function __construct(string $attributeCode, string $frontendInput)
     {
-        FrontendInput::validateFrontendInput($frontendInput);
         $this->attributeCode = $attributeCode;
         $this->frontendInput = $frontendInput;
     }
