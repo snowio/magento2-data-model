@@ -27,7 +27,7 @@ class AttributeOptionTest extends TestCase
             ->withLabel('Larger');
         self::assertEquals('size', $attributeOption->getAttributeCode());
         self::assertEquals('large', $attributeOption->getValue());
-        self::assertEquals('Large', $attributeOption->getLabel());
+        self::assertEquals('Larger', $attributeOption->getLabel());
     }
 
     public function testEquals()
