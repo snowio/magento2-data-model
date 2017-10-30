@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace SnowIO\Magento2DataModel\Internal;
+namespace SnowIO\Magento2DataModel;
 
 use SnowIO\Magento2DataModel\MagentoDataException;
 
