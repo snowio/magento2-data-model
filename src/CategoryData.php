@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class Category
+final class CategoryData
 {
     private const CODE = 'code';
     private const PARENT_CODE = 'parent_code';
@@ -88,7 +88,7 @@ final class Category
 
     public function equals($category): bool
     {
-        return $category instanceof Category &&
+        return $category instanceof CategoryData &&
             ($this->name === $category->name) &&
             ($this->isActive === $category->isActive) &&
             ($this->customAttributes->equals($category->customAttributes)) &&
