@@ -1,10 +1,10 @@
 <?php
-
-
+declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-
-class ExtensionAttributeValue
+interface ExtensionAttributeValue
 {
+    public function toJson(): array;
 
+    public function equals($value): bool;
 }
