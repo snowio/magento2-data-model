@@ -2,8 +2,12 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
+use SnowIO\Magento2DataModel\Internal\CustomAttributeTrait;
+
 final class ProductData
 {
+    use CustomAttributeTrait;
+
     const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
 
@@ -94,27 +98,6 @@ final class ProductData
         return $result;
     }
 
-    public function getCustomAttributes(): CustomAttributeSet
-    {
-        return $this->customAttributes;
-    }
-
-    public function withCustomAttribute(CustomAttribute $customAttribute)
-    {
-        $result = clone $this;
-        $result->customAttributes = $result->customAttributes
-            ->withCustomAttribute($customAttribute);
-        return $result;
-    }
-
-    public function withCustomAttributes(CustomAttributeSet $customAttributes): self
-    {
-        $result = clone $this;
-        $result->customAttributes = $result->customAttributes
-            ->add($customAttributes);
-        return $result;
-    }
-
     public function toJson(): array
     {
         return [
@@ -151,8 +134,6 @@ final class ProductData
     private $extensionAttributes = [
         self::ATTRIBUTE_SET_CODE => self::DEFAULT_ATTRIBUTE_SET_CODE,
     ];
-    /** @var CustomAttributeSet */
-    private $customAttributes;
 
     private function __construct(string $sku, string $name)
     {

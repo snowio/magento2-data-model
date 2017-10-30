@@ -2,8 +2,12 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
+use SnowIO\Magento2DataModel\Internal\CustomAttributeTrait;
+
 final class CategoryData
 {
+    use CustomAttributeTrait;
+
     private const CODE = 'code';
     private const PARENT_CODE = 'parent_code';
 
@@ -42,27 +46,6 @@ final class CategoryData
         return $result;
     }
 
-    public function getCustomAttributes(): CustomAttributeSet
-    {
-        return $this->customAttributes;
-    }
-
-    public function withCustomAttribute(CustomAttribute $customAttribute): self
-    {
-        $result = clone $this;
-        $result->customAttributes = $result->customAttributes
-            ->withCustomAttribute($customAttribute);
-        return $result;
-    }
-
-    public function withCustomAttributes(CustomAttributeSet $customAttributes): self
-    {
-        $result = clone $this;
-        $result->customAttributes = $result->customAttributes
-            ->add($customAttributes);
-        return $result;
-    }
-
     public function getParentCode(): ?string
     {
         return $this->extensionAttributes[self::PARENT_CODE] ?? null;
@@ -97,7 +80,6 @@ final class CategoryData
 
     private $name;
     private $isActive = false;
-    private $customAttributes;
     private $extensionAttributes = [];
 
     private function __construct(string $code, string $name)
