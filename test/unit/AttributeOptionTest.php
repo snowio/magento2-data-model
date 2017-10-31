@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+namespace  SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\AttributeData;

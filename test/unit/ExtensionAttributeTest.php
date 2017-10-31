@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace  SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
@@ -10,8 +13,7 @@ class ExtensionAttributeTest extends TestCase
 
     public function testToJson()
     {
-        $extensionAttributeValue = $this->createExternalAttributeValue(10, 1000);
-        $extensionAttribute = ExtensionAttribute::of('stock', $extensionAttributeValue);
+        $extensionAttribute = $this->createStockExtensionAttribute(10, 1000);
         self::assertEquals([
             'stock' => [
                 'internal_amount' => 10,
@@ -22,51 +24,22 @@ class ExtensionAttributeTest extends TestCase
 
     public function testAccessors()
     {
-        $extensionAttributeValue = $this->createExternalAttributeValue(10, 1000);
-        $extensionAttribute = ExtensionAttribute::of('stock', $extensionAttributeValue);
-        self::assertEquals('stock', $extensionAttribute->getKey());
-        self::assertTrue($this->createExternalAttributeValue(10, 1000)->equals($extensionAttribute->getValue()));
+        $extensionAttribute = $this->createStockExtensionAttribute(10, 1000);
+        self::assertEquals('stock', $extensionAttribute->getCode());
     }
 
     public function testEquals()
     {
-        $extensionAttributeValue = $this->createExternalAttributeValue(10, 1000);
-        $extensionAttribute = ExtensionAttribute::of('stock', $extensionAttributeValue);
-        $sameValue =  $this->createExternalAttributeValue(10, 1000);
-        $differentValue = $this->createExternalAttributeValue(10, 100);
-        $sameExtensionAttribute = ExtensionAttribute::of('stock', $sameValue);
+        $extensionAttribute = $this->createStockExtensionAttribute(10, 1000);
+        $sameExtensionAttribute =  $this->createStockExtensionAttribute(10, 1000);
+        $differentExtensionAttribute = $this->createStockExtensionAttribute(10, 100);
         self::assertTrue($extensionAttribute->equals($sameExtensionAttribute));
-        self::assertFalse($extensionAttribute->equals(ExtensionAttribute::of('stock', $differentValue)));
-        self::assertFalse($extensionAttribute->equals(ExtensionAttribute::of('other', $differentValue)));
+        self::assertFalse($extensionAttribute->equals($differentExtensionAttribute));
         self::assertFalse($extensionAttribute->equals(CustomAttribute::of('stock', '1000')));
     }
 
-    private function createExternalAttributeValue(int $internalAmount, int $warehouseAmount)
+    private function createStockExtensionAttribute(int $internalAmount, int $warehouseAmount)
     {
-        return new class ($internalAmount, $warehouseAmount) implements ExtensionAttributeValue {
-            public function toJson(): array
-            {
-                return [
-                    'internal_amount' => $this->internalAmount,
-                    'warehouse_amount' => $this->warehouseAmount,
-                ];
-            }
-
-            public function equals($value): bool
-            {
-                return $value instanceof self &&
-                ($this->internalAmount === $value->internalAmount) &&
-                ($this->warehouseAmount === $value->warehouseAmount);
-            }
-
-            private $internalAmount;
-            private $warehouseAmount;
-
-            public function __construct($internalAmount, $warehouseAmount)
-            {
-                $this->internalAmount = $internalAmount;
-                $this->warehouseAmount = $warehouseAmount;
-            }
-        };
+        return StockItem::of($internalAmount, $warehouseAmount);
     }
 }

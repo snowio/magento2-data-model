@@ -7,5 +7,10 @@
         "psr-4": {
             "SnowIO\\Magento2DataModel\\": "src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SnowIO\\Magento2DataModel\\Test\\": "test/unit"
+        }
     }
 }
