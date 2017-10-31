@@ -31,5 +31,4 @@ trait CustomAttributeTrait
 
     /** @var CustomAttributeSet */
     private $customAttributes;
-
 }

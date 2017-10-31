@@ -30,8 +30,10 @@ final class ExtensionAttributeSet implements \IteratorAggregate
         return $extensionAttributes;
     }
 
-    private static function itemsAreEqual(ExtensionAttribute $extensionAttribute, ExtensionAttribute $otherExtensionAttribute): bool
-    {
+    private static function itemsAreEqual(
+        ExtensionAttribute $extensionAttribute,
+        ExtensionAttribute $otherExtensionAttribute
+    ) : bool {
         return $extensionAttribute->equals($otherExtensionAttribute);
     }
 }

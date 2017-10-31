@@ -4,12 +4,12 @@ namespace SnowIO\Magento2DataModel;
 
 abstract class ExtensionAttribute
 {
-    public final function getCode(): string
+    final public function getCode(): string
     {
         return $this->code;
     }
 
-    public final function toJson(): array
+    final public function toJson(): array
     {
         return [
             $this->code => $this->getValueJson(),
@@ -29,5 +29,5 @@ abstract class ExtensionAttribute
         $this->code = $code;
     }
 
-    protected abstract function getValueJson();
+    abstract protected function getValueJson();
 }
