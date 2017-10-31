@@ -66,7 +66,7 @@ final class CategoryData
         ];
 
         if ($this->getParentCode() === null) {
-          $json['parent_id'] = 1;
+            $json['parent_id'] = 1;
         }
 
         return $json;
