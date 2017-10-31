@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace  SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
-use SnowIO\Magento2DataModel\AttributeSetCode;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
 
 class ExtensionAttributeSetTest extends TestCase
@@ -13,16 +13,13 @@ class ExtensionAttributeSetTest extends TestCase
     public function testToJson()
     {
         $extensionAttributeSet = ExtensionAttributeSet::of([
-            AttributeSetCode::of('default'),
-            $this->createStockExtensionAttribute(100, 1000)
+            ExtensionAttribute::of('attribute_set_code', 'default'),
+            ExtensionAttribute::of('attribute_group_code', 'measurements'),
         ]);
 
         self::assertEquals([
             'attribute_set_code' => 'default',
-            'stock' => [
-                'internal_amount' => 100,
-                'warehouse_amount' => 1000,
-            ]
+            'attribute_group_code' => 'measurements'
         ], $extensionAttributeSet->toJson());
     }
 
@@ -33,19 +30,18 @@ class ExtensionAttributeSetTest extends TestCase
         self::assertTrue($extensionAttributeSet->isEmpty());
 
         $extensionAttributeSet = $extensionAttributeSet
-            ->withExtensionAttribute($this->createStockExtensionAttribute(100, 1000))
-            ->withExtensionAttribute($this->createSupplierReferenceExtensionAttribute(5897343));
+            ->withExtensionAttribute(ExtensionAttribute::of('attribute_set_code', 'default'))
+            ->withExtensionAttribute(ExtensionAttribute::of('attribute_group_code', 'measurements'));
 
         self::assertEquals(2, $extensionAttributeSet->count());
 
         $extensionAttributeSet = $extensionAttributeSet
-            ->withExtensionAttribute(AttributeSetCode::of('general'))
-            ->withExtensionAttribute($this->createSupplierReferenceExtensionAttribute(5897843));
+            ->withExtensionAttribute(ExtensionAttribute::of('attribute_set_code', 'general'))
+            ->withExtensionAttribute(ExtensionAttribute::of('attribute_group_code', 'units'));
 
         $expectedExtensionAttributeSet = ExtensionAttributeSet::of([
-            AttributeSetCode::of('general'),
-            $this->createStockExtensionAttribute(100, 1000),
-            $this->createSupplierReferenceExtensionAttribute(5897843),
+            ExtensionAttribute::of('attribute_set_code', 'general'),
+            ExtensionAttribute::of('attribute_group_code', 'units')
         ]);
 
         self::assertTrue($expectedExtensionAttributeSet->equals($extensionAttributeSet));
@@ -55,34 +51,19 @@ class ExtensionAttributeSetTest extends TestCase
     public function testEquality()
     {
         $expectedExtensionAttributeSet = ExtensionAttributeSet::of([
-            AttributeSetCode::of('general'),
-            $this->createStockExtensionAttribute(100, 1000),
-            $this->createSupplierReferenceExtensionAttribute(5897843),
+            ExtensionAttribute::of('attribute_set_code', 'general'),
         ]);
 
         $sameExtensionAttributeSet = ExtensionAttributeSet::of([
-            AttributeSetCode::of('general'),
-            $this->createStockExtensionAttribute(100, 1000),
-            $this->createSupplierReferenceExtensionAttribute(5897843),
+            ExtensionAttribute::of('attribute_set_code', 'general'),
         ]);
 
         $differentExtensionAttributeSet = ExtensionAttributeSet::of([
-            AttributeSetCode::of('general'),
-            $this->createStockExtensionAttribute(100, 1001),
-            $this->createSupplierReferenceExtensionAttribute(5897843),
+            ExtensionAttribute::of('attribute_group_code', 'measurements'),
         ]);
 
         self::assertTrue($expectedExtensionAttributeSet->equals($sameExtensionAttributeSet));
         self::assertFalse($expectedExtensionAttributeSet->equals($differentExtensionAttributeSet));
     }
 
-    private function createStockExtensionAttribute(int $internalAmount, int $warehouseAmount)
-    {
-        return StockItem::of($internalAmount, $warehouseAmount);
-    }
-
-    private function createSupplierReferenceExtensionAttribute(int $referenceNumber)
-    {
-        return SupplierReference::of($referenceNumber);
-    }
 }
