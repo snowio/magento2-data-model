@@ -23,6 +23,17 @@ class CategoryTest extends TestCase
                 'parent_code' => 'T-Shirts',
             ],
         ], $category->toJson());
+
+        $category = CategoryData::of('mens_tshirts', 'Mens T-Shirts');
+        self::assertEquals([
+            'name' => 'Mens T-Shirts',
+            'is_active' => true,
+            'custom_attributes' => [],
+            'parent_id' => 1,
+            'extension_attributes' => [
+                'code' => 'mens_tshirts',
+            ],
+        ], $category->toJson());
     }
 
     public function testWithers()
