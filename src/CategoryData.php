@@ -4,7 +4,7 @@ namespace SnowIO\Magento2DataModel;
 
 final class CategoryData
 {
-    use CustomAttributeTrait;
+    use EavEntityTrait;
 
     private const CODE = 'code';
     private const PARENT_CODE = 'parent_code';
@@ -58,13 +58,18 @@ final class CategoryData
 
     public function toJson(): array
     {
-        return [
+        $json = [
             'name' => $this->name,
-//            'parent_id' => 1, todo is discuss this
             'is_active' => $this->isActive,
             'custom_attributes' => $this->customAttributes->toJson(),
             'extension_attributes' => $this->extensionAttributes,
         ];
+
+        if ($this->getParentCode() === null) {
+            $json['parent_id'] = 1;
+        }
+
+        return $json;
     }
 
     public function equals($category): bool

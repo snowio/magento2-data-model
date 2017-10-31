@@ -4,7 +4,7 @@ namespace SnowIO\Magento2DataModel;
 
 final class ProductData
 {
-    use CustomAttributeTrait;
+    use EavEntityTrait;
 
     const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
