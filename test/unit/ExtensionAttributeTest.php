@@ -6,40 +6,31 @@ namespace  SnowIO\Magento2DataModel\Test;
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttribute;
-use SnowIO\Magento2DataModel\ExtensionAttributeValue;
 
 class ExtensionAttributeTest extends TestCase
 {
 
     public function testToJson()
     {
-        $extensionAttribute = $this->createStockExtensionAttribute(10, 1000);
+        $extensionAttribute = ExtensionAttribute::of('attribute_set_code', 'default');
         self::assertEquals([
-            'stock' => [
-                'internal_amount' => 10,
-                'warehouse_amount' => 1000
-            ]
+            'attribute_set_code' => 'default'
         ], $extensionAttribute->toJson());
     }
 
     public function testAccessors()
     {
-        $extensionAttribute = $this->createStockExtensionAttribute(10, 1000);
-        self::assertEquals('stock', $extensionAttribute->getCode());
+        $extensionAttribute = ExtensionAttribute::of('attribute_set_code', 'default');
+        self::assertEquals('default', $extensionAttribute->getValue());
+        self::assertEquals('attribute_set_code', $extensionAttribute->getCode());
     }
 
     public function testEquals()
     {
-        $extensionAttribute = $this->createStockExtensionAttribute(10, 1000);
-        $sameExtensionAttribute =  $this->createStockExtensionAttribute(10, 1000);
-        $differentExtensionAttribute = $this->createStockExtensionAttribute(10, 100);
-        self::assertTrue($extensionAttribute->equals($sameExtensionAttribute));
-        self::assertFalse($extensionAttribute->equals($differentExtensionAttribute));
-        self::assertFalse($extensionAttribute->equals(CustomAttribute::of('stock', '1000')));
+        $extensionAttribute = ExtensionAttribute::of('attribute_set_code', 'default');
+        self::assertTrue($extensionAttribute->equals(ExtensionAttribute::of('attribute_set_code', 'default')));
+        self::assertFalse($extensionAttribute->equals(ExtensionAttribute::of('attribute_set_id', 1)));
+        self::assertFalse($extensionAttribute->equals(CustomAttribute::of('attribute_set_code', 'default')));
     }
 
-    private function createStockExtensionAttribute(int $internalAmount, int $warehouseAmount)
-    {
-        return StockItem::of($internalAmount, $warehouseAmount);
-    }
 }

@@ -4,6 +4,11 @@ namespace SnowIO\Magento2DataModel;
 
 abstract class ExtensionAttribute
 {
+    public static function of(string $code, $value)
+    {
+        return new SimpleExtensionAttribute($code, $value);
+    }
+
     final public function getCode(): string
     {
         return $this->code;
