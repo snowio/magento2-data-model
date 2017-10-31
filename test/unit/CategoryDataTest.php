@@ -39,6 +39,7 @@ class CategoryTest extends TestCase
         self::assertEquals('Mens T-Shirts Half Price', $category->getName());
         self::assertEquals('t_shirts', $category->getParentCode());
         self::assertEquals('t_shirts', $category->getParentCode());
+        self::assertEquals(false, $category->isActive());
         self::assertTrue($category->getCustomAttributes()->equals(CustomAttributeSet::of([
             CustomAttribute::of('fredhopper_category_id', 'menstshirts')
         ])));
