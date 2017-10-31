@@ -2,44 +2,32 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class ExtensionAttribute
+abstract class ExtensionAttribute
 {
-    public static function of(string $key, ExtensionAttributeValue $value)
+    public final function getCode(): string
     {
-        return new self($key, $value);
+        return $this->code;
     }
 
-    public function getKey(): string
-    {
-        return $this->key;
-    }
-
-    public function getValue(): ExtensionAttributeValue
-    {
-        return $this->value;
-    }
-
-    public function toJson(): array
+    public final function toJson(): array
     {
         return [
-            $this->key => $this->value->toJson(),
+            $this->code => $this->getValueJson(),
         ];
     }
 
     public function equals($extensionAttribute): bool
     {
         return $extensionAttribute instanceof ExtensionAttribute &&
-            ($this->key === $extensionAttribute->key) &&
-            ($this->value->equals($extensionAttribute->value));
+            ($extensionAttribute->code === $this->code);
     }
 
-    private $key;
-    /** @var ExtensionAttributeValue */
-    private $value;
+    private $code;
 
-    private function __construct(string $key, ExtensionAttributeValue $value)
+    protected function __construct(string $code)
     {
-        $this->key = $key;
-        $this->value = $value;
+        $this->code = $code;
     }
+
+    protected abstract function getValueJson();
 }
