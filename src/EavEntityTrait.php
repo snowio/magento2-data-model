@@ -3,10 +3,7 @@ declare(strict_types=1);
 
 namespace SnowIO\Magento2DataModel;
 
-use SnowIO\Magento2DataModel\CustomAttribute;
-use SnowIO\Magento2DataModel\CustomAttributeSet;
-
-trait CustomAttributeTrait
+trait EavEntityTrait
 {
     public function getCustomAttributes(): CustomAttributeSet
     {
@@ -24,8 +21,7 @@ trait CustomAttributeTrait
     public function withCustomAttributes(CustomAttributeSet $customAttributes): self
     {
         $result = clone $this;
-        $result->customAttributes = $result->customAttributes
-            ->add($customAttributes);
+        $result->customAttributes = $result->customAttributes = $customAttributes;
         return $result;
     }
 
