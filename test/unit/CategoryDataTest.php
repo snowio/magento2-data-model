@@ -22,7 +22,7 @@ class CategoryTest extends TestCase
                 'code' => 'mens_tshirts',
                 'parent_code' => 'T-Shirts',
             ],
-        ],$category->toJson());
+        ], $category->toJson());
     }
 
     public function testWithers()
@@ -54,5 +54,4 @@ class CategoryTest extends TestCase
             ->withParent('Shirts')));
         self::assertFalse($category->equals(CustomAttribute::of('mens_tshirts', 'shirts')));
     }
-
 }

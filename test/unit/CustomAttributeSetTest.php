@@ -6,7 +6,6 @@ namespace  SnowIO\Magento2DataModel\Test;
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\CustomAttributeSet;
-use SnowIO\Magento2DataModel\MagentoDataException;
 
 class CustomAttributeSetTest extends TestCase
 {

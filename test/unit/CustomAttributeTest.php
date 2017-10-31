@@ -16,7 +16,7 @@ class CustomAttributeTest extends TestCase
         self::assertEquals([
             'attribute_code' => 'product_weight',
             'value' => '80',
-        ],$customAttribute->toJson());
+        ], $customAttribute->toJson());
     }
 
     public function testAccessors()
@@ -33,5 +33,4 @@ class CustomAttributeTest extends TestCase
         self::assertTrue($customAttribute->equals($otherAttribute));
         self::assertFalse((CustomAttribute::of('status', 'data'))->equals(ProductData::of('foo-bar', 'test')));
     }
-
 }

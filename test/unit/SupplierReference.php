@@ -4,7 +4,8 @@ namespace SnowIO\Magento2DataModel\Test;
 
 use SnowIO\Magento2DataModel\ExtensionAttribute;
 
-class SupplierReference extends ExtensionAttribute {
+final class SupplierReference extends ExtensionAttribute
+{
 
     public static function of(int $referenceNumber)
     {
