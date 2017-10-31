@@ -5,7 +5,7 @@ namespace  SnowIO\Magento2DataModel\Test;
 
 use SnowIO\Magento2DataModel\ExtensionAttribute;
 
-class StockItem extends ExtensionAttribute
+final class StockItem extends ExtensionAttribute
 {
 
     public static function of(int $internalAmount, int $warehouseAmount)
