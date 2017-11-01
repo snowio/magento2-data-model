@@ -52,6 +52,20 @@ final class AttributeData
         return $result;
     }
 
+    public function getScope(): string
+    {
+        return $this->scope;
+    }
+
+    public function withScope(string $scope): self
+    {
+        AttributeScope::validateScope($scope);
+        $result = clone $this;
+        $result->scope = $scope;
+        return $result;
+    }
+
+
     public function toJson(): array
     {
         return [
@@ -68,13 +82,15 @@ final class AttributeData
             ($this->attributeCode === $attribute->attributeCode) &&
             ($this->isRequired === $attribute->isRequired) &&
             ($this->frontendInput === $attribute->frontendInput) &&
-            ($this->defaultFrontendLabel === $attribute->defaultFrontendLabel);
+            ($this->defaultFrontendLabel === $attribute->defaultFrontendLabel) &&
+            ($this->scope === $attribute->scope);
     }
 
     private $attributeCode;
     private $isRequired = false;
     private $frontendInput;
     private $defaultFrontendLabel;
+    private $scope;
 
     private function __construct(string $attributeCode, string $frontendInput)
     {
