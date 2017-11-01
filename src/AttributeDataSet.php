@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class AttributeDataSet implements \IteratorAggregate
+final class AttributeDataSet implements \IteratorAggregate
 {
     use SetTrait;
 
