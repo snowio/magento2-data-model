@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class SimpleExtensionAttribute extends ExtensionAttribute
+final class SimpleExtensionAttribute extends ExtensionAttribute
 {
     public function getValue()
     {
