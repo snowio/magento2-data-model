@@ -104,6 +104,16 @@ trait SetTrait
         return $result;
     }
 
+    /**
+     * @return static
+     */
+    public function diffByKey(self $otherSet): self
+    {
+        $result = new self;
+        $result->items = \array_diff_key($this->items, $otherSet->items);
+        return $result;
+    }
+
     public function overlaps(self $otherSet): bool
     {
         foreach ($this->items as $key => $item) {
