@@ -13,6 +13,10 @@ final class ProductData
     {
         $productData = new self($sku, $name);
         $productData->customAttributes = CustomAttributeSet::create();
+        $productData->extensionAttributes = ExtensionAttributeSet::create()
+            ->withExtensionAttribute(
+                ExtensionAttribute::of(self::ATTRIBUTE_SET_CODE, self::DEFAULT_ATTRIBUTE_SET_CODE)
+            );
         return $productData;
     }
 
@@ -86,13 +90,16 @@ final class ProductData
 
     public function getAttributeSetCode(): string
     {
-        return $this->extensionAttributes[self::ATTRIBUTE_SET_CODE];
+        return $this->extensionAttributes->get(self::ATTRIBUTE_SET_CODE)->getValue();
     }
 
     public function withAttributeSetCode(string $attributeSetCode): self
     {
         $result = clone $this;
-        $result->extensionAttributes[self::ATTRIBUTE_SET_CODE] =  $attributeSetCode;
+        $result->extensionAttributes = $result->extensionAttributes
+            ->withExtensionAttribute(
+                ExtensionAttribute::of(self::ATTRIBUTE_SET_CODE, $attributeSetCode)
+            );
         return $result;
     }
 
@@ -105,7 +112,7 @@ final class ProductData
             'visibility' => (int)$this->visibility,
             'price' => $this->price,
             'type_id' => $this->typeId,
-            'extension_attributes' => $this->extensionAttributes,
+            'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson(),
         ];
     }
@@ -119,7 +126,7 @@ final class ProductData
         ($this->visibility === $otherProductData->visibility) &&
         ($this->price === $otherProductData->price) &&
         ($this->typeId === $otherProductData->typeId) &&
-        ($this->extensionAttributes == $otherProductData->extensionAttributes) &&
+        ($this->extensionAttributes->equals($otherProductData->extensionAttributes)) &&
         $this->customAttributes->equals($otherProductData->customAttributes);
     }
 
@@ -129,9 +136,6 @@ final class ProductData
     private $visibility = ProductVisibility::CATALOG_SEARCH;
     private $price;
     private $typeId = ProductTypeId::SIMPLE;
-    private $extensionAttributes = [
-        self::ATTRIBUTE_SET_CODE => self::DEFAULT_ATTRIBUTE_SET_CODE,
-    ];
 
     private function __construct(string $sku, string $name)
     {

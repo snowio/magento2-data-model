@@ -17,7 +17,8 @@ final class CategoryData
 
     public function getCode(): string
     {
-        return $this->extensionAttributes[self::CODE];
+        return $this->extensionAttributes->get(self::CODE)
+            ->getValue();
     }
 
     public function getName(): string
@@ -46,13 +47,20 @@ final class CategoryData
 
     public function getParentCode(): ?string
     {
-        return $this->extensionAttributes[self::PARENT_CODE] ?? null;
+        $extensionAttribute = $this->extensionAttributes->get(self::PARENT_CODE);
+
+        if ($extensionAttribute !== null) {
+            return $extensionAttribute->getValue();
+        }
+
+        return null;
     }
 
-    public function withParent(string $parentCode): self
+    public function withParentCode(string $parentCode): self
     {
         $result = clone $this;
-        $result->extensionAttributes[self::PARENT_CODE] = $parentCode;
+        $result->extensionAttributes = $result->extensionAttributes
+            ->withExtensionAttribute(ExtensionAttribute::of(self::PARENT_CODE, $parentCode));
         return $result;
     }
 
@@ -62,7 +70,7 @@ final class CategoryData
             'name' => $this->name,
             'is_active' => $this->isActive,
             'custom_attributes' => $this->customAttributes->toJson(),
-            'extension_attributes' => $this->extensionAttributes,
+            'extension_attributes' => $this->extensionAttributes->toJson(),
         ];
 
         if ($this->getParentCode() === null) {
@@ -78,20 +86,17 @@ final class CategoryData
             ($this->name === $category->name) &&
             ($this->isActive === $category->isActive) &&
             ($this->customAttributes->equals($category->customAttributes)) &&
-            ($this->extensionAttributes == $category->extensionAttributes);
+            ($this->extensionAttributes->equals($category->extensionAttributes));
     }
 
     private $name;
-    private $isActive = false;
-    private $extensionAttributes = [];
+    private $isActive = true;
 
     private function __construct(string $code, string $name)
     {
         $this->name = $name;
         $this->customAttributes = CustomAttributeSet::create();
-        $this->isActive = true;
-        $this->extensionAttributes = [
-            self::CODE => $code,
-        ];
+        $this->extensionAttributes = ExtensionAttributeSet::create()
+            ->withExtensionAttribute(ExtensionAttribute::of(self::CODE, $code));
     }
 }
