@@ -66,4 +66,14 @@ class ExtensionAttributeSetTest extends TestCase
         self::assertFalse($expectedExtensionAttributeSet->equals($differentExtensionAttributeSet));
     }
 
+    public function testGet()
+    {
+        $extensionAttributeSet = ExtensionAttributeSet::of([
+            ExtensionAttribute::of('attribute_set_code', 'general'),
+        ]);
+
+        self::assertTrue($extensionAttributeSet->get('attribute_set_code')
+            ->equals(ExtensionAttribute::of('attribute_set_code', 'general')));
+        self::assertNull($extensionAttributeSet->get('attribute_group_code'));
+    }
 }

@@ -130,4 +130,15 @@ class CustomAttributeSetTest extends TestCase
 
         self::assertTrue($customAttributes->equals($sameAttributes));
     }
+
+    public function testGet()
+    {
+        $customAttributeSet = CustomAttributeSet::of([
+            CustomAttribute::of('volume', '90'),
+        ]);
+
+        self::assertTrue($customAttributeSet->get('volume')
+            ->equals(CustomAttribute::of('volume', '90')));
+        self::assertNull($customAttributeSet->get('diameter'));
+    }
 }

@@ -14,6 +14,11 @@ final class ExtensionAttributeSet implements \IteratorAggregate
         return $result;
     }
 
+    public function get(string $key): ?ExtensionAttribute
+    {
+        return $this->items[$key] ?? null;
+    }
+
     private static function getKey(ExtensionAttribute $extensionAttribute): string
     {
         return $extensionAttribute->getCode();

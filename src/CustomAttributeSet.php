@@ -14,6 +14,11 @@ final class CustomAttributeSet implements \IteratorAggregate
         return $result;
     }
 
+    public function get(string $key): ?CustomAttribute
+    {
+        return $this->items[$key] ?? null;
+    }
+
     private static function getKey(CustomAttribute $customAttribute): string
     {
         return $customAttribute->getCode();
