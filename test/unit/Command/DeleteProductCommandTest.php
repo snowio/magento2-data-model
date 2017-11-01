@@ -1,0 +1,23 @@
+<?php
+declare(strict_types=1);
+namespace SnowIO\Magento2DataModel\Test;
+
+use PHPUnit\Framework\TestCase;
+use SnowIO\Magento2DataModel\Command\DeleteProductCommand;
+
+class DeleteProductCommandTest extends TestCase
+{
+
+    public function testToJson()
+    {
+        $command = DeleteProductCommand::of('test-product');
+        self::assertEquals(['sku' => 'test-product'], $command->toJson());
+    }
+
+    public function testAccessors()
+    {
+        $command = DeleteProductCommand::of('test-product');
+        self::assertEquals('test-product', $command->getSku());
+    }
+
+}
