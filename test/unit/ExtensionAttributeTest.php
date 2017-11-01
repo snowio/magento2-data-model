@@ -32,5 +32,4 @@ class ExtensionAttributeTest extends TestCase
         self::assertFalse($extensionAttribute->equals(ExtensionAttribute::of('attribute_set_id', 1)));
         self::assertFalse($extensionAttribute->equals(CustomAttribute::of('attribute_set_code', 'default')));
     }
-
 }
