@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CategoryData;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\CustomAttributeSet;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
 
 class CategoryDataTest extends TestCase
 {
@@ -41,6 +42,8 @@ class CategoryDataTest extends TestCase
         $category = CategoryData::of('mens_tshirts', 'Mens T-Shirts')
             ->withParentCode('t_shirts')
             ->withActive(false)
+            ->withStoreCode('default')
+            ->withExtensionAttribute(ExtensionAttribute::of('category_attribute_group_code', 'clothes'))
             ->withCustomAttributes(CustomAttributeSet::of([
                 CustomAttribute::of('fredhopper_category_id', 'menstshirts')
             ]))
@@ -49,8 +52,11 @@ class CategoryDataTest extends TestCase
         self::assertEquals('mens_tshirts', $category->getCode());
         self::assertEquals('Mens T-Shirts Half Price', $category->getName());
         self::assertEquals('t_shirts', $category->getParentCode());
+        self::assertEquals('default', $category->getStoreCode());
         self::assertEquals('t_shirts', $category->getParentCode());
         self::assertEquals(false, $category->isActive());
+        self::assertTrue(ExtensionAttribute::of('category_attribute_group_code',
+            'clothes')->equals($category->getExtensionAttributes()->get('category_attribute_group_code')));
         self::assertTrue($category->getCustomAttributes()->equals(CustomAttributeSet::of([
             CustomAttribute::of('fredhopper_category_id', 'menstshirts')
         ])));

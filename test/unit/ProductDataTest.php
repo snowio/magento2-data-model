@@ -10,6 +10,7 @@ use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
 use SnowIO\Magento2DataModel\ProductVisibility;
+use SnowIO\Magento2DataModel\StockItem;
 
 class ProductDataTest extends TestCase
 {
@@ -68,6 +69,8 @@ class ProductDataTest extends TestCase
             ->withPrice('45.43')
             ->withTypeId(ProductTypeId::CONFIGURABLE)
             ->withAttributeSetCode('TestAttributeSet')
+            ->withStoreCode('default')
+            ->withExtensionAttribute(StockItem::create(1, 300))
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
@@ -77,8 +80,10 @@ class ProductDataTest extends TestCase
         self::assertSame(ProductStatus::DISABLED, $product->getStatus());
         self::assertSame(ProductVisibility::CATALOG, $product->getVisibility());
         self::assertSame('45.43', $product->getPrice());
+        self::assertEquals('default', $product->getStoreCode());
         self::assertSame(ProductTypeId::CONFIGURABLE, $product->getTypeId());
         self::assertSame('TestAttributeSet', $product->getAttributeSetCode());
+        self::assertTrue(StockItem::create(1, 300)->equals($product->getExtensionAttributes()->get('stock_item')));
         $expectedCustomAttributes = CustomAttributeSet::create()
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
