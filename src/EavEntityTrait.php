@@ -21,10 +21,47 @@ trait EavEntityTrait
     public function withCustomAttributes(CustomAttributeSet $customAttributes): self
     {
         $result = clone $this;
-        $result->customAttributes = $result->customAttributes = $customAttributes;
+        $result->customAttributes = $customAttributes;
         return $result;
     }
 
+    public function getStoreCode(): string
+    {
+        return $this->storeCode;
+    }
+
+    public function withStoreCode(string $storeCode): self
+    {
+        $result = clone $this;
+        $result->storeCode = $storeCode;
+        return $result;
+    }
+
+    public function getExtensionAttributes(): ExtensionAttributeSet
+    {
+        return $this->extensionAttributes;
+    }
+
+    public function withExtensionAttribute(ExtensionAttribute $extensionAttribute): self
+    {
+        $result = clone $this;
+        $result->extensionAttributes = $result->extensionAttributes
+            ->withExtensionAttribute($extensionAttribute);
+        return $result;
+    }
+
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributeSet): self
+    {
+        $result = clone $this;
+        $result->extensionAttributes  = $extensionAttributeSet;
+        return $result;
+    }
+
+    private $storeCode = 'admin';
+
     /** @var CustomAttributeSet */
     private $customAttributes;
+
+    /** @var ExtensionAttributeSet */
+    private $extensionAttributes;
 }
