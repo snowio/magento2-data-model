@@ -90,7 +90,7 @@ final class AttributeData
     private $isRequired = false;
     private $frontendInput;
     private $defaultFrontendLabel;
-    private $scope;
+    private $scope = AttributeScope::GLOBAL;
 
     private function __construct(string $attributeCode, string $frontendInput)
     {
