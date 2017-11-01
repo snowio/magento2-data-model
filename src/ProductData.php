@@ -127,7 +127,8 @@ final class ProductData
         ($this->price === $otherProductData->price) &&
         ($this->typeId === $otherProductData->typeId) &&
         ($this->extensionAttributes->equals($otherProductData->extensionAttributes)) &&
-        $this->customAttributes->equals($otherProductData->customAttributes);
+        $this->customAttributes->equals($otherProductData->customAttributes) &&
+        ($this->storeCode === $otherProductData->storeCode);
     }
 
     private $sku;

@@ -86,7 +86,9 @@ final class CategoryData
             ($this->name === $category->name) &&
             ($this->isActive === $category->isActive) &&
             ($this->customAttributes->equals($category->customAttributes)) &&
-            ($this->extensionAttributes->equals($category->extensionAttributes));
+            ($this->extensionAttributes->equals($category->extensionAttributes)) &&
+            ($this->storeCode === $category->storeCode);
+
     }
 
     private $name;
