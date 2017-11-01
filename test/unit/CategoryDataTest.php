@@ -8,12 +8,12 @@ use SnowIO\Magento2DataModel\CategoryData;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\CustomAttributeSet;
 
-class CategoryTest extends TestCase
+class CategoryDataTest extends TestCase
 {
     public function testToJson()
     {
         $category = CategoryData::of('mens_tshirts', 'Mens T-Shirts')
-            ->withParent('T-Shirts');
+            ->withParentCode('T-Shirts');
         self::assertEquals([
             'name' => 'Mens T-Shirts',
             'is_active' => true,
@@ -39,7 +39,7 @@ class CategoryTest extends TestCase
     public function testWithers()
     {
         $category = CategoryData::of('mens_tshirts', 'Mens T-Shirts')
-            ->withParent('t_shirts')
+            ->withParentCode('t_shirts')
             ->withActive(false)
             ->withCustomAttributes(CustomAttributeSet::of([
                 CustomAttribute::of('fredhopper_category_id', 'menstshirts')
@@ -59,11 +59,11 @@ class CategoryTest extends TestCase
     public function testEquals()
     {
         $category = CategoryData::of('mens_tshirts', 'Mens T-Shirts')
-            ->withParent('T-Shirts');
+            ->withParentCode('T-Shirts');
         self::assertTrue($category->equals(CategoryData::of('mens_tshirts', 'Mens T-Shirts')
-            ->withParent('T-Shirts')));
+            ->withParentCode('T-Shirts')));
         self::assertFalse($category->equals(CategoryData::of('mens_shirts', 'Mens Shirts')
-            ->withParent('Shirts')));
+            ->withParentCode('Shirts')));
         self::assertFalse($category->equals(CustomAttribute::of('mens_tshirts', 'shirts')));
     }
 }
