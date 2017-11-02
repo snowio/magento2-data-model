@@ -23,4 +23,11 @@ class DeleteAttributeOptionCommandTest extends TestCase
             ->withEntityType(8);
         self::assertEquals(8, $command->getEntityType());
     }
+
+    public function testAccessor()
+    {
+        $command = DeleteAttributeOptionCommand::of('size', 'large');
+        self::assertEquals('size', $command->getAttributeCode());
+        self::assertEquals('large', $command->getOptionCode());
+    }
 }
