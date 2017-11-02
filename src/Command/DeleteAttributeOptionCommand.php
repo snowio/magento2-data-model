@@ -47,4 +47,9 @@ final class DeleteAttributeOptionCommand extends Command
     private $attributeCode;
     private $optionCode;
     private $entityType = self::PRODUCT;
+
+    private function __construct()
+    {
+
+    }
 }
