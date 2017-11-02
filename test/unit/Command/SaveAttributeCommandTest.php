@@ -26,10 +26,9 @@ class SaveAttributeCommandTest extends TestCase
         ], $command->toJson());
     }
 
-    public function getAccessor()
+    public function testAccessor()
     {
-        $attributeData = AttributeData::of('volume', FrontendInput::TEXT, 'Volume');
-        $command = SaveAttributeCommand::of($attributeData);
-        self::assertTrue($attributeData->equals($command->getAttributeData()));
+        $command = SaveAttributeCommand::of(AttributeData::of('volume', FrontendInput::TEXT, 'Volume'));
+        self::assertTrue((AttributeData::of('volume', FrontendInput::TEXT, 'Volume'))->equals($command->getAttributeData()));
     }
 }
