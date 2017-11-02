@@ -103,20 +103,6 @@ final class ProductData
         return $result;
     }
 
-    public function toJson(): array
-    {
-        return [
-            'sku' => $this->sku,
-            'name' => $this->name,
-            'status' => (int)$this->status,
-            'visibility' => (int)$this->visibility,
-            'price' => $this->price,
-            'type_id' => $this->typeId,
-            'extension_attributes' => $this->extensionAttributes->toJson(),
-            'custom_attributes' => $this->customAttributes->toJson(),
-        ];
-    }
-
     public function getStockItem(): ?StockItem
     {
         $extensionAttribute = $this->extensionAttributes->get(StockItem::CODE);
@@ -132,6 +118,20 @@ final class ProductData
         $result->extensionAttributes = $this->extensionAttributes
             ->withExtensionAttribute($stockItem->asExtensionAttribute());
         return $result;
+    }
+
+    public function toJson(): array
+    {
+        return [
+            'sku' => $this->sku,
+            'name' => $this->name,
+            'status' => (int)$this->status,
+            'visibility' => (int)$this->visibility,
+            'price' => $this->price,
+            'type_id' => $this->typeId,
+            'extension_attributes' => $this->extensionAttributes->toJson(),
+            'custom_attributes' => $this->customAttributes->toJson(),
+        ];
     }
 
     public function equals($otherProductData): bool
