@@ -2,6 +2,9 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
+use SnowIO\Magento2DataModel\Command\DeleteAttributeOptionCommand;
+use SnowIO\Magento2DataModel\Command\SaveAttributeOptionCommand;
+
 final class AttributeOptionSet implements \IteratorAggregate
 {
     use SetTrait;
@@ -12,6 +15,21 @@ final class AttributeOptionSet implements \IteratorAggregate
         $key = self::getKey($attributeOption);
         $result->items[$key] = $attributeOption;
         return $result;
+    }
+
+    public function mapToSaveCommands(float $timestamp): array
+    {
+        return \array_map(function (AttributeOption $attributeOption) use ($timestamp) {
+            return SaveAttributeOptionCommand::of($attributeOption)->withTimestamp($timestamp);
+        }, $this->items);
+    }
+
+    public function mapToDeleteCommands(float $timestamp): array
+    {
+        return \array_map(function (AttributeOption $attributeOption) use ($timestamp) {
+            return DeleteAttributeOptionCommand::of($attributeOption->getAttributeCode(), $attributeOption->getValue())
+                ->withTimestamp(1509613892);
+        }, $this->items);
     }
 
     private static function getKey(AttributeOption $attributeOption): string
