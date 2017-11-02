@@ -117,6 +117,23 @@ final class ProductData
         ];
     }
 
+    public function getStockItem(): ?StockItem
+    {
+        $extensionAttribute = $this->extensionAttributes->get(StockItem::CODE);
+        if ($extensionAttribute === null) {
+            return null;
+        }
+        return StockItem::fromJson($extensionAttribute->toJson());
+    }
+
+    public function withStockItem(StockItem $stockItem): self
+    {
+        $result = clone $this;
+        $result->extensionAttributes = $this->extensionAttributes
+            ->withExtensionAttribute($stockItem->asExtensionAttribute());
+        return $result;
+    }
+
     public function equals($otherProductData): bool
     {
         return $otherProductData instanceof ProductData &&

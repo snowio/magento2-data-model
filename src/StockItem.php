@@ -2,13 +2,22 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class StockItem extends ExtensionAttribute
+final class StockItem
 {
-    private const STOCK_ITEM = 'stock_item';
+    const CODE = 'stock_item';
 
-    public static function create(int $stockId, int $quantity)
+    public static function of(int $stockId, int $quantity)
     {
         return new self($stockId, $quantity);
+    }
+
+    public static function fromJson(array $json)
+    {
+        $json = $json[self::CODE];
+        $stockId = $json['stock_id'];
+        $quantity = $json['qty'];
+        $stockItem = new self($stockId, $quantity);
+        return $stockItem;
     }
 
     public function getStockId(): int
@@ -42,14 +51,13 @@ final class StockItem extends ExtensionAttribute
 
     public function equals($extensionAttribute): bool
     {
-        return parent::equals($extensionAttribute) &&
-            ($extensionAttribute instanceof StockItem) &&
+        return ($extensionAttribute instanceof StockItem) &&
             ($this->stockId === $extensionAttribute->stockId) &&
             ($this->quantity === $extensionAttribute->quantity) &&
             ($this->isInStock === $extensionAttribute->isInStock);
     }
 
-    protected function getValueJson(): array
+    public function toJson(): array
     {
         return [
             'stock_id' => $this->stockId,
@@ -58,13 +66,17 @@ final class StockItem extends ExtensionAttribute
         ];
     }
 
+    public function asExtensionAttribute(): ExtensionAttribute
+    {
+        return ExtensionAttribute::of(self::CODE, $this->toJson());
+    }
+
     private $isInStock;
     private $quantity;
     private $stockId;
 
     protected function __construct(int $stockId, int $quantity)
     {
-        parent::__construct(self::STOCK_ITEM);
         $this->stockId = $stockId;
         $this->quantity = $quantity;
         $this->isInStock = $quantity > 0;
