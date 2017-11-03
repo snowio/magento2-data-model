@@ -28,7 +28,7 @@ final class AttributeOptionSet implements \IteratorAggregate
     {
         return \array_map(function (AttributeOption $attributeOption) use ($timestamp) {
             return DeleteAttributeOptionCommand::of($attributeOption->getAttributeCode(), $attributeOption->getValue())
-                ->withTimestamp(1509613892);
+                ->withTimestamp($timestamp);
         }, $this->items);
     }
 
