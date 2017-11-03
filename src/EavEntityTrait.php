@@ -50,10 +50,10 @@ trait EavEntityTrait
         return $result;
     }
 
-    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributeSet): self
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
     {
         $result = clone $this;
-        $result->extensionAttributes  = $extensionAttributeSet;
+        $result->extensionAttributes = $extensionAttributes;
         return $result;
     }
 

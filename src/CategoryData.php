@@ -17,8 +17,13 @@ final class CategoryData
 
     public function getCode(): string
     {
-        return $this->extensionAttributes->get(self::CODE)
-            ->getValue();
+        $extensionAttribute = $this->extensionAttributes->get(self::CODE);
+
+        if (null === $extensionAttribute) {
+            throw new \Exception('Category must have a code');
+        }
+
+        return $extensionAttribute->getValue();
     }
 
     public function getName(): string
@@ -61,6 +66,23 @@ final class CategoryData
         $result = clone $this;
         $result->extensionAttributes = $result->extensionAttributes
             ->withExtensionAttribute(ExtensionAttribute::of(self::PARENT_CODE, $parentCode));
+        return $result;
+    }
+
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
+    {
+        $result = clone $this;
+        if (!$extensionAttributes->has(self::CODE)) {
+            $code = $result->extensionAttributes->get(self::CODE);
+            $extensionAttributes = $extensionAttributes->withExtensionAttribute($code);
+        }
+
+        if ($result->extensionAttributes->has(self::PARENT_CODE) && !$extensionAttributes->has(self::PARENT_CODE)) {
+            $parentCode = $result->extensionAttributes->get(self::PARENT_CODE);
+            $extensionAttributes = $extensionAttributes->withExtensionAttribute($parentCode);
+        }
+
+        $result->extensionAttributes = $extensionAttributes;
         return $result;
     }
 

@@ -129,6 +129,11 @@ trait SetTrait
         return false;
     }
 
+    public function has(string $key): bool
+    {
+        return isset($this->items[$key]);
+    }
+
     public function count(): int
     {
         return \count($this->items);

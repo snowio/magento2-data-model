@@ -120,6 +120,23 @@ final class ProductData
         return $result;
     }
 
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
+    {
+        $result = clone $this;
+        if (!$extensionAttributes->has(self::ATTRIBUTE_SET_CODE)) {
+            $attributeSetCode = $result->extensionAttributes->get(self::ATTRIBUTE_SET_CODE);
+            $extensionAttributes = $extensionAttributes->withExtensionAttribute($attributeSetCode);
+        }
+
+        if (!$extensionAttributes->has(StockItem::CODE) && $result->extensionAttributes->has(StockItem::CODE)) {
+            $stockItem = $result->extensionAttributes->get(StockItem::CODE);
+            $extensionAttributes = $extensionAttributes->withExtensionAttribute($stockItem);
+        }
+
+        $result->extensionAttributes = $extensionAttributes;
+        return $result;
+    }
+
     public function toJson(): array
     {
         return [
