@@ -10,19 +10,17 @@ class StockItemTest extends TestCase
 {
     public function testToJson()
     {
-        $stockItem = StockItem::create(1, 100);
+        $stockItem = StockItem::of(1, 100);
         self::assertEquals([
-            'stock_item' => [
-                'stock_id' => 1,
-                'qty' => 100,
-                'is_in_stock' => true,
-            ]
+            'stock_id' => 1,
+            'qty' => 100,
+            'is_in_stock' => true,
         ], $stockItem->toJson());
     }
 
     public function testWithers()
     {
-        $stockItem = StockItem::create(1, 100);
+        $stockItem = StockItem::of(1, 100);
         self::assertEquals(1, $stockItem->getStockId());
         self::assertEquals(100, $stockItem->getQuantity());
 
@@ -35,10 +33,10 @@ class StockItemTest extends TestCase
 
     public function testEquals()
     {
-        $stockItem = StockItem::create(1, 100);
-        self::assertTrue($stockItem->equals(StockItem::create(1, 100)));
-        self::assertFalse($stockItem->equals(StockItem::create(1, 1000)));
-        self::assertFalse($stockItem->equals(StockItem::create(10, 100)));
+        $stockItem = StockItem::of(1, 100);
+        self::assertTrue($stockItem->equals(StockItem::of(1, 100)));
+        self::assertFalse($stockItem->equals(StockItem::of(1, 1000)));
+        self::assertFalse($stockItem->equals(StockItem::of(10, 100)));
         self::assertFalse($stockItem->equals(ExtensionAttribute::of('stock_size', 1000)));
         self::assertFalse($stockItem->equals(ExtensionAttribute::of('stock_item', 100)));
     }

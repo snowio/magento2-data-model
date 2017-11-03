@@ -1,11 +1,14 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
-namespace  SnowIO\Magento2DataModel\Test;
+namespace SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\CustomAttribute;
 use SnowIO\Magento2DataModel\CustomAttributeSet;
+use SnowIO\Magento2DataModel\EavEntityTrait;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
+use SnowIO\Magento2DataModel\ExtensionAttributeSet;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
@@ -62,6 +65,7 @@ class ProductDataTest extends TestCase
 
     public function testWithers()
     {
+        /** @var ProductData $product */
         $product = ProductData::of('snowio-test-product', 'Snowio Test Product')
             ->withName('Snowio Test Product Updated!!')
             ->withStatus(ProductStatus::DISABLED)
@@ -70,20 +74,40 @@ class ProductDataTest extends TestCase
             ->withTypeId(ProductTypeId::CONFIGURABLE)
             ->withAttributeSetCode('TestAttributeSet')
             ->withStoreCode('default')
-            ->withExtensionAttribute(StockItem::create(1, 300))
+            ->withStockItem(StockItem::of(1, 300))
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
-            ->withCustomAttribute(CustomAttribute::of('density', '800'));
+            ->withCustomAttribute(CustomAttribute::of('density', '800'))
+            ->withExtensionAttributes(ExtensionAttributeSet::of([
+                ExtensionAttribute::of('warehouse_specifications', [
+                    'part_number' => 4894379374,
+                    'manufacturer_reference' => '49j03j94r',
+                ]),
+            ]));
 
         self::assertSame('Snowio Test Product Updated!!', $product->getName());
         self::assertSame(ProductStatus::DISABLED, $product->getStatus());
         self::assertSame(ProductVisibility::CATALOG, $product->getVisibility());
         self::assertSame('45.43', $product->getPrice());
         self::assertEquals('default', $product->getStoreCode());
+        self::assertTrue((StockItem::of(1, 300))->equals($product->getStockItem()));
         self::assertSame(ProductTypeId::CONFIGURABLE, $product->getTypeId());
         self::assertSame('TestAttributeSet', $product->getAttributeSetCode());
-        self::assertTrue(StockItem::create(1, 300)->equals($product->getExtensionAttributes()->get('stock_item')));
+        //NOTE: The preservation of stock_item and attribute_set_code
+        //please review this technical decision
+        self::assertTrue(ExtensionAttributeSet::of([
+            ExtensionAttribute::of('warehouse_specifications', [
+                'part_number' => 4894379374,
+                'manufacturer_reference' => '49j03j94r',
+            ]),
+            ExtensionAttribute::of('attribute_set_code', 'TestAttributeSet'),
+            ExtensionAttribute::of('stock_item', [
+                'stock_id' => 1,
+                'qty' => 300,
+                'is_in_stock' => true,
+            ]),
+        ])->equals($product->getExtensionAttributes()));
         $expectedCustomAttributes = CustomAttributeSet::create()
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
@@ -145,7 +169,7 @@ class ProductDataTest extends TestCase
                 ->withCustomAttribute(CustomAttribute::of('weight', '30')))
                 ->equals(
                     ProductData::of('test-product', 'test')
-                    ->withCustomAttribute(CustomAttribute::of('weight', '59'))
+                        ->withCustomAttribute(CustomAttribute::of('weight', '59'))
                 )
         );
         self::assertFalse((ProductData::of('test-product', 'test'))->equals(CustomAttribute::of('foo', 'bar')));
