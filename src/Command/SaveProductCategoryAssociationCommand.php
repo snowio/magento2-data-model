@@ -4,7 +4,7 @@ namespace SnowIO\Magento2DataModel\Command;
 
 use SnowIO\Magento2DataModel\ProductCategoryAssociation;
 
-final class ProductCategoryAssociationCommand extends Command
+final class SaveProductCategoryAssociationCommand extends Command
 {
     public static function of(ProductCategoryAssociation $productCategoryAssociation)
     {
