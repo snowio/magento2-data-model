@@ -4,7 +4,7 @@ namespace SnowIO\Magento2DataModel;
 
 final class CustomAttribute
 {
-    public static function of(string $attributeCode, string $value): self
+    public static function of(string $attributeCode, ?string $value): self
     {
         $customAttribute = new self;
         $customAttribute->attributeCode = $attributeCode;
