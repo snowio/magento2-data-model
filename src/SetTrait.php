@@ -98,7 +98,7 @@ trait SetTrait
         foreach ($this->items as $key => $item) {
             $otherItem = $otherSet->items[$key] ?? null;
             if (!isset($otherItem) || !self::itemsAreEqual($item, $otherItem)) {
-                $result[$key] = $item;
+                $result->items[$key] = $item;
             }
         }
         return $result;
