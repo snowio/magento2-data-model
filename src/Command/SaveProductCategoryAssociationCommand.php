@@ -2,29 +2,42 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel\Command;
 
-use SnowIO\Magento2DataModel\ProductCategoryAssociation;
+use SnowIO\Magento2DataModel\CategoryCodeSet;
 
 final class SaveProductCategoryAssociationCommand extends Command
 {
-    public static function of(ProductCategoryAssociation $productCategoryAssociation)
+    public static function of(string $productSku, CategoryCodeSet $categoryCodes)
     {
-        return new self($productCategoryAssociation);
+        $command = new self;
+        $command->productSku = $productSku;
+        $command->categoryCodes = $categoryCodes;
+        return $command;
     }
 
-    public function getProductCategoryAssociation(): ProductCategoryAssociation
+    public function getProductSku(): string
     {
-        return $this->productCategoryAssociation;
+        return $this->productSku;
+    }
+
+    public function getCategoryCodes(): CategoryCodeSet
+    {
+        return $this->categoryCodes;
     }
 
     public function toJson(): array
     {
-        return parent::toJson() + $this->productCategoryAssociation->toJson();
+        return parent::toJson() + [
+            'productSku' => $this->productSku,
+            'categoryCodes' => $this->categoryCodes->toArray(),
+        ];
     }
 
-    private $productCategoryAssociation;
+    private $productSku;
+    /** @var CategoryCodeSet */
+    private $categoryCodes;
 
-    private function __construct(ProductCategoryAssociation $productCategoryAssociation)
+    private function __construct()
     {
-        $this->productCategoryAssociation = $productCategoryAssociation;
+
     }
 }
