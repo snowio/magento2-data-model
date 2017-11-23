@@ -6,9 +6,17 @@ final class StockItem
 {
     const CODE = 'stock_item';
 
+    public static function create()
+    {
+        return new self;
+    }
+
     public static function of(int $stockId, int $quantity)
     {
-        return new self($stockId, $quantity);
+        return self::create()
+            ->withStockId($stockId)
+            ->withQuantity($quantity)
+            ->withInStock(0 < $quantity);
     }
 
     public static function fromJson(array $json)
@@ -16,13 +24,22 @@ final class StockItem
         $json = $json[self::CODE];
         $stockId = $json['stock_id'];
         $quantity = $json['qty'];
-        $stockItem = new self($stockId, $quantity);
-        return $stockItem;
+        return self::create()
+            ->withStockId($stockId)
+            ->withQuantity($quantity)
+            ->withInStock($quantity > 0);
     }
 
     public function getStockId(): int
     {
         return $this->stockId;
+    }
+
+    public function withStockId(int $stockId): self
+    {
+        $result = clone $this;
+        $result->stockId = $stockId;
+        return $result;
     }
 
     public function getQuantity(): int
@@ -75,10 +92,8 @@ final class StockItem
     private $quantity;
     private $stockId;
 
-    protected function __construct(int $stockId, int $quantity)
+    protected function __construct()
     {
-        $this->stockId = $stockId;
-        $this->quantity = $quantity;
-        $this->isInStock = $quantity > 0;
+
     }
 }
