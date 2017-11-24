@@ -17,7 +17,7 @@ final class CustomAttribute
         return $this->attributeCode;
     }
 
-    public function getValue(): ?string
+    public function getValue()
     {
         return $this->value;
     }
