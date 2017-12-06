@@ -1,12 +1,14 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\Magento2DataModel;
+namespace SnowIO\Magento2DataModel\AttributeSet;
 
-final class FamilyAttributeDataSet implements \IteratorAggregate
+use SnowIO\Magento2DataModel\SetTrait;
+
+final class AttributeDataSet implements \IteratorAggregate
 {
     use SetTrait;
 
-    public function with(FamilyAttributeData $attributeData): self
+    public function with(AttributeData $attributeData): self
     {
         $result = clone $this;
         $key = self::getKey($attributeData);
@@ -14,19 +16,19 @@ final class FamilyAttributeDataSet implements \IteratorAggregate
         return $result;
     }
 
-    public function get(string $key): ?FamilyAttributeData
+    public function get(string $key): ?AttributeData
     {
         return $this->items[$key] ?? null;
     }
 
-    private static function getKey(FamilyAttributeData $attributeData): string
+    private static function getKey(AttributeData $attributeData): string
     {
         return "{$attributeData->getCode()}";
     }
 
     private static function itemsAreEqual(
-        FamilyAttributeData $attributeData,
-        FamilyAttributeData $otherAttributeData
+        AttributeData $attributeData,
+        AttributeData $otherAttributeData
     ): bool
     {
         return $attributeData->equals($otherAttributeData);
@@ -34,8 +36,8 @@ final class FamilyAttributeDataSet implements \IteratorAggregate
 
     public function toJson()
     {
-        return \array_map(function (FamilyAttributeData $familyAttributeData) {
-            return $familyAttributeData->toJson();
+        return \array_map(function (AttributeData $attributeData) {
+            return $attributeData->toJson();
         }, array_values($this->items));
     }
 }

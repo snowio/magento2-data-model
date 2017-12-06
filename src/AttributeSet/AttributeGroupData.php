@@ -1,16 +1,15 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\Magento2DataModel;
+namespace SnowIO\Magento2DataModel\AttributeSet;
 
-final class AttributeGroup
+final class AttributeGroupData
 {
     public static function of(string $code, string $name): self
     {
         $attributeGroup = new self;
         $attributeGroup->code = $code;
-        $attributeGroup->sortOrder = 1;
         $attributeGroup->name = $name;
-        $attributeGroup->attributes = FamilyAttributeDataSet::create();
+        $attributeGroup->attributes = AttributeDataSet::create();
         return $attributeGroup;
     }
 
@@ -43,26 +42,26 @@ final class AttributeGroup
         return $this->sortOrder;
     }
 
-    public function withAttribute(FamilyAttributeData $familyAttributeData): self
+    public function withAttribute(AttributeData $attributeData): self
     {
         $result = clone $this;
-        $result->attributes = $result->attributes->with($familyAttributeData);
+        $result->attributes = $result->attributes->with($attributeData);
         return $result;
     }
 
-    public function getAttribute(string $attributeCode): ?FamilyAttributeData
+    public function getAttribute(string $attributeCode): ?AttributeData
     {
         return $this->attributes->get($attributeCode);
     }
 
-    public function withAttributes(FamilyAttributeDataSet $familyAttributeDataSet): self
+    public function withAttributes(AttributeDataSet $attributeDataSet): self
     {
         $result = clone $this;
-        $result->attributes = $familyAttributeDataSet;
+        $result->attributes = $attributeDataSet;
         return $result;
     }
 
-    public function getAttributes(): FamilyAttributeDataSet
+    public function getAttributes(): AttributeDataSet
     {
         return $this->attributes;
     }
@@ -79,7 +78,7 @@ final class AttributeGroup
 
     public function equals($otherAttributeGroup): bool
     {
-        return $otherAttributeGroup instanceof AttributeGroup &&
+        return $otherAttributeGroup instanceof AttributeGroupData &&
         $otherAttributeGroup->code === $this->code &&
         $otherAttributeGroup->name === $this->name &&
         $otherAttributeGroup->sortOrder === $this->sortOrder &&
@@ -88,8 +87,8 @@ final class AttributeGroup
 
     private $code;
     private $name;
-    private $sortOrder;
-    /** @var FamilyAttributeDataSet $attributes */
+    private $sortOrder = 1;
+    /** @var AttributeDataSet $attributes */
     private $attributes;
 
     private function __construct()

@@ -2,17 +2,24 @@
 declare(strict_types = 1);
 namespace SnowIO\Magento2DataModel;
 
-final class AttributeSet
-{
+use SnowIO\Magento2DataModel\AttributeSet\AttributeGroupData;
+use SnowIO\Magento2DataModel\AttributeSet\AttributeGroupDataSet;
 
-    public static function of(string $code, string $name): self
+final class AttributeSetData
+{
+    public static function of(string $entityTypeCode, string $code, string $name): self
     {
         $result = new self;
+        $result->entityTypeCode = $entityTypeCode;
         $result->code = $code;
         $result->name = $name;
-        $result->entityTypeCode = EntityTypeCode::CATALOG_PRODUCT;
-        $result->attributeGroups = AttributeGroupSet::create();
+        $result->attributeGroups = AttributeGroupDataSet::create();
         return $result;
+    }
+
+    public function getEntityTypeCode(): string
+    {
+        return $this->entityTypeCode;
     }
 
     public function getCode(): string
@@ -32,39 +39,26 @@ final class AttributeSet
         return $this->name;
     }
 
-    public function withEntityTypeCode(string $entityTypeCode): self
-    {
-        EntityTypeCode::validateEntityTypeCode($entityTypeCode);
-        $result = clone $this;
-        $result->entityTypeCode = $entityTypeCode;
-        return $result;
-    }
-
-    public function getEntityTypeCode(): string
-    {
-        return $this->entityTypeCode;
-    }
-
-    public function withAttributeGroup(AttributeGroup $attributeGroup): self
+    public function withAttributeGroup(AttributeGroupData $attributeGroup): self
     {
         $result = clone $this;
         $result->attributeGroups = $result->attributeGroups->with($attributeGroup);
         return $result;
     }
 
-    public function getAttributeGroup(string $attributeGroupCode): ?AttributeGroup
+    public function getAttributeGroup(string $attributeGroupCode): ?AttributeGroupData
     {
         return $this->attributeGroups->get($attributeGroupCode);
     }
 
-    public function withAttributeGroups(AttributeGroupSet $attributeGroups): self
+    public function withAttributeGroups(AttributeGroupDataSet $attributeGroups): self
     {
         $result = clone $this;
         $result->attributeGroups = $attributeGroups;
         return $result;
     }
 
-    public function getAttributeGroups(): AttributeGroupSet
+    public function getAttributeGroups(): AttributeGroupDataSet
     {
         return $this->attributeGroups;
     }
@@ -81,7 +75,7 @@ final class AttributeSet
 
     public function equals($otherAttributeSet): bool
     {
-        return $otherAttributeSet instanceof AttributeSet &&
+        return $otherAttributeSet instanceof AttributeSetData &&
         $otherAttributeSet->code === $this->code &&
         $otherAttributeSet->name === $this->name &&
         $otherAttributeSet->entityTypeCode === $this->entityTypeCode &&
@@ -91,7 +85,7 @@ final class AttributeSet
     private $code;
     private $name;
     private $entityTypeCode;
-    /** @var AttributeGroupSet */
+    /** @var AttributeGroupDataSet */
     private $attributeGroups;
 
     private function __construct()

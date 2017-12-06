@@ -1,12 +1,14 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\Magento2DataModel;
+namespace SnowIO\Magento2DataModel\AttributeSet;
 
-final class AttributeGroupSet implements \IteratorAggregate
+use SnowIO\Magento2DataModel\SetTrait;
+
+final class AttributeGroupDataSet implements \IteratorAggregate
 {
     use SetTrait;
 
-    public function with(AttributeGroup $attributeGroup): self
+    public function with(AttributeGroupData $attributeGroup): self
     {
         $result = clone $this;
         $key = self::getKey($attributeGroup);
@@ -14,19 +16,19 @@ final class AttributeGroupSet implements \IteratorAggregate
         return $result;
     }
 
-    public function get(string $attributeGroupCode): ?AttributeGroup
+    public function get(string $attributeGroupCode): ?AttributeGroupData
     {
         return $this->items[$attributeGroupCode] ?? null;
     }
 
-    private static function getKey(AttributeGroup $attributeGroup): string
+    private static function getKey(AttributeGroupData $attributeGroup): string
     {
         return $attributeGroup->getCode();
     }
 
     private static function itemsAreEqual(
-        AttributeGroup $attributeGroup,
-        AttributeGroup $otherAttributeGroup
+        AttributeGroupData $attributeGroup,
+        AttributeGroupData $otherAttributeGroup
     ): bool
     {
         return $attributeGroup->equals($otherAttributeGroup);
@@ -34,7 +36,7 @@ final class AttributeGroupSet implements \IteratorAggregate
 
     public function toJson(): array
     {
-        return array_map(function (AttributeGroup $attributeGroup) {
+        return array_map(function (AttributeGroupData $attributeGroup) {
             return $attributeGroup->toJson();
         }, array_values($this->items));
     }
