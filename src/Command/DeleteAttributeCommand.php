@@ -2,8 +2,6 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel\Command;
 
-use SnowIO\Magento2DataModel\AttributeData;
-
 final class DeleteAttributeCommand extends Command
 {
     public static function of(string $attributeCode): self
