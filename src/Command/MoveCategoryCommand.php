@@ -3,7 +3,7 @@ namespace SnowIO\Magento2DataModel\Command;
 
 class MoveCategoryCommand extends Command
 {
-    public static function of(string $categoryCode, string $parentCategoryCode): self
+    public static function of(string $categoryCode, ?string $parentCategoryCode): self
     {
         $command = new self;
         $command->categoryCode = $categoryCode;
@@ -16,9 +16,9 @@ class MoveCategoryCommand extends Command
         return $this->categoryCode;
     }
 
-    public function getParentCategoryCode(): string
+    public function getParentCategoryCode(): ?string
     {
-        return $this->categoryCode;
+        return $this->parentCategoryCode;
     }
 
     public function toJson(): array
