@@ -2,12 +2,23 @@
 namespace SnowIO\Magento2DataModel\Transform;
 
 use Joshdifabio\Transform\MapElements;
+use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
 use SnowIO\Magento2DataModel\AttributeOption;
 use SnowIO\Magento2DataModel\Command\SaveAttributeOptionCommand;
 
 final class CreateSaveAttributeOptionCommands
 {
+    public static function fromIterables(): Transform
+    {
+        return Pipeline::of(
+            CreateDiffs::fromIterables(function (AttributeOption $attributeOption) {
+                return \implode(' ', [$attributeOption->getAttributeCode(), $attributeOption->getValue()]);
+            }),
+            self::fromDiffs()
+        );
+    }
+
     public static function fromDiffs(): Transform
     {
         return CreateSaveCommands::fromDiffs(self::fromAttributeOptions());

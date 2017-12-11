@@ -10,6 +10,16 @@ use SnowIO\Magento2DataModel\Command\MoveCategoryCommand;
 
 final class CreateMoveCategoryCommands
 {
+    public static function fromIterables(): Transform
+    {
+        return Pipeline::of(
+            CreateDiffs::fromIterables(function (CategoryData $categoryData) {
+                return \implode(' ', [$categoryData->getCode(), $categoryData->getStoreCode()]);
+            }),
+            self::fromDiffs()
+        );
+    }
+
     public static function fromDiffs(): Transform
     {
         return Pipeline::of(

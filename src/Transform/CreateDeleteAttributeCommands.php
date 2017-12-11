@@ -2,12 +2,23 @@
 namespace SnowIO\Magento2DataModel\Transform;
 
 use Joshdifabio\Transform\MapElements;
+use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
 use SnowIO\Magento2DataModel\AttributeData;
 use SnowIO\Magento2DataModel\Command\DeleteAttributeCommand;
 
 final class CreateDeleteAttributeCommands
 {
+    public static function fromIterables(): Transform
+    {
+        return Pipeline::of(
+            CreateDiffs::fromIterables(function (AttributeData $attributeData) {
+                return $attributeData->getCode();
+            }),
+            self::fromDiffs()
+        );
+    }
+
     public static function fromDiffs(): Transform
     {
         return CreateDeleteCommands::fromDiffs(self::fromAttributeData());
