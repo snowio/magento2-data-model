@@ -24,6 +24,14 @@ final class SaveProductCategoryAssociationCommand extends Command
         return $this->categoryCodes;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->productSku === $object->productSku
+            && $this->categoryCodes->equals($object->categoryCodes)
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [

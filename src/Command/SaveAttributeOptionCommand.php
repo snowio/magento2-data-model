@@ -18,6 +18,13 @@ final class SaveAttributeOptionCommand extends Command
         return $this->attributeOption;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->attributeOption->equals($object->attributeOption)
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + $this->attributeOption->toJson();

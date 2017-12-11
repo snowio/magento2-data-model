@@ -18,6 +18,13 @@ final class SaveCategoryCommand extends Command
         return $this->categoryData;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->categoryData->equals($object->categoryData)
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [

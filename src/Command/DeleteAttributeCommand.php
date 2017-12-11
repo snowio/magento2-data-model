@@ -16,6 +16,13 @@ final class DeleteAttributeCommand extends Command
         return $this->attributeCode;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+        && $this->attributeCode === $object->attributeCode
+        && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [

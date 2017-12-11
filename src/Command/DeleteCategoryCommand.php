@@ -16,6 +16,13 @@ final class DeleteCategoryCommand extends Command
         return $this->categoryCode;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->categoryCode === $object->categoryCode
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [

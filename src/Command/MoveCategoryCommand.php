@@ -21,6 +21,14 @@ class MoveCategoryCommand extends Command
         return $this->parentCategoryCode;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->categoryCode === $object->categoryCode
+            && $this->parentCategoryCode === $object->parentCategoryCode
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [
@@ -31,4 +39,9 @@ class MoveCategoryCommand extends Command
 
     private $categoryCode;
     private $parentCategoryCode;
+
+    private function __construct()
+    {
+
+    }
 }

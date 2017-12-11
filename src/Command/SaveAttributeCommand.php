@@ -18,6 +18,13 @@ final class SaveAttributeCommand extends Command
         return $this->attributeData;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->attributeData->equals($object->attributeData)
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [

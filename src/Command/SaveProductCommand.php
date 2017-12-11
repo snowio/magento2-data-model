@@ -18,6 +18,13 @@ final class SaveProductCommand extends Command
         return $this->productData;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->productData->equals($object->productData)
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [

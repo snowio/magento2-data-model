@@ -40,6 +40,14 @@ abstract class Command
         return $result;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof Command
+        && $this->timestamp === $object->timestamp
+        && $this->commandGroupId === $object->commandGroupId
+        && $this->shardingKey === $object->shardingKey;
+    }
+
     public function toJson(): array
     {
         $json = [];

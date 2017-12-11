@@ -4,7 +4,6 @@ namespace SnowIO\Magento2DataModel\Command;
 
 final class DeleteAttributeOptionCommand extends Command
 {
-    private const PRODUCT = 4;
     public static function of(string $attributeCode, string $optionCode): self
     {
         $deleteAttributeOptionCommand = new self;
@@ -35,6 +34,15 @@ final class DeleteAttributeOptionCommand extends Command
         return $result;
     }
 
+    public function equals($object): bool
+    {
+        return $object instanceof self
+            && $this->entityType === $object->entityType
+            && $this->attributeCode === $object->attributeCode
+            && $this->optionCode === $object->optionCode
+            && parent::equals($object);
+    }
+
     public function toJson(): array
     {
         return parent::toJson() + [
@@ -43,6 +51,8 @@ final class DeleteAttributeOptionCommand extends Command
             'optionCode' => $this->optionCode,
         ];
     }
+
+    private const PRODUCT = 4;
 
     private $attributeCode;
     private $optionCode;
