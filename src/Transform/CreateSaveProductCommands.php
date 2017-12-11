@@ -8,7 +8,7 @@ use SnowIO\Magento2DataModel\Command\SaveProductCommand;
 
 final class CreateSaveProductCommands
 {
-    public static function fromProductDataDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return CreateSaveCommands::fromDiffs(self::fromProductData());
     }

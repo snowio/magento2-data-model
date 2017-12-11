@@ -8,7 +8,7 @@ use SnowIO\Magento2DataModel\Command\DeleteProductCommand;
 
 final class CreateDeleteProductCommands
 {
-    public static function fromProductDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return CreateDeleteCommands::fromDiffs(self::fromProductData());
     }

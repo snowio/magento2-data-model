@@ -8,7 +8,7 @@ use SnowIO\Magento2DataModel\Command\SaveCategoryCommand;
 
 final class CreateSaveCategoryCommands
 {
-    public static function fromCategoryDataDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return CreateSaveCommands::fromDiffs(self::fromCategoryData());
     }

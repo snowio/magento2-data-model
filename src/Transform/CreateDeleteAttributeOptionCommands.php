@@ -8,7 +8,7 @@ use SnowIO\Magento2DataModel\Command\DeleteAttributeOptionCommand;
 
 final class CreateDeleteAttributeOptionCommands
 {
-    public static function fromAttributeOptionDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return CreateDeleteCommands::fromDiffs(self::fromAttributeOptions());
     }

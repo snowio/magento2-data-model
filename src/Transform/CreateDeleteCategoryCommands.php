@@ -8,7 +8,7 @@ use SnowIO\Magento2DataModel\Command\DeleteCategoryCommand;
 
 final class CreateDeleteCategoryCommands
 {
-    public static function fromCategoryDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return CreateDeleteCommands::fromDiffs(self::fromCategoryData());
     }

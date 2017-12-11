@@ -8,7 +8,7 @@ use SnowIO\Magento2DataModel\Command\SaveAttributeCommand;
 
 final class CreateSaveAttributeCommands
 {
-    public static function fromAttributeDataDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return CreateSaveCommands::fromDiffs(self::fromAttributeData());
     }

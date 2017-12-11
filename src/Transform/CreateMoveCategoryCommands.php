@@ -10,7 +10,7 @@ use SnowIO\Magento2DataModel\Command\MoveCategoryCommand;
 
 final class CreateMoveCategoryCommands
 {
-    public static function fromCategoryDiffs(): Transform
+    public static function fromDiffs(): Transform
     {
         return Pipeline::of(
             Filter::by(function (Diff $diff) {
