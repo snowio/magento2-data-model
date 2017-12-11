@@ -2,7 +2,9 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel\Command;
 
-abstract class Command
+use SnowIO\Magento2DataModel\ValueObject;
+
+abstract class Command implements ValueObject
 {
     public function getTimestamp(): ?float
     {

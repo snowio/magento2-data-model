@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-class ExtensionAttribute
+class ExtensionAttribute implements ValueObject
 {
     public static function of(string $code, $value)
     {

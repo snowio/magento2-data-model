@@ -2,7 +2,9 @@
 declare(strict_types = 1);
 namespace SnowIO\Magento2DataModel\AttributeSet;
 
-final class AttributeGroupData
+use SnowIO\Magento2DataModel\ValueObject;
+
+final class AttributeGroupData implements ValueObject
 {
     public static function of(string $code, string $name): self
     {

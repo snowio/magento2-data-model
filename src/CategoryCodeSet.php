@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class CategoryCodeSet implements \IteratorAggregate
+final class CategoryCodeSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait {
         overlaps as private;

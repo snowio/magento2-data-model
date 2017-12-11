@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class CustomAttribute
+final class CustomAttribute implements ValueObject
 {
     public static function of(string $attributeCode, $value): self
     {

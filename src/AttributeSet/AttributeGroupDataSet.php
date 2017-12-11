@@ -3,8 +3,9 @@ declare(strict_types = 1);
 namespace SnowIO\Magento2DataModel\AttributeSet;
 
 use SnowIO\Magento2DataModel\SetTrait;
+use SnowIO\Magento2DataModel\ValueObject;
 
-final class AttributeGroupDataSet implements \IteratorAggregate
+final class AttributeGroupDataSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait;
 

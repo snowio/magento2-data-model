@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class ProductData
+final class ProductData implements ValueObject
 {
     use EavEntityTrait;
 

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class StockItem
+final class StockItem implements ValueObject
 {
     const CODE = 'stock_item';
 

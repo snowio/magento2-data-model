@@ -5,7 +5,7 @@ namespace SnowIO\Magento2DataModel;
 use SnowIO\Magento2DataModel\Command\DeleteProductCommand;
 use SnowIO\Magento2DataModel\Command\SaveProductCommand;
 
-final class ProductDataSet implements \IteratorAggregate
+final class ProductDataSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait;
 

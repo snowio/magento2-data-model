@@ -5,7 +5,7 @@ namespace SnowIO\Magento2DataModel;
 use SnowIO\Magento2DataModel\Command\DeleteCategoryCommand;
 use SnowIO\Magento2DataModel\Command\SaveCategoryCommand;
 
-final class CategoryDataSet implements \IteratorAggregate
+final class CategoryDataSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait;
 

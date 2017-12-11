@@ -5,7 +5,7 @@ namespace SnowIO\Magento2DataModel;
 use SnowIO\Magento2DataModel\Command\DeleteAttributeOptionCommand;
 use SnowIO\Magento2DataModel\Command\SaveAttributeOptionCommand;
 
-final class AttributeOptionSet implements \IteratorAggregate
+final class AttributeOptionSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait;
 

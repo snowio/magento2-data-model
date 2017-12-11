@@ -5,7 +5,7 @@ namespace SnowIO\Magento2DataModel;
 use SnowIO\Magento2DataModel\AttributeSet\AttributeGroupData;
 use SnowIO\Magento2DataModel\AttributeSet\AttributeGroupDataSet;
 
-final class AttributeSetData
+final class AttributeSetData implements ValueObject
 {
     public static function of(string $entityTypeCode, string $code, string $name): self
     {

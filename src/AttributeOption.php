@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
-final class AttributeOption
+final class AttributeOption implements ValueObject
 {
     private const PRODUCT_ENTITY_TYPE = 4;
 

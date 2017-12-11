@@ -12,5 +12,8 @@
         "psr-4": {
             "SnowIO\\Magento2DataModel\\Test\\": "test/unit"
         }
+    },
+    "require": {
+        "joshdifabio/transform": "^0.1.0"
     }
 }
