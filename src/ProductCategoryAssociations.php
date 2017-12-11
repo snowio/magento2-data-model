@@ -1,17 +1,14 @@
 <?php
-declare(strict_types=1);
-namespace SnowIO\Magento2DataModel\Command;
+namespace SnowIO\Magento2DataModel;
 
-use SnowIO\Magento2DataModel\CategoryCodeSet;
-
-final class SaveProductCategoryAssociationCommand extends Command
+final class ProductCategoryAssociations implements ValueObject
 {
-    public static function of(string $productSku, CategoryCodeSet $categoryCodes)
+    public static function of(string $productSku, CategoryCodeSet $categoryCodes): self
     {
-        $command = new self;
-        $command->productSku = $productSku;
-        $command->categoryCodes = $categoryCodes;
-        return $command;
+        $productCategoryAssociations = new self;
+        $productCategoryAssociations->productSku = $productSku;
+        $productCategoryAssociations->categoryCodes = $categoryCodes;
+        return $productCategoryAssociations;
     }
 
     public function getProductSku(): string
@@ -28,13 +25,12 @@ final class SaveProductCategoryAssociationCommand extends Command
     {
         return $object instanceof self
             && $this->productSku === $object->productSku
-            && $this->categoryCodes->equals($object->categoryCodes)
-            && parent::equals($object);
+            && $this->categoryCodes->equals($object->categoryCodes);
     }
 
     public function toJson(): array
     {
-        return parent::toJson() + [
+        return [
             'productSku' => $this->productSku,
             'categoryCodes' => $this->categoryCodes->toArray(),
         ];
