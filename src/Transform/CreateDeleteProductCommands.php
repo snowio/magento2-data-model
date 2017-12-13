@@ -1,6 +1,7 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
+use Joshdifabio\Transform\Distinct;
 use Joshdifabio\Transform\MapElements;
 use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
@@ -12,29 +13,30 @@ final class CreateDeleteProductCommands
     public static function fromIterables(): Transform
     {
         return Pipeline::of(
-            CreateDiffs::fromIterables(function (ProductData $productData) {
-                return \implode(' ', [$productData->getSku(), $productData->getStoreCode()]);
+            GetDeletedItems::fromIterables(function (ProductData $productData) {
+                return $productData->getSku();
             }),
-            self::fromDiffs()
+            self::fromProductData()
         );
-    }
-
-    public static function fromDiffs(): Transform
-    {
-        return CreateDeleteCommands::fromDiffs(self::fromProductData());
     }
 
     public static function fromProductData(): Transform
     {
-        return MapElements::via(function (ProductData $previousProductData) {
-            return DeleteProductCommand::of($previousProductData->getSku());
-        });
+        return Pipeline::of(
+            MapElements::via(function (ProductData $previousProductData) {
+                return $previousProductData->getSku();
+            }),
+            self::fromSkus()
+        );
     }
 
     public static function fromSkus(): Transform
     {
-        return MapElements::via(function (string $sku) {
-            return DeleteProductCommand::of($sku);
-        });
+        return Pipeline::of(
+            Distinct::create(),
+            MapElements::via(function (string $productSku) {
+                return DeleteProductCommand::of($productSku);
+            })
+        );
     }
 }

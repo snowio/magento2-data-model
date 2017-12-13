@@ -1,6 +1,7 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
+use Joshdifabio\Transform\Distinct;
 use Joshdifabio\Transform\MapElements;
 use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
@@ -12,29 +13,30 @@ final class CreateDeleteCategoryCommands
     public static function fromIterables(): Transform
     {
         return Pipeline::of(
-            CreateDiffs::fromIterables(function (CategoryData $categoryData) {
-                return \implode(' ', [$categoryData->getCode(), $categoryData->getStoreCode()]);
+            GetDeletedItems::fromIterables(function (CategoryData $categoryData) {
+                return $categoryData->getCode();
             }),
-            self::fromDiffs()
+            self::fromCategoryData()
         );
-    }
-
-    public static function fromDiffs(): Transform
-    {
-        return CreateDeleteCommands::fromDiffs(self::fromCategoryData());
     }
 
     public static function fromCategoryData(): Transform
     {
-        return MapElements::via(function (CategoryData $previousCategoryData) {
-            return DeleteCategoryCommand::of($previousCategoryData->getCode());
-        });
+        return Pipeline::of(
+            MapElements::via(function (CategoryData $previousCategoryData) {
+                return $previousCategoryData->getCode();
+            }),
+            self::fromCategoryCodes()
+        );
     }
 
     public static function fromCategoryCodes(): Transform
     {
-        return MapElements::via(function (string $attributeCode) {
-            return DeleteCategoryCommand::of($attributeCode);
-        });
+        return Pipeline::of(
+            Distinct::create(),
+            MapElements::via(function (string $attributeCode) {
+                return DeleteCategoryCommand::of($attributeCode);
+            })
+        );
     }
 }

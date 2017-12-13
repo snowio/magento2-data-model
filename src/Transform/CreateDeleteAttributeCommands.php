@@ -1,6 +1,7 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
+use Joshdifabio\Transform\Distinct;
 use Joshdifabio\Transform\MapElements;
 use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
@@ -12,29 +13,30 @@ final class CreateDeleteAttributeCommands
     public static function fromIterables(): Transform
     {
         return Pipeline::of(
-            CreateDiffs::fromIterables(function (AttributeData $attributeData) {
+            GetDeletedItems::fromIterables(function (AttributeData $attributeData) {
                 return $attributeData->getCode();
             }),
-            self::fromDiffs()
+            self::fromAttributeData()
         );
-    }
-
-    public static function fromDiffs(): Transform
-    {
-        return CreateDeleteCommands::fromDiffs(self::fromAttributeData());
     }
 
     public static function fromAttributeData(): Transform
     {
-        return MapElements::via(function (AttributeData $attributeData) {
-            return DeleteAttributeCommand::of($attributeData->getCode());
-        });
+        return Pipeline::of(
+            MapElements::via(function (AttributeData $previousAttributeData) {
+                return $previousAttributeData->getCode();
+            }),
+            self::fromAttributeCodes()
+        );
     }
 
     public static function fromAttributeCodes(): Transform
     {
-        return MapElements::via(function (string $attributeCode) {
-            return DeleteAttributeCommand::of($attributeCode);
-        });
+        return Pipeline::of(
+            Distinct::create(),
+            MapElements::via(function (string $attributeCode) {
+                return DeleteAttributeCommand::of($attributeCode);
+            })
+        );
     }
 }

@@ -2,15 +2,12 @@
 namespace SnowIO\Magento2DataModel\Transform;
 
 use Joshdifabio\Transform\Filter;
-use Joshdifabio\Transform\FluentTransformTrait;
 use Joshdifabio\Transform\MapElements;
 use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
 
 final class CreateSaveCommands
 {
-    use FluentTransformTrait;
-
     public static function fromDiffs(Transform $mapDataToCommands): Transform
     {
         return Pipeline::of(
