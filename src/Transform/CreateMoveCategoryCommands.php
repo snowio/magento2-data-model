@@ -1,8 +1,10 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
+use Joshdifabio\Transform\Distinct;
 use Joshdifabio\Transform\Filter;
 use Joshdifabio\Transform\MapElements;
+use Joshdifabio\Transform\MapValues;
 use Joshdifabio\Transform\Pipeline;
 use Joshdifabio\Transform\Transform;
 use SnowIO\Magento2DataModel\CategoryData;
@@ -12,10 +14,15 @@ final class CreateMoveCategoryCommands
 {
     public static function fromIterables(): Transform
     {
+        $getKeyFn = function (CategoryData $categoryData) {
+            return $categoryData->getCode();
+        };
+
         return Pipeline::of(
-            CreateDiffs::fromIterables(function (CategoryData $categoryData) {
-                return \implode(' ', [$categoryData->getCode(), $categoryData->getStoreCode()]);
+            MapValues::via(function ($iterable) use ($getKeyFn) {
+                return Distinct::withRepresentativeValueFn($getKeyFn)->applyTo($iterable);
             }),
+            CreateDiffs::fromIterables($getKeyFn),
             self::fromDiffs()
         );
     }
