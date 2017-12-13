@@ -15,7 +15,7 @@ final class CreateSaveCommands
     {
         return Pipeline::of(
             Filter::by(function (Diff $diff) {
-                return $diff->getType() === Diff::CHANGE && $diff->getType() === Diff::CREATION;
+                return $diff->getType() === Diff::CHANGE || $diff->getType() === Diff::CREATION;
             }),
             MapElements::via(function (Diff $diff) {
                 return $diff->getCurrentData();

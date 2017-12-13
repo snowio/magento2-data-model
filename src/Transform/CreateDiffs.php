@@ -47,7 +47,7 @@ final class CreateDiffs implements Transform
             })
         );
 
-        return $pipeline->applyTo([Kv::of('previous', $previous), Kv::of('previous', $current)]);
+        return $pipeline->applyTo([Kv::of('previous', $previous), Kv::of('current', $current)]);
     }
 
     use FluentTransformTrait;
