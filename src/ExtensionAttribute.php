@@ -28,8 +28,9 @@ class ExtensionAttribute implements ValueObject
 
     public function equals($extensionAttribute): bool
     {
-        return $extensionAttribute instanceof ExtensionAttribute &&
-            ($extensionAttribute->code === $this->code);
+        return $extensionAttribute instanceof ExtensionAttribute
+            && $extensionAttribute->code === $this->code
+            && $extensionAttribute->value === $this->value;
     }
 
     private $code;
