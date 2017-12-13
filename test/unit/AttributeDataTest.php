@@ -19,6 +19,7 @@ class AttributeDataTest extends TestCase
             'is_required' => false,
             'frontend_input' => 'text',
             'default_frontend_label' => 'Diameter',
+            'scope' => AttributeScope::GLOBAL,
         ], $attribute->toJson());
     }
 

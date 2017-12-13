@@ -73,6 +73,7 @@ final class AttributeData implements ValueObject
             'is_required' => $this->isRequired,
             'frontend_input' => $this->frontendInput,
             'default_frontend_label' => $this->defaultFrontendLabel,
+            'scope' => $this->scope,
         ];
     }
 
