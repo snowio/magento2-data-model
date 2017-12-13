@@ -5,6 +5,7 @@ namespace SnowIO\Magento2DataModel\Test;
 
 use SnowIO\Magento2DataModel\Command\SaveProductCategoryAssociationsCommand;
 use SnowIO\Magento2DataModel\CategoryCodeSet;
+use SnowIO\Magento2DataModel\ProductCategoryAssociations;
 
 class SaveProductCategoryAssociationCommandTest extends CommandTest
 {
@@ -12,7 +13,8 @@ class SaveProductCategoryAssociationCommandTest extends CommandTest
     public function testToJson()
     {
         $time = time();
-        $command = SaveProductCategoryAssociationsCommand::of('test-product', CategoryCodeSet::of(['category1']))
+        $associations = ProductCategoryAssociations::of('test-product', CategoryCodeSet::of(['category1']));
+        $command = SaveProductCategoryAssociationsCommand::of($associations)
             ->withTimestamp($time);
         self::assertEquals([
             'productSku' => 'test-product',
@@ -23,7 +25,8 @@ class SaveProductCategoryAssociationCommandTest extends CommandTest
 
     public function testAccessors()
     {
-        $command = SaveProductCategoryAssociationsCommand::of('test-product', CategoryCodeSet::of(['category1']));
+        $associations = ProductCategoryAssociations::of('test-product', CategoryCodeSet::of(['category1']));
+        $command = SaveProductCategoryAssociationsCommand::of($associations);
         self::assertSame('test-product', $command->getProductSku());
         self::assertTrue($command->getCategoryCodes()->equals(CategoryCodeSet::of(['category1'])));
     }
