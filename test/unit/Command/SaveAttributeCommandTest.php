@@ -4,6 +4,7 @@ namespace SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\AttributeData;
+use SnowIO\Magento2DataModel\AttributeScope;
 use SnowIO\Magento2DataModel\Command\SaveAttributeCommand;
 use SnowIO\Magento2DataModel\FrontendInput;
 
@@ -22,6 +23,7 @@ class SaveAttributeCommandTest extends TestCase
                 'is_required' => false,
                 'frontend_input' => 'text',
                 'default_frontend_label' => 'Volume',
+                'scope' => AttributeScope::GLOBAL,
             ],
         ], $command->toJson());
     }
