@@ -11,7 +11,7 @@ final class DeleteAttributeOptionCommand extends Command
         $deleteAttributeOptionCommand->optionCode = $optionCode;
         return $deleteAttributeOptionCommand
             ->withCommandGroupId("attribute_option.product.$attributeCode.$optionCode")
-            ->withShardingKey($optionCode);
+            ->withShardingKey($attributeCode);
     }
 
     public function getAttributeCode(): string

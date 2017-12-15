@@ -12,7 +12,7 @@ final class SaveAttributeOptionCommand extends Command
         $saveAttributeOptionCommand->attributeOption = $attributeOption;
         return $saveAttributeOptionCommand
             ->withCommandGroupId("attribute_option.product.{$attributeOption->getAttributeCode()}.{$attributeOption->getValue()}")
-            ->withShardingKey($attributeOption->getValue());
+            ->withShardingKey($attributeOption->getAttributeCode());
     }
 
     public function getAttributeOption(): AttributeOption
