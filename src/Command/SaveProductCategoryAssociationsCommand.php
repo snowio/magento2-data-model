@@ -11,7 +11,9 @@ final class SaveProductCategoryAssociationsCommand extends Command
     {
         $command = new self;
         $command->data = $data;
-        return $command;
+        return $command
+            ->withCommandGroupId("product.categories.{$data->getProductSku()}")
+            ->withShardingKey($data->getProductSku());
     }
 
     public function getProductSku(): string

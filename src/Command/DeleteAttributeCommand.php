@@ -8,7 +8,9 @@ final class DeleteAttributeCommand extends Command
     {
         $result = new self;
         $result->attributeCode = $attributeCode;
-        return $result;
+        return $result
+            ->withCommandGroupId("attribute.product.$attributeCode")
+            ->withShardingKey($attributeCode);
     }
 
     public function getAttributeCode(): string

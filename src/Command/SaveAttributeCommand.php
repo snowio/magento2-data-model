@@ -10,7 +10,9 @@ final class SaveAttributeCommand extends Command
     {
         $command = new self;
         $command->attributeData = $attributeData;
-        return $command;
+        return $command
+            ->withCommandGroupId("attribute.product.{$attributeData->getCode()}")
+            ->withShardingKey($attributeData->getCode());
     }
 
     public function getAttributeData(): AttributeData

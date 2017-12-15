@@ -10,7 +10,9 @@ final class SaveProductCommand extends Command
     {
         $command = new self;
         $command->productData = $productData;
-        return $command;
+        return $command
+            ->withCommandGroupId("product.{$productData->getSku()}")
+            ->withShardingKey($productData->getSku());
     }
 
     public function getProductData(): ProductData

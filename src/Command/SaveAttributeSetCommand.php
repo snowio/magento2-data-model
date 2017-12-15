@@ -9,8 +9,9 @@ class SaveAttributeSetCommand extends Command
     {
         $command = new self;
         $command->attributeSetData = $attributeSetData;
-        $commandGroupId = "attribute_set.{$attributeSetData->getEntityTypeCode()}.{$attributeSetData->getCode()}";
-        return $command->withCommandGroupId($commandGroupId);
+        return $command
+            ->withCommandGroupId("attribute_set.{$attributeSetData->getEntityTypeCode()}.{$attributeSetData->getCode()}")
+            ->withShardingKey($attributeSetData->getCode());
     }
 
     public function getAttributeSetData(): AttributeSetData

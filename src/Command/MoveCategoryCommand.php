@@ -8,7 +8,9 @@ class MoveCategoryCommand extends Command
         $command = new self;
         $command->categoryCode = $categoryCode;
         $command->parentCategoryCode = $parentCategoryCode;
-        return $command;
+        return $command
+            ->withCommandGroupId("category.$categoryCode")
+            ->withShardingKey($categoryCode);
     }
 
     public function getCategoryCode(): string

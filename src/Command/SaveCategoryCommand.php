@@ -10,7 +10,9 @@ final class SaveCategoryCommand extends Command
     {
         $result = new self;
         $result->categoryData = $categoryData;
-        return $result;
+        return $result
+            ->withCommandGroupId("category.{$categoryData->getCode()}")
+            ->withShardingKey($categoryData->getCode());
     }
 
     public function getCategoryData(): CategoryData

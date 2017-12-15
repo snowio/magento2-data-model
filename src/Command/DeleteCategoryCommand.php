@@ -8,7 +8,9 @@ final class DeleteCategoryCommand extends Command
     {
         $deleteCategoryCommand = new self;
         $deleteCategoryCommand->categoryCode = $categoryCode;
-        return $deleteCategoryCommand;
+        return $deleteCategoryCommand
+            ->withCommandGroupId("category.$categoryCode")
+            ->withShardingKey($categoryCode);
     }
 
     public function getCategoryCode(): string

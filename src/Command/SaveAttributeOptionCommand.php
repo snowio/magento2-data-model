@@ -10,7 +10,9 @@ final class SaveAttributeOptionCommand extends Command
     {
         $saveAttributeOptionCommand = new self;
         $saveAttributeOptionCommand->attributeOption = $attributeOption;
-        return $saveAttributeOptionCommand;
+        return $saveAttributeOptionCommand
+            ->withCommandGroupId("attribute_option.product.{$attributeOption->getAttributeCode()}.{$attributeOption->getValue()}")
+            ->withShardingKey($attributeOption->getValue());
     }
 
     public function getAttributeOption(): AttributeOption

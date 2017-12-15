@@ -8,7 +8,9 @@ final class DeleteProductCommand extends Command
     {
         $deleteProductCommand = new self;
         $deleteProductCommand->sku = $sku;
-        return $deleteProductCommand;
+        return $deleteProductCommand
+            ->withCommandGroupId("product.$sku")
+            ->withShardingKey($sku);
     }
 
     public function getSku(): string
