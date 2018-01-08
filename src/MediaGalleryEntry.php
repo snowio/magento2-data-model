@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace SnowIO\Magento2DataModel;
 
 final class MediaGalleryEntry implements ValueObject
@@ -6,13 +7,19 @@ final class MediaGalleryEntry implements ValueObject
 
     private $mediaType;
     private $label;
-    private $position;
-    private $disabled;
-    private $types;
-    private $file;
+    private $types = [];
+    private $file = "";
+    private $disabled = false;
+    private $position = 0;
     /**
      * TODO add content and extention_attributes
      */
+
+    public static function of(string $mediaType, string $label)
+    {
+        $mediaGalleryEntry = new self($mediaType, $label);
+        return $mediaGalleryEntry;
+    }
 
     public function getMediaType(): string
     {
@@ -44,62 +51,56 @@ final class MediaGalleryEntry implements ValueObject
         return $this->file;
     }
 
-    public function withFile($file): self
+    public function withFile(string $file): self
     {
         $result = clone $this;
         $result->file = $file;
         return $result;
     }
 
-    public function withTypes($types): self
+    public function withTypes(array $types): self
     {
         $result = clone $this;
-        $result->$types = $types;
+        $result->types = $types;
         return $result;
     }
 
-    public function withDisabled($disabled): self
+    public function withDisabled(bool $disabled): self
     {
         $result = clone $this;
         $result->disabled = $disabled;
         return $result;
     }
 
-    public function withPosition($position): self
+    public function withPosition(int $position): self
     {
         $result = clone $this;
-        $result->position= $position;
+        $result->position = $position;
         return $result;
     }
 
-    public function withLabel($label): self
+    public function withLabel(string $label): self
     {
         $result = clone $this;
         $result->label = $label;
         return $result;
     }
 
-    public function withMediaType($mediaType): self
+    public function withMediaType(string $mediaType): self
     {
         $result = clone $this;
         $result->mediaType = $mediaType;
         return $result;
     }
 
-    public static function create()
-    {
-        return new self;
-    }
-
     public function equals($object): bool
     {
         return ($object instanceof MediaGalleryEntry) &&
-            ($this->getDisabled() === $object->getDisabled()) &&
-            ($this->getFile() === $object->getFile()) &&
-            ($this->getLabel() === $object->getLabel()) &&
-            ($this->getPosition() === $object->getPosition()) &&
-            ($this->getMediaType() === $object->getMediaType()) &&
-            ($this->getTypes() === $object->getTypes());
+            ($this->disabled === $object->disabled) &&
+            ($this->file === $object->file) &&
+            ($this->label === $object->label) &&
+            ($this->position === $object->position) &&
+            (empty(array_diff($this->types, $object->types)) && empty(array_diff($object->types, $this->types)));
     }
 
     public function fromJson($json): MediaGalleryEntry
@@ -128,35 +129,9 @@ final class MediaGalleryEntry implements ValueObject
         return $json;
     }
 
-}
-
-/**
- *
-"media_gallery_entries": [
-{
-    "id": 0,
-    "media_type": "string",
-    "label": "string",
-    "position": 0,
-    "disabled": true,
-    "types": [
-        "string"
-    ],
-    "file": "string",
-    "content": {
-        "base64_encoded_data": "string",
-        "type": "string",
-        "name": "string"
-    },
-    "extension_attributes": {
-        "video_content": {
-        "media_type": "string",
-        "video_provider": "string",
-        "video_url": "string",
-        "video_title": "string",
-        "video_description": "string",
-        "video_metadata": "string"
+    private function __construct(string $mediaType, string $label)
+    {
+        $this->mediaType = $mediaType;
+        $this->label = $label;
     }
 }
-
- */
