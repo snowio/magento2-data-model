@@ -46,7 +46,7 @@ final class MediaGalleryEntry implements ValueObject
         return $this->types;
     }
 
-    public function getFile(): string
+    public function getFile(): ?string
     {
         return $this->file;
     }
@@ -125,7 +125,7 @@ final class MediaGalleryEntry implements ValueObject
         ];
 
         if ($this->file !== null) {
-            $json['file'] = $this->file
+            $json['file'] = $this->file;
         }
 
         return $json;
