@@ -8,7 +8,7 @@ final class MediaGalleryEntry implements ValueObject
     private $mediaType;
     private $label;
     private $types = [];
-    private $file = "";
+    private $file = null;
     private $disabled = false;
     private $position = 0;
     /**
@@ -122,9 +122,11 @@ final class MediaGalleryEntry implements ValueObject
             'position' => $this->position,
             'disabled' => $this->disabled,
             'types' => $this->types,
-            'file' => $this->file,
-
         ];
+
+        if ($this->file !== null) {
+            $json['file'] = $this->file
+        }
 
         return $json;
     }
