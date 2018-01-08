@@ -10,9 +10,12 @@ class DeleteCategoryCommandTest extends TestCase
     public function testToJson()
     {
         /** @var DeleteCategoryCommand $command */
-        $command = DeleteCategoryCommand::of('mens_tshirt');
+        $command = DeleteCategoryCommand::of('mens_tshirts')->withTimestamp(123);
         self::assertEquals([
-            'categoryCode' => 'mens_tshirt',
+            '@timestamp' => (float)123,
+            '@shardingKey' => 'mens_tshirts',
+            '@commandGroupId' => 'category.mens_tshirts',
+            'categoryCode' => 'mens_tshirts',
         ], $command->toJson());
     }
 

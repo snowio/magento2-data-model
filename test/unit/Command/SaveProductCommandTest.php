@@ -15,6 +15,8 @@ class SaveProductCommandTest extends TestCase
         $command = SaveProductCommand::of(ProductData::of('test-product', 'Test Product'));
         self::assertEquals([
             '@store' => 'admin',
+            '@shardingKey' => 'test-product',
+            '@commandGroupId' => 'product.test-product',
             'sku' => 'test-product',
             'product' => [
                 'sku' => 'test-product',

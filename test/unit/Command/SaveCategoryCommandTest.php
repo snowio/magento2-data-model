@@ -12,9 +12,13 @@ class SaveCategoryCommandTest extends TestCase
     {
         /** @var SaveCategoryCommand $command */
         $command = SaveCategoryCommand::of(CategoryData::of('mens_tshirts', 'Mens T-Shirts')
-            ->withParentCode('t_shirts'));
+            ->withParentCode('t_shirts'))
+            ->withTimestamp(123);
         self::assertEquals([
             '@store' => 'admin',
+            '@timestamp' => (float)123,
+            '@shardingKey' => 'mens_tshirts',
+            '@commandGroupId' => 'category.mens_tshirts',
             'category' => [
                 'name' => 'Mens T-Shirts',
                 'is_active' => true,

@@ -10,8 +10,13 @@ class DeleteProductCommandTest extends TestCase
 
     public function testToJson()
     {
-        $command = DeleteProductCommand::of('test-product');
-        self::assertEquals(['sku' => 'test-product'], $command->toJson());
+        $command = DeleteProductCommand::of('test-product')->withTimestamp(123);
+        self::assertEquals([
+            '@timestamp' => (float)123,
+            '@shardingKey' => 'test-product',
+            '@commandGroupId' => 'product.test-product',
+            'sku' => 'test-product',
+        ], $command->toJson());
     }
 
     public function testAccessors()

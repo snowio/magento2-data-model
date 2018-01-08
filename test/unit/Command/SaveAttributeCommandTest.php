@@ -16,8 +16,9 @@ class SaveAttributeCommandTest extends TestCase
         ->withTimestamp(1509530316)
         ->withShardingKey('volume');
         self::assertEquals([
-            '@timestamp' => 1509530316,
+            '@timestamp' => (float)1509530316,
             '@shardingKey' => 'volume',
+            '@commandGroupId' => 'attribute.product.volume',
             'attribute' => [
                 'attribute_code' => 'volume',
                 'is_required' => false,
