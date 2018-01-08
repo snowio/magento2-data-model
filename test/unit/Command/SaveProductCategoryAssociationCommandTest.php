@@ -17,9 +17,11 @@ class SaveProductCategoryAssociationCommandTest extends CommandTest
         $command = SaveProductCategoryAssociationsCommand::of($associations)
             ->withTimestamp($time);
         self::assertEquals([
+            '@timestamp' => (float)$time,
+            '@shardingKey' => 'test-product',
+            '@commandGroupId' => 'product.categories.test-product',
             'productSku' => 'test-product',
             'categoryCodes' => ['category1'],
-            '@timestamp' => $time,
         ], $command->toJson());
     }
 

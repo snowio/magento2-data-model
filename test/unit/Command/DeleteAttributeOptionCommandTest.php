@@ -9,8 +9,11 @@ class DeleteAttributeOptionCommandTest extends TestCase
 {
     public function testToJson()
     {
-        $command = DeleteAttributeOptionCommand::of('size', 'large');
+        $command = DeleteAttributeOptionCommand::of('size', 'large')->withTimestamp(1509530316);
         self::assertEquals([
+            '@timestamp' => (float)1509530316,
+            '@shardingKey' => 'size',
+            '@commandGroupId' => 'attribute_option.product.size.large',
             'entityType' => 4,
             'attributeCode' => 'size',
             'optionCode' => 'large',

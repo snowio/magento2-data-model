@@ -14,8 +14,9 @@ class DeleteAttributeCommandTest extends TestCase
             ->withShardingKey('volume');
 
         self::assertEquals([
+            '@timestamp' => (float)1509530316,
             '@shardingKey' => 'volume',
-            '@timestamp' => 1509530316,
+            '@commandGroupId' => 'attribute.product.volume',
             'attributeCode' => 'volume',
         ], $command->toJson());
     }
