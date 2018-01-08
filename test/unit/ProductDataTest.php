@@ -30,7 +30,8 @@ class ProductDataTest extends TestCase
             'extension_attributes' => [
                 'attribute_set_code' => 'default'
             ],
-            'custom_attributes' => []
+            'custom_attributes' => [],
+            'media_gallery_entries' => [],
         ], $product->toJson());
     }
 
@@ -45,6 +46,7 @@ class ProductDataTest extends TestCase
         self::assertEquals(ProductTypeId::SIMPLE, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
         self::assertTrue(($product->getCustomAttributes())->isEmpty());
+        self::assertTrue(($product->getMediaGalleryEntries())->isEmpty());
     }
 
     /**
