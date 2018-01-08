@@ -28,7 +28,8 @@ class SaveProductCommandTest extends TestCase
                 'extension_attributes' => [
                     'attribute_set_code' => 'default'
                 ],
-                'custom_attributes' => []
+                'custom_attributes' => [],
+                'media_gallery_entries' => [],
             ]
         ], $command->toJson());
     }
