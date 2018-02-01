@@ -18,24 +18,6 @@ final class StockItem implements ValueObject
             ->withQuantity($quantity);
     }
 
-    public static function fromJson(array $json)
-    {
-        $json = $json[self::CODE];
-        $stockItem = self::create()
-            ->withStockId($json['stock_id'])
-            ->withQuantity($json['qty']);
-        if (isset($json['is_in_stock'])) {
-            $stockItem = $stockItem->withInStock($json['is_in_stock']);
-        }
-        if (isset($json['manage_stock'])) {
-            $stockItem = $stockItem->withManageStock($json['manage_stock']);
-        }
-        if (isset($json['use_config_manage_stock'])) {
-            $stockItem = $stockItem->withUseConfigManageStock($json['use_config_manage_stock']);
-        }
-        return $stockItem;
-    }
-
     public function getStockId(): int
     {
         return $this->stockId;
@@ -106,6 +88,24 @@ final class StockItem implements ValueObject
             ($this->useConfigManageStock === $extensionAttribute->useConfigManageStock);
     }
 
+    public static function fromJson(array $json)
+    {
+        $json = $json[self::CODE];
+        $stockItem = self::create()
+            ->withStockId($json['stock_id'])
+            ->withQuantity($json['qty']);
+        if (isset($json['is_in_stock'])) {
+            $stockItem = $stockItem->withInStock($json['is_in_stock']);
+        }
+        if (isset($json['manage_stock'])) {
+            $stockItem = $stockItem->withManageStock($json['manage_stock']);
+        }
+        if (isset($json['use_config_manage_stock'])) {
+            $stockItem = $stockItem->withUseConfigManageStock($json['use_config_manage_stock']);
+        }
+        return $stockItem;
+    }
+
     public function toJson(): array
     {
         $json = [
@@ -129,11 +129,11 @@ final class StockItem implements ValueObject
         return ExtensionAttribute::of(self::CODE, $this->toJson());
     }
 
+    private $stockId;
+    private $quantity;
     private $isInStock;
     private $manageStock;
     private $useConfigManageStock;
-    private $quantity;
-    private $stockId;
 
     protected function __construct()
     {
