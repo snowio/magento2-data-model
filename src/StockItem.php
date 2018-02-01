@@ -30,6 +30,9 @@ final class StockItem implements ValueObject
         if (isset($json['manage_stock'])) {
             $stockItem = $stockItem->withManageStock($json['manage_stock']);
         }
+        if (isset($json['use_config_manage_stock'])) {
+            $stockItem = $stockItem->withUseConfigManageStock($json['use_config_manage_stock']);
+        }
         return $stockItem;
     }
 
@@ -57,7 +60,7 @@ final class StockItem implements ValueObject
         return $result;
     }
 
-    public function isInStock(): bool
+    public function isInStock(): ?bool
     {
         return $this->isInStock;
     }
@@ -69,7 +72,7 @@ final class StockItem implements ValueObject
         return $result;
     }
 
-    public function getManageStock(): bool
+    public function getManageStock(): ?bool
     {
         return $this->manageStock;
     }
@@ -81,13 +84,26 @@ final class StockItem implements ValueObject
         return $result;
     }
 
+    public function getUseConfigManageStock(): ?bool
+    {
+        return $this->useConfigManageStock;
+    }
+
+    public function withUseConfigManageStock(bool $useConfigManageStock): self
+    {
+        $result = clone $this;
+        $result->useConfigManageStock = $useConfigManageStock;
+        return $result;
+    }
+
     public function equals($extensionAttribute): bool
     {
         return ($extensionAttribute instanceof StockItem) &&
             ($this->stockId === $extensionAttribute->stockId) &&
             ($this->quantity === $extensionAttribute->quantity) &&
             ($this->isInStock === $extensionAttribute->isInStock) &&
-            ($this->manageStock === $extensionAttribute->manageStock);
+            ($this->manageStock === $extensionAttribute->manageStock) &&
+            ($this->useConfigManageStock === $extensionAttribute->useConfigManageStock);
     }
 
     public function toJson(): array
@@ -102,6 +118,9 @@ final class StockItem implements ValueObject
         if (isset($this->manageStock)) {
             $json['manage_stock'] = $this->manageStock;
         }
+        if (isset($this->useConfigManageStock)) {
+            $json['use_config_manage_stock'] = $this->useConfigManageStock;
+        }
         return $json;
     }
 
@@ -112,6 +131,7 @@ final class StockItem implements ValueObject
 
     private $isInStock;
     private $manageStock;
+    private $useConfigManageStock;
     private $quantity;
     private $stockId;
 
