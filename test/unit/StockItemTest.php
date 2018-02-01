@@ -11,10 +11,21 @@ class StockItemTest extends TestCase
     public function testToJson()
     {
         $stockItem = StockItem::of(1, 100);
+
+        self::assertEquals([
+            'stock_id' => 1,
+            'qty' => 100,
+        ], $stockItem->toJson());
+
+        $stockItem = $stockItem
+            ->withInStock(true)
+            ->withManageStock(false);
+
         self::assertEquals([
             'stock_id' => 1,
             'qty' => 100,
             'is_in_stock' => true,
+            'manage_stock' => false,
         ], $stockItem->toJson());
     }
 

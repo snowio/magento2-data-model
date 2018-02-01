@@ -107,7 +107,6 @@ class ProductDataTest extends TestCase
             ExtensionAttribute::of('stock_item', [
                 'stock_id' => 1,
                 'qty' => 300,
-                'is_in_stock' => true,
             ]),
         ])->equals($product->getExtensionAttributes()));
         $expectedCustomAttributes = CustomAttributeSet::create()

@@ -15,19 +15,22 @@ final class StockItem implements ValueObject
     {
         return self::create()
             ->withStockId($stockId)
-            ->withQuantity($quantity)
-            ->withInStock(0 < $quantity);
+            ->withQuantity($quantity);
     }
 
     public static function fromJson(array $json)
     {
         $json = $json[self::CODE];
-        $stockId = $json['stock_id'];
-        $quantity = $json['qty'];
-        return self::create()
-            ->withStockId($stockId)
-            ->withQuantity($quantity)
-            ->withInStock($quantity > 0);
+        $stockItem = self::create()
+            ->withStockId($json['stock_id'])
+            ->withQuantity($json['qty']);
+        if (isset($json['is_in_stock'])) {
+            $stockItem = $stockItem->withInStock($json['is_in_stock']);
+        }
+        if (isset($json['manage_stock'])) {
+            $stockItem = $stockItem->withManageStock($json['manage_stock']);
+        }
+        return $stockItem;
     }
 
     public function getStockId(): int
@@ -66,21 +69,40 @@ final class StockItem implements ValueObject
         return $result;
     }
 
+    public function getManageStock(): bool
+    {
+        return $this->manageStock;
+    }
+
+    public function withManageStock(bool $manageStock): self
+    {
+        $result = clone $this;
+        $result->manageStock = $manageStock;
+        return $result;
+    }
+
     public function equals($extensionAttribute): bool
     {
         return ($extensionAttribute instanceof StockItem) &&
             ($this->stockId === $extensionAttribute->stockId) &&
             ($this->quantity === $extensionAttribute->quantity) &&
-            ($this->isInStock === $extensionAttribute->isInStock);
+            ($this->isInStock === $extensionAttribute->isInStock) &&
+            ($this->manageStock === $extensionAttribute->manageStock);
     }
 
     public function toJson(): array
     {
-        return [
+        $json = [
             'stock_id' => $this->stockId,
             'qty' => $this->quantity,
-            'is_in_stock' => $this->isInStock,
         ];
+        if (isset($this->isInStock)) {
+            $json['is_in_stock'] = $this->isInStock;
+        }
+        if (isset($this->manageStock)) {
+            $json['manage_stock'] = $this->manageStock;
+        }
+        return $json;
     }
 
     public function asExtensionAttribute(): ExtensionAttribute
@@ -89,6 +111,7 @@ final class StockItem implements ValueObject
     }
 
     private $isInStock;
+    private $manageStock;
     private $quantity;
     private $stockId;
 
