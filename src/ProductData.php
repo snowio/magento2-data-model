@@ -90,6 +90,18 @@ final class ProductData implements ValueObject
         return $result;
     }
 
+    public function withWeight(string $weight): self
+    {
+        $result = clone $this;
+        $result->weight = $weight;
+        return $result;
+    }
+
+    public function getWeight(): ?string
+    {
+        return $this->weight;
+    }
+
     public function getAttributeSetCode(): string
     {
         return $this->extensionAttributes->get(self::ATTRIBUTE_SET_CODE)->getValue();
@@ -167,6 +179,7 @@ final class ProductData implements ValueObject
             'visibility' => (int)$this->visibility,
             'price' => $this->price,
             'type_id' => $this->typeId,
+            'weight' => $this->weight,
             'media_gallery_entries' => $this->mediaGalleryEntries->toJson(),
             'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson(),
@@ -182,6 +195,7 @@ final class ProductData implements ValueObject
         ($this->visibility === $otherProductData->visibility) &&
         ($this->price === $otherProductData->price) &&
         ($this->typeId === $otherProductData->typeId) &&
+        ($this->weight === $otherProductData->weight) &&
         ($this->extensionAttributes->equals($otherProductData->extensionAttributes)) &&
         $this->customAttributes->equals($otherProductData->customAttributes) &&
         ($this->storeCode === $otherProductData->storeCode);
@@ -193,6 +207,7 @@ final class ProductData implements ValueObject
     private $visibility = ProductVisibility::CATALOG_SEARCH;
     private $price;
     private $typeId = ProductTypeId::SIMPLE;
+    private $weight;
 
     private function __construct(string $sku, string $name)
     {

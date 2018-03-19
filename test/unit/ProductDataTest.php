@@ -26,6 +26,7 @@ class ProductDataTest extends TestCase
             'status' => ProductStatus::ENABLED,
             'visibility' => ProductVisibility::CATALOG_SEARCH,
             'price' => null,
+            'weight' => null,
             'type_id' => 'simple',
             'extension_attributes' => [
                 'attribute_set_code' => 'default'
@@ -43,6 +44,7 @@ class ProductDataTest extends TestCase
         self::assertEquals(ProductStatus::ENABLED, $product->getStatus());
         self::assertEquals(ProductVisibility::CATALOG_SEARCH, $product->getVisibility());
         self::assertEquals(null, $product->getPrice());
+        self::assertEquals(null, $product->getWeight());
         self::assertEquals(ProductTypeId::SIMPLE, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
         self::assertTrue(($product->getCustomAttributes())->isEmpty());
@@ -73,6 +75,7 @@ class ProductDataTest extends TestCase
             ->withStatus(ProductStatus::DISABLED)
             ->withVisibility(ProductVisibility::CATALOG)
             ->withPrice('45.43')
+            ->withWeight('10.1')
             ->withTypeId(ProductTypeId::CONFIGURABLE)
             ->withAttributeSetCode('TestAttributeSet')
             ->withStoreCode('default')
@@ -92,6 +95,7 @@ class ProductDataTest extends TestCase
         self::assertSame(ProductStatus::DISABLED, $product->getStatus());
         self::assertSame(ProductVisibility::CATALOG, $product->getVisibility());
         self::assertSame('45.43', $product->getPrice());
+        self::assertSame('10.1', $product->getWeight());
         self::assertEquals('default', $product->getStoreCode());
         self::assertTrue((StockItem::of(1, 300))->equals($product->getStockItem()));
         self::assertSame(ProductTypeId::CONFIGURABLE, $product->getTypeId());
