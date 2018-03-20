@@ -9,12 +9,14 @@ final class ProductData implements ValueObject
     const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
     private $mediaGalleryEntries;
+    private $tierPrices;
 
     public static function of(string $sku, string $name): self
     {
         $productData = new self($sku, $name);
         $productData->customAttributes = CustomAttributeSet::create();
         $productData->mediaGalleryEntries = MediaGalleryEntrySet::create();
+        $productData->tierPrices = TierPriceSet::create();
         $productData->extensionAttributes = ExtensionAttributeSet::create()
             ->withExtensionAttribute(
                 ExtensionAttribute::of(self::ATTRIBUTE_SET_CODE, self::DEFAULT_ATTRIBUTE_SET_CODE)
@@ -170,6 +172,13 @@ final class ProductData implements ValueObject
         return $result;
     }
 
+    public function withTierPrices(TierPriceSet $tierPrices): self
+    {
+        $result = clone $this;
+        $result->tierPrices = $tierPrices;
+        return $result;
+    }
+
     public function toJson(): array
     {
         return [
@@ -183,6 +192,7 @@ final class ProductData implements ValueObject
             'media_gallery_entries' => $this->mediaGalleryEntries->toJson(),
             'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson(),
+            'tier_prices' => $this->tierPrices->toJson(),
         ];
     }
 

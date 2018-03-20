@@ -31,6 +31,7 @@ class SaveProductCommandTest extends TestCase
                 ],
                 'custom_attributes' => [],
                 'media_gallery_entries' => [],
+                'tier_prices' => [],
             ]
         ], $command->toJson());
     }
