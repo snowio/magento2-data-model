@@ -34,6 +34,7 @@ class ProductDataTest extends TestCase
             'custom_attributes' => [],
             'media_gallery_entries' => [],
             'tier_prices' => [],
+            'product_links' => [],
         ], $product->toJson());
     }
 
