@@ -21,7 +21,7 @@ final class ProductLinkSet implements \IteratorAggregate, ValueObject
 
     private static function getKey(ProductLink $productLink): string
     {
-        return sprintf('%s-%s', $productLink->getSku(), $productLink->getLinkedProductSku());
+        return sprintf('%s-%s-%s', $productLink->getSku(), $productLink->getLinkedProductSku(), $productLink->getLinkType());
     }
 
     public function toJson(): array

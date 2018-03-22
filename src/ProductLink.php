@@ -6,6 +6,7 @@ final class ProductLink implements ValueObject
 {
     const EXTENSION_QUANTITY = 'qty';
     const PRODUCT_TYPE_SIMPLE = 'simple';
+    const LINK_TYPE_ASSOCIATED = 'associated';
 
     private $sku;
     private $linkType;
@@ -16,14 +17,14 @@ final class ProductLink implements ValueObject
     /** @var $extensionAttributes ExtensionAttributeSet */
     private $extensionAttributes;
 
-    public static function of(string $sku, string $linkedProductSku)
+    public static function of(string $sku, string $linkedProductSku, string $linkType): self
     {
-        $result = new self($sku, $linkedProductSku);
+        $result = new self($sku, $linkedProductSku, $linkType);
         $result->extensionAttributes = ExtensionAttributeSet::create();
         return $result;
     }
 
-    public function withQty(int $qty)
+    public function withQty(int $qty): self
     {
         $result = clone $this;
         $result->extensionAttributes = ExtensionAttributeSet::create()
@@ -100,7 +101,7 @@ final class ProductLink implements ValueObject
     {
         return self::create()
             ->withCustomerGroupId($json['customer_group_id'])
-            ->withQty($json['qty'])
+            ->withQty($json[self::EXTENSION_QUANTITY])
             ->withValue($json['value']);
     }
 
@@ -116,10 +117,11 @@ final class ProductLink implements ValueObject
         ];
     }
 
-    private function __construct(string $sku, string $linkedProductSku)
+    private function __construct(string $sku, string $linkedProductSku, string $linkType)
     {
         $this->sku = $sku;
         $this->linkedProductSku = $linkedProductSku;
+        $this->linkType = $linkType;
         $this->linkedProductType = self::PRODUCT_TYPE_SIMPLE;
     }
 

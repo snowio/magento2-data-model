@@ -12,14 +12,14 @@ class ProductLinkSetTest extends TestCase
     public function testDefaultValues()
     {
         $productLinkSet = ProductLinkSet::of([
-            ProductLink::of('a', 'b')->withQty(1),
+            ProductLink::of('a', 'b', 'type')->withQty(1),
         ]);
 
         self::assertEquals([[
             'sku' => 'a',
             'linked_product_sku' => 'b',
             'linked_product_type' => 'simple',
-            'link_type' => null,
+            'link_type' => 'type',
             'position' => 0,
             'extension_attributes' => [
                 'qty' => 1
@@ -29,9 +29,9 @@ class ProductLinkSetTest extends TestCase
     public function testToJson()
     {
         $productLinkSet = ProductLinkSet::of([
-            ProductLink::of('a', 'b'),
-            ProductLink::of('b', 'b'),
-            ProductLink::of('c', 'b'),
+            ProductLink::of('a', 'b', 'type'),
+            ProductLink::of('b', 'b', 'type'),
+            ProductLink::of('c', 'b', 'type'),
         ]);
 
         self::assertEquals([
@@ -39,7 +39,7 @@ class ProductLinkSetTest extends TestCase
                 'sku' => 'a',
                 'linked_product_sku' => 'b',
                 'linked_product_type' => 'simple',
-                'link_type' => null,
+                'link_type' => 'type',
                 'position' => 0,
                 'extension_attributes' => []
             ],
@@ -47,7 +47,7 @@ class ProductLinkSetTest extends TestCase
                 'sku' => 'b',
                 'linked_product_sku' => 'b',
                 'linked_product_type' => 'simple',
-                'link_type' => null,
+                'link_type' => 'type',
                 'position' => 0,
                 'extension_attributes' => []
             ],
@@ -55,7 +55,7 @@ class ProductLinkSetTest extends TestCase
                 'sku' => 'c',
                 'linked_product_sku' => 'b',
                 'linked_product_type' => 'simple',
-                'link_type' => null,
+                'link_type' => 'type',
                 'position' => 0,
                 'extension_attributes' => []
             ],
@@ -64,38 +64,39 @@ class ProductLinkSetTest extends TestCase
 
     /**
      * @expectedException SnowIO\Magento2DataModel\MagentoDataException
-     * @expectedMessage Cannot set ProductLink with same sku linked_product_sku
+     * @expectedMessage Cannot set ProductLink with same sku linked_product_sku, link_type
      */
     public function testInvalidSetProductLinkTwice()
     {
         ProductLinkSet::of([
-            ProductLink::of('a', 'a'),
-            ProductLink::of('a', 'a'),
-            ProductLink::of('b', 'a'),
+            ProductLink::of('a', 'a', 'type'),
+            ProductLink::of('a', 'a', 'type'),
+            ProductLink::of('b', 'a', 'type'),
         ]);
     }
 
     public function testWitherToSet()
     {
+        /** @var $productLinkSet ProductLinkSet */
         $productLinkSet = ProductLinkSet::create();
 
         self::assertTrue($productLinkSet->isEmpty());
 
         $productLinkSet = $productLinkSet
-            ->withProductLink(ProductLink::of('d', 'x'));
+            ->withProductLink(ProductLink::of('d', 'x', 'type'));
 
         self::assertEquals(1, $productLinkSet->count());
 
         $productLinkSet = $productLinkSet
-            ->withProductLink(ProductLink::of('a', 'x'))
-            ->withProductLink(ProductLink::of('b', 'x'))
-            ->withProductLink(ProductLink::of('c', 'x'));
+            ->withProductLink(ProductLink::of('a', 'x', 'type'))
+            ->withProductLink(ProductLink::of('b', 'x', 'type'))
+            ->withProductLink(ProductLink::of('c', 'x', 'type'));
 
         $expectedProductLinkSet = ProductLinkSet::of([
-            ProductLink::of('a', 'x'),
-            ProductLink::of('b', 'x'),
-            ProductLink::of('c', 'x'),
-            ProductLink::of('d', 'x'),
+            ProductLink::of('a', 'x', 'type'),
+            ProductLink::of('b', 'x', 'type'),
+            ProductLink::of('c', 'x', 'type'),
+            ProductLink::of('d', 'x', 'type'),
         ]);
 
         self::assertTrue($expectedProductLinkSet->equals($productLinkSet));
@@ -104,19 +105,19 @@ class ProductLinkSetTest extends TestCase
     public function testAddToSet()
     {
         $productLinkSet = ProductLinkSet::of([
-            ProductLink::of('a', 'b'),
+            ProductLink::of('a', 'b', 'type'),
         ]);
 
         $anotherProductLink = ProductLinkSet::of([
-            ProductLink::of('b', 'b'),
-            ProductLink::of('c', 'b'),
+            ProductLink::of('b', 'b', 'type'),
+            ProductLink::of('c', 'b', 'type'),
         ]);
 
         $productLinkSet = $productLinkSet->add($anotherProductLink);
         $expectedProductLinkSet = ProductLinkSet::of([
-            ProductLink::of('a', 'b'),
-            ProductLink::of('b', 'b'),
-            ProductLink::of('c', 'b'),
+            ProductLink::of('a', 'b', 'type'),
+            ProductLink::of('b', 'b', 'type'),
+            ProductLink::of('c', 'b', 'type'),
         ]);
 
         self::assertTrue($expectedProductLinkSet->equals($productLinkSet));
@@ -125,15 +126,15 @@ class ProductLinkSetTest extends TestCase
     public function testEquality()
     {
         $productLink = ProductLinkSet::of([
-            ProductLink::of('a', 'b'),
-            ProductLink::of('b', 'b'),
-            ProductLink::of('c', 'b'),
+            ProductLink::of('a', 'b', 'type'),
+            ProductLink::of('b', 'b', 'type'),
+            ProductLink::of('c', 'b', 'type'),
         ]);
 
         $otherProductLink = ProductLinkSet::of([
-            ProductLink::of('a', 'b'),
-            ProductLink::of('b', 'b'),
-            ProductLink::of('c', 'b'),
+            ProductLink::of('a', 'b', 'type'),
+            ProductLink::of('b', 'b', 'type'),
+            ProductLink::of('c', 'b', 'type'),
         ]);
 
         self::assertTrue($productLink->equals($otherProductLink));

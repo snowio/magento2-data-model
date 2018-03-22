@@ -217,6 +217,8 @@ final class ProductData implements ValueObject
         ($this->weight === $otherProductData->weight) &&
         ($this->extensionAttributes->equals($otherProductData->extensionAttributes)) &&
         $this->customAttributes->equals($otherProductData->customAttributes) &&
+        $this->tierPrices->equals($otherProductData->tierPrices) &&
+        $this->productLinks->equals($otherProductData->productLinks) &&
         ($this->storeCode === $otherProductData->storeCode);
     }
 
