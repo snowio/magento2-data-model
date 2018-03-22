@@ -4,6 +4,8 @@ namespace SnowIO\Magento2DataModel;
 
 final class TierPrice implements ValueObject
 {
+    const EXTENSION_WEBSITE = 'website_id';
+
     private $customerGroupId;
     private $qty;
     private $value;
@@ -11,7 +13,7 @@ final class TierPrice implements ValueObject
     /** @var $extensionAttributes ExtensionAttributeSet */
     private $extensionAttributes;
 
-    public static function of(int $customerGroupId, int $qty, float $value)
+    public static function of(int $customerGroupId, int $qty, string $value)
     {
         $tierPriceEntry = new self($customerGroupId, $qty, $value);
         $tierPriceEntry->extensionAttributes = ExtensionAttributeSet::create();
@@ -28,7 +30,7 @@ final class TierPrice implements ValueObject
         return $this->qty;
     }
 
-    public function getValue(): ?float
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -37,6 +39,16 @@ final class TierPrice implements ValueObject
     {
         $result = clone $this;
         $result->customerGroupId = $customerGroupId;
+        return $result;
+    }
+
+    public function withWebsiteId(int $websiteId): self
+    {
+        $result = clone $this;
+        $result->extensionAttributes = ExtensionAttributeSet::create()
+            ->withExtensionAttribute(
+                ExtensionAttribute::of(self::EXTENSION_WEBSITE, $websiteId)
+            );
         return $result;
     }
 
@@ -59,7 +71,8 @@ final class TierPrice implements ValueObject
         return ($object instanceof TierPrice) &&
         ($this->customerGroupId === $object->customerGroupId) &&
         ($this->qty === $object->qty) &&
-        ($this->value === $object->value);
+        ($this->value === $object->value) &&
+        ($this->extensionAttributes->equals($object->extensionAttributes));
     }
 
     public function fromJson($json): TierPrice
@@ -80,7 +93,7 @@ final class TierPrice implements ValueObject
         ];
     }
 
-    private function __construct(int $customerGroupId, int $qty, float $value)
+    private function __construct(int $customerGroupId, int $qty, string $value)
     {
         $this->customerGroupId = $customerGroupId;
         $this->qty = $qty;
