@@ -10,10 +10,14 @@ use SnowIO\Magento2DataModel\EavEntityTrait;
 use SnowIO\Magento2DataModel\ExtensionAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
 use SnowIO\Magento2DataModel\ProductData;
+use SnowIO\Magento2DataModel\ProductLink;
+use SnowIO\Magento2DataModel\ProductLinkSet;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
 use SnowIO\Magento2DataModel\ProductVisibility;
 use SnowIO\Magento2DataModel\StockItem;
+use SnowIO\Magento2DataModel\TierPrice;
+use SnowIO\Magento2DataModel\TierPriceSet;
 
 class ProductDataTest extends TestCase
 {
@@ -26,12 +30,15 @@ class ProductDataTest extends TestCase
             'status' => ProductStatus::ENABLED,
             'visibility' => ProductVisibility::CATALOG_SEARCH,
             'price' => null,
+            'weight' => null,
             'type_id' => 'simple',
             'extension_attributes' => [
                 'attribute_set_code' => 'default'
             ],
             'custom_attributes' => [],
             'media_gallery_entries' => [],
+            'tier_prices' => [],
+            'product_links' => [],
         ], $product->toJson());
     }
 
@@ -43,10 +50,13 @@ class ProductDataTest extends TestCase
         self::assertEquals(ProductStatus::ENABLED, $product->getStatus());
         self::assertEquals(ProductVisibility::CATALOG_SEARCH, $product->getVisibility());
         self::assertEquals(null, $product->getPrice());
+        self::assertEquals(null, $product->getWeight());
         self::assertEquals(ProductTypeId::SIMPLE, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
         self::assertTrue(($product->getCustomAttributes())->isEmpty());
         self::assertTrue(($product->getMediaGalleryEntries())->isEmpty());
+        self::assertTrue(($product->getTierPrices())->isEmpty());
+        self::assertTrue(($product->getProductLinks())->isEmpty());
     }
 
     /**
@@ -73,10 +83,15 @@ class ProductDataTest extends TestCase
             ->withStatus(ProductStatus::DISABLED)
             ->withVisibility(ProductVisibility::CATALOG)
             ->withPrice('45.43')
+            ->withWeight('10.1')
             ->withTypeId(ProductTypeId::CONFIGURABLE)
             ->withAttributeSetCode('TestAttributeSet')
             ->withStoreCode('default')
             ->withStockItem(StockItem::of(1, 300))
+            ->withTierPrices(TierPriceSet::of([TierPrice::of(1,1,'100')]))
+            ->withProductLinks(ProductLinkSet::create()->withProductLink(
+                ProductLink::of('KEY', 'x', 'type')
+            ))
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
@@ -88,10 +103,19 @@ class ProductDataTest extends TestCase
                 ]),
             ]));
 
+        self::assertSame(
+            TierPriceSet::of([TierPrice::of(1,1,'100')])->toJson(),
+            $product->getTierPrices()->toJson()
+        );
+        self::assertSame(
+            ProductLinkSet::of([ProductLink::of('KEY', 'x', 'type')])->toJson(),
+            $product->getProductLinks()->toJson()
+        );
         self::assertSame('Snowio Test Product Updated!!', $product->getName());
         self::assertSame(ProductStatus::DISABLED, $product->getStatus());
         self::assertSame(ProductVisibility::CATALOG, $product->getVisibility());
         self::assertSame('45.43', $product->getPrice());
+        self::assertSame('10.1', $product->getWeight());
         self::assertEquals('default', $product->getStoreCode());
         self::assertTrue((StockItem::of(1, 300))->equals($product->getStockItem()));
         self::assertSame(ProductTypeId::CONFIGURABLE, $product->getTypeId());

@@ -24,12 +24,15 @@ class SaveProductCommandTest extends TestCase
                 'status' => ProductStatus::ENABLED,
                 'visibility' => ProductVisibility::CATALOG_SEARCH,
                 'price' => null,
+                'weight' => null,
                 'type_id' => 'simple',
                 'extension_attributes' => [
                     'attribute_set_code' => 'default'
                 ],
                 'custom_attributes' => [],
                 'media_gallery_entries' => [],
+                'tier_prices' => [],
+                'product_links' => [],
             ]
         ], $command->toJson());
     }

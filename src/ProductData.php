@@ -8,17 +8,20 @@ final class ProductData implements ValueObject
 
     const DEFAULT_ATTRIBUTE_SET_CODE = 'default';
     private const ATTRIBUTE_SET_CODE = 'attribute_set_code';
-    private $mediaGalleryEntries;
 
     public static function of(string $sku, string $name): self
     {
         $productData = new self($sku, $name);
         $productData->customAttributes = CustomAttributeSet::create();
         $productData->mediaGalleryEntries = MediaGalleryEntrySet::create();
+        $productData->tierPrices = TierPriceSet::create();
+        $productData->productLinks = ProductLinkSet::create();
+
         $productData->extensionAttributes = ExtensionAttributeSet::create()
             ->withExtensionAttribute(
                 ExtensionAttribute::of(self::ATTRIBUTE_SET_CODE, self::DEFAULT_ATTRIBUTE_SET_CODE)
             );
+
         return $productData;
     }
 
@@ -90,6 +93,18 @@ final class ProductData implements ValueObject
         return $result;
     }
 
+    public function withWeight(string $weight): self
+    {
+        $result = clone $this;
+        $result->weight = $weight;
+        return $result;
+    }
+
+    public function getWeight(): ?string
+    {
+        return $this->weight;
+    }
+
     public function getAttributeSetCode(): string
     {
         return $this->extensionAttributes->get(self::ATTRIBUTE_SET_CODE)->getValue();
@@ -158,6 +173,30 @@ final class ProductData implements ValueObject
         return $result;
     }
 
+    public function withTierPrices(TierPriceSet $tierPrices): self
+    {
+        $result = clone $this;
+        $result->tierPrices = $tierPrices;
+        return $result;
+    }
+
+    public function getTierPrices(): TierPriceSet
+    {
+        return $this->tierPrices;
+    }
+
+    public function withProductLinks(ProductLinkSet $productLinks): self
+    {
+        $result = clone $this;
+        $result->productLinks = $productLinks;
+        return $result;
+    }
+
+    public function getProductLinks(): ProductLinkSet
+    {
+        return $this->productLinks;
+    }
+
     public function toJson(): array
     {
         return [
@@ -167,9 +206,12 @@ final class ProductData implements ValueObject
             'visibility' => (int)$this->visibility,
             'price' => $this->price,
             'type_id' => $this->typeId,
+            'weight' => $this->weight,
             'media_gallery_entries' => $this->mediaGalleryEntries->toJson(),
             'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson(),
+            'tier_prices' => $this->tierPrices->toJson(),
+            'product_links' => $this->productLinks->toJson(),
         ];
     }
 
@@ -182,8 +224,11 @@ final class ProductData implements ValueObject
         ($this->visibility === $otherProductData->visibility) &&
         ($this->price === $otherProductData->price) &&
         ($this->typeId === $otherProductData->typeId) &&
+        ($this->weight === $otherProductData->weight) &&
         ($this->extensionAttributes->equals($otherProductData->extensionAttributes)) &&
         $this->customAttributes->equals($otherProductData->customAttributes) &&
+        $this->tierPrices->equals($otherProductData->tierPrices) &&
+        $this->productLinks->equals($otherProductData->productLinks) &&
         ($this->storeCode === $otherProductData->storeCode);
     }
 
@@ -193,6 +238,10 @@ final class ProductData implements ValueObject
     private $visibility = ProductVisibility::CATALOG_SEARCH;
     private $price;
     private $typeId = ProductTypeId::SIMPLE;
+    private $weight;
+    private $mediaGalleryEntries;
+    private $tierPrices;
+    private $productLinks;
 
     private function __construct(string $sku, string $name)
     {
