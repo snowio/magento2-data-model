@@ -26,6 +26,17 @@ class ProductLinkSetTest extends TestCase
             ]
         ]], $productLinkSet->toJson());
     }
+
+    public function testGetShouldUseCompoundKey()
+    {
+        $productLinkSet = ProductLinkSet::create()->withProductLink(
+            ProductLink::of('KEY', 'x', 'type')
+        );
+
+        self::assertInstanceOf(ProductLink::class, $productLinkSet->get('KEY-x-type'));
+        self::assertNull($productLinkSet->get('any-invalid-key'));
+    }
+
     public function testToJson()
     {
         $productLinkSet = ProductLinkSet::of([
@@ -63,7 +74,7 @@ class ProductLinkSetTest extends TestCase
     }
 
     /**
-     * @expectedException SnowIO\Magento2DataModel\MagentoDataException
+     * @expectedException \SnowIO\Magento2DataModel\MagentoDataException
      * @expectedMessage Cannot set ProductLink with same sku linked_product_sku, link_type
      */
     public function testInvalidSetProductLinkTwice()

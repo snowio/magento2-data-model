@@ -10,10 +10,14 @@ use SnowIO\Magento2DataModel\EavEntityTrait;
 use SnowIO\Magento2DataModel\ExtensionAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
 use SnowIO\Magento2DataModel\ProductData;
+use SnowIO\Magento2DataModel\ProductLink;
+use SnowIO\Magento2DataModel\ProductLinkSet;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
 use SnowIO\Magento2DataModel\ProductVisibility;
 use SnowIO\Magento2DataModel\StockItem;
+use SnowIO\Magento2DataModel\TierPrice;
+use SnowIO\Magento2DataModel\TierPriceSet;
 
 class ProductDataTest extends TestCase
 {
@@ -51,6 +55,8 @@ class ProductDataTest extends TestCase
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
         self::assertTrue(($product->getCustomAttributes())->isEmpty());
         self::assertTrue(($product->getMediaGalleryEntries())->isEmpty());
+        self::assertTrue(($product->getTierPrices())->isEmpty());
+        self::assertTrue(($product->getProductLinks())->isEmpty());
     }
 
     /**
@@ -82,6 +88,10 @@ class ProductDataTest extends TestCase
             ->withAttributeSetCode('TestAttributeSet')
             ->withStoreCode('default')
             ->withStockItem(StockItem::of(1, 300))
+            ->withTierPrices(TierPriceSet::of([TierPrice::of(1,1,'100')]))
+            ->withProductLinks(ProductLinkSet::create()->withProductLink(
+                ProductLink::of('KEY', 'x', 'type')
+            ))
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
             ->withCustomAttribute(CustomAttribute::of('width', '300'))
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
@@ -93,6 +103,14 @@ class ProductDataTest extends TestCase
                 ]),
             ]));
 
+        self::assertSame(
+            TierPriceSet::of([TierPrice::of(1,1,'100')])->toJson(),
+            $product->getTierPrices()->toJson()
+        );
+        self::assertSame(
+            ProductLinkSet::of([ProductLink::of('KEY', 'x', 'type')])->toJson(),
+            $product->getProductLinks()->toJson()
+        );
         self::assertSame('Snowio Test Product Updated!!', $product->getName());
         self::assertSame(ProductStatus::DISABLED, $product->getStatus());
         self::assertSame(ProductVisibility::CATALOG, $product->getVisibility());

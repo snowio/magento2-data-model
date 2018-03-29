@@ -19,6 +19,22 @@ class TierPriceTest extends TestCase
         ], $customAttribute->toJson());
     }
 
+    public function testFromJson()
+    {
+        $tierPrice = TierPrice::fromJson([
+            'customer_group_id' => 1,
+            'qty' => 10,
+            'value' => '100'
+        ]);
+
+        self::assertEquals([
+            'customer_group_id' => 1,
+            'qty' => 10,
+            'value' => '100',
+            'extension_attributes' => [],
+        ], $tierPrice->toJson());
+    }
+
     public function testExtension()
     {
         $customAttribute = TierPrice::of(99, 1, '100.00')->withWebsiteId(0);
@@ -59,5 +75,24 @@ class TierPriceTest extends TestCase
         self::assertFalse($tierPrice->equals(
             TierPrice::of(1, 1, '80.99')->withWebsiteId(0)
         ));
+    }
+
+    public function testWitherToSet()
+    {
+        $priceTier = TierPrice::of(1,1,'80.99')->withCustomerGroupId(1);
+        self::assertSame(1, $priceTier->getCustomerGroupId());
+        self::assertInstanceOf(TierPrice::class, TierPrice::of(1,1,'100')->withCustomerGroupId(10));
+
+        $priceTier = TierPrice::of(1,1,'100')->withCustomerGroupId(10);
+        self::assertSame(10, $priceTier->getCustomerGroupId());
+        self::assertInstanceOf(TierPrice::class, TierPrice::of(1,1,'100')->withCustomerGroupId(10));
+
+        $priceTier = TierPrice::of(1,1,'100')->withQty(1);
+        self::assertSame(1, $priceTier->getQty());
+        self::assertInstanceOf(TierPrice::class, TierPrice::of(1,1,'100')->withQty(10));
+
+        $priceTier = TierPrice::of(1,1,'100')->withValue('100');
+        self::assertSame('100', $priceTier->getValue());
+        self::assertInstanceOf(TierPrice::class, TierPrice::of(1,1,'100')->withValue('1'));
     }
 }

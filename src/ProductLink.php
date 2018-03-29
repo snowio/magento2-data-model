@@ -54,7 +54,7 @@ final class ProductLink implements ValueObject
         return $this->linkedProductSku;
     }
 
-    private function getPosition(): int
+    public function getPosition(): int
     {
         return (int) $this->position;
     }
@@ -97,12 +97,11 @@ final class ProductLink implements ValueObject
         ($this->position === $object->position);
     }
 
-    public function fromJson($json): TierPrice
+    public static function fromJson($json): ProductLink
     {
-        return self::create()
-            ->withCustomerGroupId($json['customer_group_id'])
-            ->withQty($json[self::EXTENSION_QUANTITY])
-            ->withValue($json['value']);
+        return self::of($json['sku'], $json['linked_product_sku'], $json['link_type'])
+            ->withLinkedProductType($json['linked_product_type'])
+            ->withPosition($json['position']);
     }
 
     public function toJson(): array

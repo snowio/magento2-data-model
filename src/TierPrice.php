@@ -35,7 +35,7 @@ final class TierPrice implements ValueObject
         return $this->value;
     }
 
-    public function withCustomerGroupId(string $customerGroupId): self
+    public function withCustomerGroupId(int $customerGroupId): self
     {
         $result = clone $this;
         $result->customerGroupId = $customerGroupId;
@@ -75,12 +75,9 @@ final class TierPrice implements ValueObject
         ($this->extensionAttributes->equals($object->extensionAttributes));
     }
 
-    public function fromJson($json): TierPrice
+    public static function fromJson($json): TierPrice
     {
-        return self::create()
-            ->withCustomerGroupId($json['customer_group_id'])
-            ->withQty($json['qty'])
-            ->withValue($json['value']);
+        return self::of($json['customer_group_id'], $json['qty'], $json['value']);
     }
 
     public function toJson(): array

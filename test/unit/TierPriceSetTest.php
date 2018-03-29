@@ -42,7 +42,7 @@ class TierPriceSetTest extends TestCase
     }
 
     /**
-     * @expectedException SnowIO\Magento2DataModel\MagentoDataException
+     * @expectedException \SnowIO\Magento2DataModel\MagentoDataException
      * @expectedMessage Cannot set TierPrice with same qty to the same group
      */
     public function testInvalidSetTierPriceTwice()
@@ -52,6 +52,16 @@ class TierPriceSetTest extends TestCase
             TierPrice::of(1, 1, '90'),
             TierPrice::of(2, 1, '1'),
         ]);
+    }
+
+    public function testGetShouldUseCompoundKey()
+    {
+        $tierPriceSet = TierPriceSet::create()->withTierPrice(
+            TierPrice::of(99, 1, '100')
+        );
+
+        self::assertInstanceOf(TierPrice::class, $tierPriceSet->get('99-1'));
+        self::assertNull($tierPriceSet->get('any-invalid-key'));
     }
 
     public function testWitherToSet()

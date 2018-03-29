@@ -180,11 +180,21 @@ final class ProductData implements ValueObject
         return $result;
     }
 
+    public function getTierPrices(): TierPriceSet
+    {
+        return $this->tierPrices;
+    }
+
     public function withProductLinks(ProductLinkSet $productLinks): self
     {
         $result = clone $this;
         $result->productLinks = $productLinks;
         return $result;
+    }
+
+    public function getProductLinks(): ProductLinkSet
+    {
+        return $this->productLinks;
     }
 
     public function toJson(): array
