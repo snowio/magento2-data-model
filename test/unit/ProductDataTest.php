@@ -89,7 +89,7 @@ class ProductDataTest extends TestCase
             ->withAttributeSetCode('TestAttributeSet')
             ->withStoreCode('default')
             ->withStockItem(StockItem::of(1, 300))
-            ->withTierPrices(TierPriceSet::of([TierPrice::of(1,1,'100')]))
+            ->withTierPrices(TierPriceSet::of([TierPrice::of(1, 1, '100')]))
             ->withProductLinks(ProductLinkSet::create()->withProductLink(
                 ProductLink::of('KEY', 'x', 'type')
             ))
@@ -105,7 +105,7 @@ class ProductDataTest extends TestCase
             ]));
 
         self::assertSame(
-            TierPriceSet::of([TierPrice::of(1,1,'100')])->toJson(),
+            TierPriceSet::of([TierPrice::of(1, 1, '100')])->toJson(),
             $product->getTierPrices()->toJson()
         );
         self::assertSame(
@@ -148,8 +148,7 @@ class ProductDataTest extends TestCase
             ->withMediaGalleryEntries(MediaGalleryEntrySet::create()
                 ->withMediaGalleryEntry(MediaGalleryEntry::of('image', 'Label')
                     ->withTypes(['image', 'small_image', 'thumbnail'])
-                    ->withFile('path/image.jpg')
-                ));
+                    ->withFile('path/image.jpg')));
 
         self::assertEquals([
             'sku' => 'snowio-test-product',
@@ -169,6 +168,29 @@ class ProductDataTest extends TestCase
                     'types' => ['image', 'small_image', 'thumbnail']
                 ]
             ],
+            'extension_attributes' => [
+                'attribute_set_code' => 'default'
+            ],
+            'custom_attributes' => [],
+            'tier_prices' => [],
+            'product_links' => [],
+        ], $product->toJson());
+    }
+
+    public function testWithEmptyMediaGalleryEntrySet()
+    {
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(MediaGalleryEntrySet::create());
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'weight' => null,
+            'type_id' => 'simple',
+            'media_gallery_entries' => [],
             'extension_attributes' => [
                 'attribute_set_code' => 'default'
             ],
