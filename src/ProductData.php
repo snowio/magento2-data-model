@@ -206,18 +206,15 @@ final class ProductData implements ValueObject
             'price' => $this->price,
             'type_id' => $this->typeId,
             'weight' => $this->weight,
+            'extension_attributes' => $this->extensionAttributes->toJson(),
+            'custom_attributes' => $this->customAttributes->toJson(),
+            'tier_prices' => $this->tierPrices->toJson(),
+            'product_links' => $this->productLinks->toJson()
         ];
 
         if ($this->mediaGalleryEntries !== null) {
             $json['media_gallery_entries'] = $this->mediaGalleryEntries->toJson();
         }
-
-        $json += [
-            'extension_attributes' => $this->extensionAttributes->toJson(),
-            'custom_attributes' => $this->customAttributes->toJson(),
-            'tier_prices' => $this->tierPrices->toJson(),
-            'product_links' => $this->productLinks->toJson(),
-        ];
 
         return $json;
     }

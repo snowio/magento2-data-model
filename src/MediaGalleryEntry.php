@@ -103,12 +103,10 @@ final class MediaGalleryEntry implements ValueObject
             (empty(array_diff($this->types, $object->types)) && empty(array_diff($object->types, $this->types)));
     }
 
-    public function fromJson($json): MediaGalleryEntry
+    public static function fromJson($json): MediaGalleryEntry
     {
-        return self::create()
-            ->withMediaType($json['media_type'])
+        return self::of($json['media_type'], $json['label'])
             ->withFile($json['file'])
-            ->withLabel($json['label'])
             ->withDisabled($json['disabled'])
             ->withTypes($json['types'])
             ->withPosition($json['position']);
