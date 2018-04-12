@@ -9,6 +9,8 @@ use SnowIO\Magento2DataModel\CustomAttributeSet;
 use SnowIO\Magento2DataModel\EavEntityTrait;
 use SnowIO\Magento2DataModel\ExtensionAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
+use SnowIO\Magento2DataModel\MediaGalleryEntry;
+use SnowIO\Magento2DataModel\MediaGalleryEntrySet;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\ProductLink;
 use SnowIO\Magento2DataModel\ProductLinkSet;
@@ -36,7 +38,6 @@ class ProductDataTest extends TestCase
                 'attribute_set_code' => 'default'
             ],
             'custom_attributes' => [],
-            'media_gallery_entries' => [],
             'tier_prices' => [],
             'product_links' => [],
         ], $product->toJson());
@@ -51,10 +52,10 @@ class ProductDataTest extends TestCase
         self::assertEquals(ProductVisibility::CATALOG_SEARCH, $product->getVisibility());
         self::assertEquals(null, $product->getPrice());
         self::assertEquals(null, $product->getWeight());
+        self::assertEquals(null, $product->getMediaGalleryEntries());
         self::assertEquals(ProductTypeId::SIMPLE, $product->getTypeId());
         self::assertEquals(ProductData::DEFAULT_ATTRIBUTE_SET_CODE, $product->getAttributeSetCode());
         self::assertTrue(($product->getCustomAttributes())->isEmpty());
-        self::assertTrue(($product->getMediaGalleryEntries())->isEmpty());
         self::assertTrue(($product->getTierPrices())->isEmpty());
         self::assertTrue(($product->getProductLinks())->isEmpty());
     }
@@ -88,7 +89,7 @@ class ProductDataTest extends TestCase
             ->withAttributeSetCode('TestAttributeSet')
             ->withStoreCode('default')
             ->withStockItem(StockItem::of(1, 300))
-            ->withTierPrices(TierPriceSet::of([TierPrice::of(1,1,'100')]))
+            ->withTierPrices(TierPriceSet::of([TierPrice::of(1, 1, '100')]))
             ->withProductLinks(ProductLinkSet::create()->withProductLink(
                 ProductLink::of('KEY', 'x', 'type')
             ))
@@ -104,7 +105,7 @@ class ProductDataTest extends TestCase
             ]));
 
         self::assertSame(
-            TierPriceSet::of([TierPrice::of(1,1,'100')])->toJson(),
+            TierPriceSet::of([TierPrice::of(1, 1, '100')])->toJson(),
             $product->getTierPrices()->toJson()
         );
         self::assertSame(
@@ -139,6 +140,64 @@ class ProductDataTest extends TestCase
             ->withCustomAttribute(CustomAttribute::of('height', '250'))
             ->withCustomAttribute(CustomAttribute::of('density', '800'));
         self::assertTrue($product->getCustomAttributes()->equals($expectedCustomAttributes));
+    }
+
+    public function testWithMediaGalleryEntrySet()
+    {
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(MediaGalleryEntrySet::create()
+                ->withMediaGalleryEntry(MediaGalleryEntry::of('image', 'Label')
+                    ->withTypes(['image', 'small_image', 'thumbnail'])
+                    ->withFile('path/image.jpg')));
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'weight' => null,
+            'type_id' => 'simple',
+            'media_gallery_entries' => [
+                [
+                    'media_type' => 'image',
+                    'label' => 'Label',
+                    'position' => 0,
+                    'disabled' => false,
+                    'file' => 'path/image.jpg',
+                    'types' => ['image', 'small_image', 'thumbnail']
+                ]
+            ],
+            'extension_attributes' => [
+                'attribute_set_code' => 'default'
+            ],
+            'custom_attributes' => [],
+            'tier_prices' => [],
+            'product_links' => [],
+        ], $product->toJson());
+    }
+
+    public function testWithEmptyMediaGalleryEntrySet()
+    {
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(MediaGalleryEntrySet::create());
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'weight' => null,
+            'type_id' => 'simple',
+            'media_gallery_entries' => [],
+            'extension_attributes' => [
+                'attribute_set_code' => 'default'
+            ],
+            'custom_attributes' => [],
+            'tier_prices' => [],
+            'product_links' => [],
+        ], $product->toJson());
     }
 
     public function testWithCustomAttributeSet()

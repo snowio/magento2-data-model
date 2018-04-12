@@ -4,7 +4,6 @@ namespace SnowIO\Magento2DataModel;
 
 trait SetTrait
 {
-
     /**
      * @return static
      */

@@ -13,7 +13,6 @@ final class ProductData implements ValueObject
     {
         $productData = new self($sku, $name);
         $productData->customAttributes = CustomAttributeSet::create();
-        $productData->mediaGalleryEntries = MediaGalleryEntrySet::create();
         $productData->tierPrices = TierPriceSet::create();
         $productData->productLinks = ProductLinkSet::create();
 
@@ -154,7 +153,7 @@ final class ProductData implements ValueObject
         return $result;
     }
 
-    public function getMediaGalleryEntries(): MediaGalleryEntrySet
+    public function getMediaGalleryEntries(): ?MediaGalleryEntrySet
     {
         return $this->mediaGalleryEntries;
     }
@@ -166,7 +165,7 @@ final class ProductData implements ValueObject
         return $result;
     }
 
-    public function withMediaGalleryEntries(MediaGalleryEntrySet $mediaGalleryEntries): self
+    public function withMediaGalleryEntries(?MediaGalleryEntrySet $mediaGalleryEntries): self
     {
         $result = clone $this;
         $result->mediaGalleryEntries = $mediaGalleryEntries;
@@ -199,7 +198,7 @@ final class ProductData implements ValueObject
 
     public function toJson(): array
     {
-        return [
+        $json = [
             'sku' => $this->sku,
             'name' => $this->name,
             'status' => (int)$this->status,
@@ -207,12 +206,17 @@ final class ProductData implements ValueObject
             'price' => $this->price,
             'type_id' => $this->typeId,
             'weight' => $this->weight,
-            'media_gallery_entries' => $this->mediaGalleryEntries->toJson(),
             'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson(),
             'tier_prices' => $this->tierPrices->toJson(),
-            'product_links' => $this->productLinks->toJson(),
+            'product_links' => $this->productLinks->toJson()
         ];
+
+        if ($this->mediaGalleryEntries !== null) {
+            $json['media_gallery_entries'] = $this->mediaGalleryEntries->toJson();
+        }
+
+        return $json;
     }
 
     public function equals($otherProductData): bool

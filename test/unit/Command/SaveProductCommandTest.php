@@ -30,7 +30,6 @@ class SaveProductCommandTest extends TestCase
                     'attribute_set_code' => 'default'
                 ],
                 'custom_attributes' => [],
-                'media_gallery_entries' => [],
                 'tier_prices' => [],
                 'product_links' => [],
             ]
