@@ -112,10 +112,21 @@ final class ProductData implements ValueObject
     public function withAttributeSetCode(string $attributeSetCode): self
     {
         $result = clone $this;
+        $result->attributeSetId = null;
         $result->extensionAttributes = $result->extensionAttributes
             ->withExtensionAttribute(
                 ExtensionAttribute::of(self::ATTRIBUTE_SET_CODE, $attributeSetCode)
             );
+        return $result;
+    }
+
+    public function withAttributeSetId(int $attributeSetId): self
+    {
+        $result = clone $this;
+        $result->attributeSetId = $attributeSetId;
+        $result->extensionAttributes = $result->extensionAttributes->deleteExtensionAttribute(
+            ExtensionAttribute::of(self::ATTRIBUTE_SET_CODE, null)
+        );
         return $result;
     }
 
@@ -216,6 +227,9 @@ final class ProductData implements ValueObject
             $json['media_gallery_entries'] = $this->mediaGalleryEntries->toJson();
         }
 
+        if ($this->attributeSetId !== null) {
+            $json['attribute_set_id'] = (int) $this->attributeSetId;
+        }
         return $json;
     }
 
@@ -246,6 +260,7 @@ final class ProductData implements ValueObject
     private $mediaGalleryEntries;
     private $tierPrices;
     private $productLinks;
+    private $attributeSetId;
 
     private function __construct(string $sku, string $name)
     {

@@ -81,6 +81,16 @@ trait SetTrait
     /**
      * @return static
      */
+    public function delete($key): self
+    {
+        $result = new self;
+        unset($this->items[$key]);
+        return $result;
+    }
+
+    /**
+     * @return static
+     */
     public function merge(self $otherSet): self
     {
         $result = new self;
