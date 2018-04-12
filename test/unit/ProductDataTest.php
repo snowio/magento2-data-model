@@ -200,7 +200,80 @@ class ProductDataTest extends TestCase
         ], $product->toJson());
     }
 
-    public function testWithCustomAttributeSet()
+    /**
+     * When attribute_set_id is defined, the default attribute_set_code is removed due to BC
+     */
+    public function testWithAttributeSetId()
+    {
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withAttributeSetId(99)
+            ->withExtensionAttribute(ExtensionAttribute::of('not_attribute_set_code', 'should_keep'));
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'weight' => null,
+            'type_id' => 'simple',
+            'attribute_set_id' => 99,
+            'extension_attributes' => [
+                'not_attribute_set_code' => 'should_keep'
+            ],
+            'custom_attributes' => [],
+            'tier_prices' => [],
+            'product_links' => [],
+        ], $product->toJson());
+    }
+
+    public function testWithoutAttributeSetId()
+    {
+        $product = ProductData::of('snowio-test-product', 'Snowio Test Product');
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'weight' => null,
+            'type_id' => 'simple',
+            'extension_attributes' => [
+                'attribute_set_code' => 'default'
+            ],
+            'custom_attributes' => [],
+            'tier_prices' => [],
+            'product_links' => [],
+        ], $product->toJson());
+    }
+
+    public function testShouldRemoveAttributeSetId()
+    {
+        $product2 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withAttributeSetId(99)
+            ->withExtensionAttribute(ExtensionAttribute::of('not_attribute_set_code', 'should_keep'))
+            ->withAttributeSetCode('default');
+
+        self::assertEquals([
+            'sku' => 'snowio-test-product',
+            'name' => 'Snowio Test Product',
+            'status' => ProductStatus::ENABLED,
+            'visibility' => ProductVisibility::CATALOG_SEARCH,
+            'price' => null,
+            'weight' => null,
+            'type_id' => 'simple',
+            'extension_attributes' => [
+                'attribute_set_code' => 'default',
+                'not_attribute_set_code' => 'should_keep'
+            ],
+            'custom_attributes' => [],
+            'tier_prices' => [],
+            'product_links' => [],
+        ], $product2->toJson());
+    }
+
+        public function testWithCustomAttributeSet()
     {
         $product = ProductData::of('snowio-test-product', 'Snowio Test Product Updated!!')
             ->withCustomAttributes(CustomAttributeSet::of([

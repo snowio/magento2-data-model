@@ -66,6 +66,17 @@ class ExtensionAttributeSetTest extends TestCase
         self::assertFalse($expectedExtensionAttributeSet->equals($differentExtensionAttributeSet));
     }
 
+    public function testDeleteExtensionAttributeByKey()
+    {
+        $extensionAttributeSet = ExtensionAttributeSet::of([
+            ExtensionAttribute::of('attribute_test_1', 'general'),
+            ExtensionAttribute::of('attribute_test_2', 'general'),
+        ]);
+        $extensionAttributeSet->delete('attribute_test_1');
+
+        self::assertSame(1, $extensionAttributeSet->count());
+    }
+
     public function testGet()
     {
         $extensionAttributeSet = ExtensionAttributeSet::of([

@@ -14,6 +14,14 @@ final class ExtensionAttributeSet implements \IteratorAggregate, ValueObject
         return $result;
     }
 
+    public function deleteExtensionAttribute(ExtensionAttribute $extensionAttribute): self
+    {
+        $result = clone $this;
+        $key = self::getKey($extensionAttribute);
+        unset($result->items[$key]);
+        return $result;
+    }
+
     public function get(string $key): ?ExtensionAttribute
     {
         return $this->items[$key] ?? null;
