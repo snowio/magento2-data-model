@@ -11,7 +11,11 @@ final class SaveProductLinkAssociationCommand extends Command
         $command = new self;
         $command->data = $data;
         return $command
-            ->withCommandGroupId("product.product_links.{$data->getLinkType()}.{$data->getProductSku()}")
+            ->withCommandGroupId(sprintf("product.product_links.%s.%s.%s",
+                $data->getProductSku(),
+                $data->getLinkType(),
+                $data->getLinkedProductSku()
+            ))
             ->withShardingKey($data->getProductSku());
     }
 

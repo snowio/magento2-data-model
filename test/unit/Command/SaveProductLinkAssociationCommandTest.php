@@ -20,7 +20,7 @@ class SaveProductLinkAssociationCommandTest extends CommandTest
         self::assertEquals([
             '@timestamp' => (float)$time,
             '@shardingKey' => 'skuA',
-            '@commandGroupId' => 'product.product_links.associated.skuA',
+            '@commandGroupId' => 'product.product_links.skuA.associated.skuB',
             'sku' => $productLink->getSku(),
             'entity' => $productLink->toJson(),
         ], $command->toJson());

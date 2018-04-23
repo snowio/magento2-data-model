@@ -20,6 +20,11 @@ final class ProductLinkAssociation implements ValueObject
         return $this->productLink->getLinkType();
     }
 
+    public function getLinkedProductSku(): string
+    {
+        return $this->productLink->getLinkedProductSku();
+    }
+
     public function equals($object): bool
     {
         return $object instanceof self
