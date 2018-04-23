@@ -36,4 +36,12 @@ class SaveProductLinkAssociationCommandTest extends CommandTest
         self::assertSame('skuA', $command->getProductSku());
         self::assertTrue($command->getData()->equals($links));
     }
+
+    public function testEquals()
+    {
+        $productLink = ProductLink::of('skuA', 'skuB', ProductLink::LINK_TYPE_ASSOCIATED);
+        $link1 = ProductLinkAssociation::of($productLink);
+        $link2 = ProductLinkAssociation::of($productLink);
+        self::assertTrue($link1->equals($link2));
+    }
 }
