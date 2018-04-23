@@ -13,7 +13,7 @@ class CreateSaveProductLinkCommands
     {
         return Pipeline::of(
             CreateDiffs::fromIterables(function (ProductLinkAssociation $links) {
-                return $links->getProductSku();
+                return $links->getProductSku() . $links->getLinkType() . $links->getLinkedProductSku();
             }),
             self::fromDiffs()
         );
