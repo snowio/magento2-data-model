@@ -123,5 +123,4 @@ final class ProductLink implements ValueObject
         $this->linkType = $linkType;
         $this->linkedProductType = self::PRODUCT_TYPE_SIMPLE;
     }
-
 }

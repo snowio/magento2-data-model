@@ -11,14 +11,12 @@ class CreateSaveProductLinkCommands
 {
     public static function fromIterables(): Transform
     {
-        $output = Pipeline::of(
+        return Pipeline::of(
             CreateDiffs::fromIterables(function (ProductLinkAssociation $links) {
                 return $links->getProductSku();
             }),
             self::fromDiffs()
         );
-
-        return $output;
     }
 
     public static function fromDiffs(): Transform

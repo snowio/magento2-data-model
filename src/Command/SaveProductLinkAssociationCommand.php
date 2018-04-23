@@ -42,6 +42,5 @@ final class SaveProductLinkAssociationCommand extends Command
 
     private function __construct()
     {
-
     }
 }
