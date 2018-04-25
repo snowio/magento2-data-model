@@ -43,6 +43,16 @@ final class ExtensionAttributeSet implements \IteratorAggregate, ValueObject
         return $extensionAttributes;
     }
 
+    public static function fromJson(array $json): self
+    {
+        $items = [];
+        foreach ($json as $code => $value) {
+            $items[] = ExtensionAttribute::fromJson([$code => $value]);
+        }
+
+        return self::of($items);
+    }
+
     private static function itemsAreEqual(
         ExtensionAttribute $extensionAttribute,
         ExtensionAttribute $otherExtensionAttribute

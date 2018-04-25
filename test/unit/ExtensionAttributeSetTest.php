@@ -87,4 +87,27 @@ class ExtensionAttributeSetTest extends TestCase
             ->equals(ExtensionAttribute::of('attribute_set_code', 'general')));
         self::assertNull($extensionAttributeSet->get('attribute_group_code'));
     }
+
+    public function testFromJson()
+    {
+        $extensionAttributeSet = ExtensionAttributeSet::of([
+            ExtensionAttribute::of('attribute_set_code', 'general'),
+            ExtensionAttribute::of('user_configuration_type', 'setting'),
+            ExtensionAttribute::of('finance_vector', [
+                'discount_weighting' => 0.23,
+                'user_eligibility' => 89.4
+            ]),
+        ]);
+
+        self::assertTrue(
+            ExtensionAttributeSet::fromJson([
+                    'attribute_set_code' => 'general',
+                    'user_configuration_type' => 'setting',
+                    'finance_vector' => [
+                        'discount_weighting' => 0.23,
+                        'user_eligibility' => 89.4
+                    ]
+                ]
+            )->equals($extensionAttributeSet));
+    }
 }
