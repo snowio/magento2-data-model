@@ -1129,13 +1129,6 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withSku(string $sku): self
-    {
-        $result = clone $this;
-        $result->sku = $sku;
-        return $result;
-    }
-
     public function withStoreId(int $storeId): self
     {
         $result = clone $this;
