@@ -9,6 +9,12 @@ class ExtensionAttribute implements ValueObject
         return new self($code, $value);
     }
 
+    public static function fromJson(array $json): self
+    {
+        $value = reset($json);
+        return self::of(key($json), $value);
+    }
+
     public function getCode(): string
     {
         return $this->code;

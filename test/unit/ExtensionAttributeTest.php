@@ -33,4 +33,12 @@ class ExtensionAttributeTest extends TestCase
         self::assertFalse($extensionAttribute->equals(ExtensionAttribute::of('attribute_set_code', 'default2')));
         self::assertFalse($extensionAttribute->equals(CustomAttribute::of('attribute_set_code', 'default')));
     }
+
+    public function testFromJson()
+    {
+        $extensionAttribute = ExtensionAttribute::of('attribute_set_code', 'default');
+        self::assertTrue(ExtensionAttribute::fromJson([
+           'attribute_set_code' => 'default'
+        ])->equals($extensionAttribute));
+    }
 }
