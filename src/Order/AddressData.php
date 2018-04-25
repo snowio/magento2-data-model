@@ -90,7 +90,7 @@ final class AddressData implements ValueObject
         return $this->fax;
     }
 
-    public function getFirstname() : ?string
+    public function getFirstname() : string
     {
         return $this->firstname;
     }
