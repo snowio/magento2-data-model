@@ -100,7 +100,7 @@ final class AddressData implements ValueObject
         return $this->lastname;
     }
 
-    public function getMiddlename() : string
+    public function getMiddlename() : ?string
     {
         return $this->middlename;
     }
