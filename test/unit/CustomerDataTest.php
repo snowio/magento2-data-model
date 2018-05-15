@@ -48,6 +48,8 @@ class CustomerDataTest extends TestCase
             ->withPrefix('Mr')
             ->withSuffix('suffix')
             ->withGender('1')
+            ->withCreatedAt('2018-01-01 10:00:00')
+            ->withUpdatedAt('2018-01-01 10:00:00')
             ->withCreatedIn('StoreName')
             ->withConfirmation('something')
             ->withTaxVAT('x')
@@ -76,8 +78,8 @@ class CustomerDataTest extends TestCase
             'default_billing' => null,
             'default_shipping' => null,
             'confirmation' => 'something',
-            'created_at' => null,
-            'updated_at' => null,
+            'created_at' => '2018-01-01 10:00:00',
+            'updated_at' => '2018-01-01 10:00:00',
             'created_in' => 'StoreName',
             'dob' => '1985-04-03',
             'middlename' => 'middle',
