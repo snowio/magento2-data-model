@@ -14,6 +14,7 @@ class SaveCustomerCommandTest extends TestCase
         ->withTimestamp(1509530316);
         self::assertEquals([
             '@timestamp' => (float)1509530316,
+            'customerId' => 0,
             'customer' => [
                 'id' => null,
                 'email' => 'test@amp.co',
