@@ -39,9 +39,25 @@ class SaveCustomerCommandTest extends TestCase
         ], $command->toJson());
     }
 
-    public function testAccessor()
+    public function testCustomerIdFromCommandPayload()
+    {
+        $command = SaveCustomerCommand::of(
+            CustomerData::of('test@amp.co')->withId(99)
+        )->withTimestamp(1509530316);
+
+        self::assertArraySubset(['customerId' => 99], $command->toJson());
+    }
+
+    public function testGetCustomerDataAccessor()
     {
         $command = SaveCustomerCommand::of(CustomerData::of('test@amp.co'));
         self::assertTrue((CustomerData::of('test@amp.co'))->equals($command->getCustomerData()));
+    }
+
+    public function testEquals()
+    {
+        $command1 = SaveCustomerCommand::of(CustomerData::of('test@amp.co'));
+        $command2 = SaveCustomerCommand::of(CustomerData::of('test@amp.co'));
+        self::assertTrue($command1->equals($command2));
     }
 }
