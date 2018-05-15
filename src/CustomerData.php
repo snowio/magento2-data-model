@@ -26,7 +26,8 @@ final class CustomerData implements ValueObject
     private $defaultBilling;
     private $defaultShipping;
     private $createdIn;
-    private $dob;
+    private $createdAt;
+    private $updatedAt;
 
     public static function of(string $email): self
     {
@@ -48,8 +49,10 @@ final class CustomerData implements ValueObject
             'default_billing' => $this->defaultBilling,
             'default_shipping' => $this->defaultShipping,
             'confirmation' => $this->confirmation,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
             'created_in' => $this->createdIn,
-            'dob' => $this->dob,
+            'dob' => $this->dateOfBirth,
             'middlename' => $this->middlename,
             'prefix' => $this->prefix,
             'suffix' => $this->suffix,
@@ -153,6 +156,42 @@ final class CustomerData implements ValueObject
         return $this->confirmation;
     }
 
+    public function withCreatedAt($createdAt)
+    {
+        $result = clone $this;
+        $result->createdAt = $createdAt;
+        return $result;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function withCreatedIn($createdIn)
+    {
+        $result = clone $this;
+        $result->createdIn = $createdIn;
+        return $result;
+    }
+
+    public function getCreatedIn()
+    {
+        return $this->createdIn;
+    }
+
+    public function withUpdatedAt($updatedAt)
+    {
+        $result = clone $this;
+        $result->updatedAt = $updatedAt;
+        return $result;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
     public function withTaxVAT($taxVAT)
     {
         $result = clone $this;
@@ -225,31 +264,6 @@ final class CustomerData implements ValueObject
         return $this->address;
     }
 
-    public function withCustomAttributes($customAttributes)
-    {
-        $result = clone $this;
-        $result->customAttributes = $customAttributes;
-        return $result;
-    }
-
-    public function getCustomAttributes()
-    {
-        return $this->customAttributes;
-    }
-
-    public function withExtensionAttributes($extensionAttributes)
-    {
-        $result = clone $this;
-        $result->extensionAttributes = $extensionAttributes;
-        return $result;
-    }
-
-    public function getExtensionAttributes()
-    {
-        return $this->extensionAttributes;
-    }
-
-
     public function withStoreId(int $storeId): self
     {
         $result = clone $this;
@@ -274,7 +288,9 @@ final class CustomerData implements ValueObject
         ($this->defaultShipping === $otherCustomerData->defaultShipping) &&
         ($this->confirmation === $otherCustomerData->confirmation) &&
         ($this->createdIn === $otherCustomerData->createdIn) &&
-        ($this->dob === $otherCustomerData->dob) &&
+        ($this->createdAt === $otherCustomerData->createdAt) &&
+        ($this->updatedAt === $otherCustomerData->updatedAt) &&
+        ($this->dateOfBirth === $otherCustomerData->dateOfBirth) &&
         ($this->middlename === $otherCustomerData->middlename) &&
         ($this->prefix === $otherCustomerData->prefix) &&
         ($this->suffix === $otherCustomerData->suffix) &&

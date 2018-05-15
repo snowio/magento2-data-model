@@ -24,6 +24,8 @@ class SaveCustomerCommandTest extends TestCase
                 'default_billing' => null,
                 'default_shipping' => null,
                 'confirmation' => null,
+                'created_at' => null,
+                'updated_at' => null,
                 'created_in' => null,
                 'dob' => null,
                 'middlename' => null,

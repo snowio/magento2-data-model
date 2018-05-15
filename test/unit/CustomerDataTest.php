@@ -22,6 +22,8 @@ class CustomerDataTest extends TestCase
             'default_billing' => null,
             'default_shipping' => null,
             'confirmation' => null,
+            'created_at' => null,
+            'updated_at' => null,
             'created_in' => null,
             'dob' => null,
             'middlename' => null,
@@ -46,6 +48,7 @@ class CustomerDataTest extends TestCase
             ->withPrefix('Mr')
             ->withSuffix('suffix')
             ->withGender('1')
+            ->withCreatedIn('StoreName')
             ->withConfirmation('something')
             ->withTaxVAT('x')
             ->withFirstname('first')
@@ -73,8 +76,10 @@ class CustomerDataTest extends TestCase
             'default_billing' => null,
             'default_shipping' => null,
             'confirmation' => 'something',
-            'created_in' => null,
-            'dob' => null,
+            'created_at' => null,
+            'updated_at' => null,
+            'created_in' => 'StoreName',
+            'dob' => '1985-04-03',
             'middlename' => 'middle',
             'prefix' => 'Mr',
             'suffix' => 'suffix',
@@ -97,6 +102,59 @@ class CustomerDataTest extends TestCase
 
         self::assertTrue($customer->equals(CustomerData::of('test@amp.co')));
         self::assertFalse($customer->equals(CustomerData::of('test2@amp.co')));
+    }
+
+    public function testGetters()
+    {
+        $customer = CustomerData::of('test@amp.co')
+            ->withId(1)
+            ->withStoreId(1)
+            ->withWebsiteId(1)
+            ->withGroupId(1)
+            ->withPrefix('Mr')
+            ->withSuffix('suffix')
+            ->withGender('1')
+            ->withConfirmation('something')
+            ->withTaxVAT('x')
+            ->withFirstname('first')
+            ->withLastname('last')
+            ->withMiddlename('middle')
+            ->withDateOfBirth('1985-04-03')
+            ->withAddress('some address')
+            ->withCustomAttributes(
+                CustomAttributeSet::of([
+                    CustomAttribute::of('test', 1)
+                ])
+            )
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 2)
+                ])
+            );
+
+        self::assertSame([
+            'id' => $customer->getId(),
+            'email' => $customer->getEmail(),
+            'firstname' => $customer->getFirstname(),
+            'lastname' => $customer->getLastname(),
+            'group_id' => $customer->getGroupId(),
+            'default_billing' => null,//@todo
+            'default_shipping' => null,//@todo
+            'confirmation' => $customer->getConfirmation(),
+            'created_at' => $customer->getCreatedAt(),
+            'updated_at' => $customer->getUpdatedAt(),
+            'created_in' => $customer->getCreatedIn(),
+            'dob' => $customer->getDateOfBirth(),
+            'middlename' => $customer->getMiddlename(),
+            'prefix' => $customer->getPrefix(),
+            'suffix' => $customer->getSuffix(),
+            'gender' => $customer->getGender(),
+            'store_id' => $customer->getStoreId(),
+            'taxvat' => $customer->getTaxVAT(),
+            'website_id' => $customer->getWebsiteId(),
+            'extension_attributes' => $customer->getExtensionAttributes()->toJson(),
+            'custom_attributes' => $customer->getCustomAttributes()->toJson()
+        ], $customer->toJson());
     }
 
     public function testEqualsComplete()
