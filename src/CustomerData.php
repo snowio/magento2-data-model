@@ -22,18 +22,19 @@ final class CustomerData implements ValueObject
     private $taxVAT;
     private $confirmation;
     private $dateOfBirth;
-    private $address;
     private $defaultBilling;
     private $defaultShipping;
     private $createdIn;
     private $createdAt;
     private $updatedAt;
+    private $addresses;
 
     public static function of(string $email): self
     {
         $productData = new self($email);
         $productData->customAttributes = CustomAttributeSet::create();
         $productData->extensionAttributes = ExtensionAttributeSet::create();
+        $productData->addresses = AddressSet::create();
 
         return $productData;
     }
@@ -41,7 +42,7 @@ final class CustomerData implements ValueObject
     public function toJson(): array
     {
         $json = [
-            'id' => $this->id,
+            'id' => (int) $this->id,
             'email' => $this->email,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
@@ -63,6 +64,11 @@ final class CustomerData implements ValueObject
             'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson()
         ];
+
+        // optionals
+        if ($this->addresses->count()) {
+            $json['addresses'] = $this->addresses->toJson();
+        }
 
         return $json;
     }
@@ -120,7 +126,7 @@ final class CustomerData implements ValueObject
         return $this->prefix;
     }
 
-    public function withSuffix($suffix)
+    public function withSuffix($suffix): self
     {
         $result = clone $this;
         $result->suffix = $suffix;
@@ -132,7 +138,7 @@ final class CustomerData implements ValueObject
         return $this->suffix;
     }
 
-    public function withGender($gender)
+    public function withGender($gender): self
     {
         $result = clone $this;
         $result->gender = $gender;
@@ -144,7 +150,7 @@ final class CustomerData implements ValueObject
         return $this->gender;
     }
 
-    public function withConfirmation($confirmation)
+    public function withConfirmation($confirmation): self
     {
         $result = clone $this;
         $result->confirmation = $confirmation;
@@ -156,7 +162,7 @@ final class CustomerData implements ValueObject
         return $this->confirmation;
     }
 
-    public function withCreatedAt($createdAt)
+    public function withCreatedAt($createdAt): self
     {
         $result = clone $this;
         $result->createdAt = $createdAt;
@@ -168,7 +174,7 @@ final class CustomerData implements ValueObject
         return $this->createdAt;
     }
 
-    public function withCreatedIn($createdIn)
+    public function withCreatedIn($createdIn): self
     {
         $result = clone $this;
         $result->createdIn = $createdIn;
@@ -180,7 +186,7 @@ final class CustomerData implements ValueObject
         return $this->createdIn;
     }
 
-    public function withUpdatedAt($updatedAt)
+    public function withUpdatedAt($updatedAt): self
     {
         $result = clone $this;
         $result->updatedAt = $updatedAt;
@@ -192,7 +198,7 @@ final class CustomerData implements ValueObject
         return $this->updatedAt;
     }
 
-    public function withTaxVAT($taxVAT)
+    public function withTaxVAT($taxVAT): self
     {
         $result = clone $this;
         $result->taxVAT = $taxVAT;
@@ -204,7 +210,7 @@ final class CustomerData implements ValueObject
         return $this->taxVAT;
     }
 
-    public function withFirstname($firstname)
+    public function withFirstname($firstname): self
     {
         $result = clone $this;
         $result->firstname = $firstname;
@@ -216,31 +222,31 @@ final class CustomerData implements ValueObject
         return $this->firstname;
     }
 
-    public function withLastname($lastname)
+    public function withLastname($lastname): self
     {
         $result = clone $this;
         $result->lastname = $lastname;
         return $result;
     }
 
-    public function getLastname()
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    public function withMiddlename($middlename)
+    public function withMiddlename(string $middlename=null): self
     {
         $result = clone $this;
         $result->middlename = $middlename;
         return $result;
     }
 
-    public function getMiddlename()
+    public function getMiddlename(): ?string
     {
         return $this->middlename;
     }
 
-    public function withDateOfBirth($dateOfBirth)
+    public function withDateOfBirth($dateOfBirth): self
     {
         $result = clone $this;
         $result->dateOfBirth = $dateOfBirth;
@@ -252,16 +258,16 @@ final class CustomerData implements ValueObject
         return $this->dateOfBirth;
     }
 
-    public function withAddress($address)
+    public function withAddresses(AddressSet $addressSet): self
     {
         $result = clone $this;
-        $result->address = $address;
+        $result->addresses = $addressSet;
         return $result;
     }
 
-    public function getAddress()
+    public function getAddresses(): AddressSet
     {
-        return $this->address;
+        return $this->addresses;
     }
 
     public function withStoreId(int $storeId): self

@@ -31,6 +31,15 @@ final class CustomAttributeSet implements \IteratorAggregate, ValueObject
         }, array_values($this->items));
     }
 
+    public static function fromJson(array $json): self
+    {
+        $items = [];
+        foreach ($json as $code => $value) {
+            $items[] = CustomAttribute::of($value['attribute_code'], $value['value']);
+        }
+        return self::of($items);
+    }
+
     private static function itemsAreEqual(CustomAttribute $customAttribute, CustomAttribute $otherCustomAttribute): bool
     {
         return $customAttribute->equals($otherCustomAttribute);
