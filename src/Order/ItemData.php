@@ -48,7 +48,7 @@ final class ItemData implements ValueObject
         $result->discountInvoiced = (string)( $json['discount_invoiced'] ?? null);
         $result->discountPercent =(string)(  $json['discount_percent'] ?? null);
         $result->discountRefunded = (string)( $json['discount_refunded'] ?? null);
-        $result->eventId = (int) $json['event_id'] ?? null;
+        $result->eventId = (int) ($json['event_id'] ?? null);
         $result->extOrderItemId = (string)( $json['ext_order_item_id'] ?? null);
         $result->freeShipping = $json['free_shipping'] ?? null;
         $result->gwBasePrice = (string)( $json['gw_base_price'] ?? null);
