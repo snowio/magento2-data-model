@@ -19,7 +19,7 @@ class PaymentDataTest extends TestCase
     public function testFromJson()
     {
         $payment = PaymentData::fromJson(self::getPaymentJson());
-        self::assertEquals("string", $payment->getAccountStatus());
+        self::assertEquals(null, $payment->getAccountStatus());
         self::assertEquals("string", $payment->getAdditionalData());
         self::assertEquals(["string"], $payment->getAdditionalInformation());
         self::assertEquals("string", $payment->getAddressStatus());
@@ -103,7 +103,7 @@ class PaymentDataTest extends TestCase
     public static function getPaymentJson(): array
     {
         return [
-            "account_status" => "string",
+            "account_status" => null,
             "additional_data" => "string",
             "additional_information" => [
                 "string"
@@ -180,8 +180,7 @@ class PaymentDataTest extends TestCase
 
     public static function getPayment(): PaymentData
     {
-        return PaymentData::of("string", "string", "string")
-            ->withAccountStatus("string")
+        return PaymentData::of(null, "string", "string")
             ->withAdditionalData("string")
             ->withAdditionalInformation(["string"])
             ->withAddressStatus("string")

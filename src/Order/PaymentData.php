@@ -7,7 +7,7 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class PaymentData implements ValueObject
 {
-    public static function of(string $accountStatus, string $ccLast4, string $method)
+    public static function of($accountStatus, string $ccLast4, string $method)
     {
         return new self($accountStatus, $ccLast4, $method);
     }
@@ -70,7 +70,7 @@ final class PaymentData implements ValueObject
         return $result;
     }
 
-    public function getAccountStatus() : string
+    public function getAccountStatus() : ?string
     {
         return $this->accountStatus;
     }
@@ -847,7 +847,7 @@ final class PaymentData implements ValueObject
     private $shippingRefunded;
     private $extensionAttributes;
 
-    private function __construct(string $accountStatus, string $ccLast4, string $method)
+    private function __construct($accountStatus, string $ccLast4, string $method)
     {
         $this->accountStatus = $accountStatus;
         $this->ccLast4 = $ccLast4;
