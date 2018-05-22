@@ -180,7 +180,7 @@ class PaymentDataTest extends TestCase
 
     public static function getPayment(): PaymentData
     {
-        return PaymentData::of(null, "string", "string")
+        return PaymentData::create()
             ->withAdditionalData("string")
             ->withAdditionalInformation(["string"])
             ->withAddressStatus("string")

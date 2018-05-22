@@ -7,14 +7,17 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class PaymentData implements ValueObject
 {
-    public static function of($accountStatus, string $ccLast4, string $method)
+    public static function create()
     {
-        return new self($accountStatus, $ccLast4, $method);
+        return new self();
     }
 
     public static function fromJson(array $json): self
     {
-        $result = self::of($json['account_status'], $json['cc_last4'], $json['method']);
+        $result = self::create();
+        $result->method = $json['method'] ?? null;
+        $result->ccLast4 = $json['cc_last4'] ?? null;
+        $result->accountStatus = $json['account_status'] ?? null;
         $result->additionalData = $json['additional_data'] ?? null;
         $result->additionalInformation = $json['additional_information'] ?? [];
         $result->addressStatus = $json['address_status'] ?? null;
@@ -300,7 +303,7 @@ final class PaymentData implements ValueObject
         return $this->lastTransId;
     }
 
-    public function getMethod() : string
+    public function getMethod() : ?string
     {
         return $this->method;
     }
@@ -847,11 +850,8 @@ final class PaymentData implements ValueObject
     private $shippingRefunded;
     private $extensionAttributes;
 
-    private function __construct($accountStatus, string $ccLast4, string $method)
+    private function __construct()
     {
-        $this->accountStatus = $accountStatus;
-        $this->ccLast4 = $ccLast4;
-        $this->method = $method;
         $this->extensionAttributes = ExtensionAttributeSet::create();
     }
 
