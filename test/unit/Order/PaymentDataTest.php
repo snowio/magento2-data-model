@@ -19,7 +19,7 @@ class PaymentDataTest extends TestCase
     public function testFromJson()
     {
         $payment = PaymentData::fromJson(self::getPaymentJson());
-        self::assertEquals(null, $payment->getAccountStatus());
+        self::assertNull($payment->getAccountStatus());
         self::assertEquals("string", $payment->getAdditionalData());
         self::assertEquals(["string"], $payment->getAdditionalInformation());
         self::assertEquals("string", $payment->getAddressStatus());
