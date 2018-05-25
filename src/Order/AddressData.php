@@ -15,8 +15,8 @@ final class AddressData implements ValueObject
     public static function fromJson(array $json): self
     {
         $result = new self;
-        $result->addressType = $json['address_type'];
-        $result->city = $json['city'];
+        $result->addressType = $json['address_type'] ?? null;
+        $result->city = $json['city'] ?? null;
         $result->company = $json['company'] ?? null;
         $result->countryId = $json['country_id'] ?? null;
         $result->customerAddressId = $json['customer_address_id'] ?? null;
@@ -24,18 +24,18 @@ final class AddressData implements ValueObject
         $result->email = $json['email'] ?? null;
         $result->entityId = $json['entity_id'] ?? null;
         $result->fax = $json['fax'] ?? null;
-        $result->firstname = $json['firstname'];
-        $result->lastname = $json['lastname'];
+        $result->firstname = $json['firstname'] ?? null;
+        $result->lastname = $json['lastname'] ?? null;
         $result->middlename = $json['middlename'] ?? null;
         $result->parentId = $json['parent_id'] ?? null;
-        $result->postcode = $json['postcode'];
+        $result->postcode = $json['postcode'] ?? null;
         $result->prefix = $json['prefix'] ?? null;
         $result->region = $json['region'] ?? null;
         $result->regionCode = $json['region_code'] ?? null;
         $result->regionId = $json['region_id'] ?? null;
-        $result->street = $json['street'] ?? [] ?? null;
+        $result->street = $json['street'] ?? [];
         $result->suffix = $json['suffix'] ?? null;
-        $result->telephone = $json['telephone'];
+        $result->telephone = $json['telephone'] ?? null;
         $result->vatId = $json['vat_id'] ?? null;
         $result->vatIsValid = $json['vat_is_valid'] ?? null;
         $result->vatRequestDate = $json['vat_request_date'] ?? null;
@@ -45,12 +45,12 @@ final class AddressData implements ValueObject
         return $result;
     }
 
-    public function getAddressType() : string
+    public function getAddressType() : ?string
     {
         return $this->addressType;
     }
 
-    public function getCity() : string
+    public function getCity() : ?string
     {
         return $this->city;
     }
@@ -90,12 +90,12 @@ final class AddressData implements ValueObject
         return $this->fax;
     }
 
-    public function getFirstname() : string
+    public function getFirstname() : ?string
     {
         return $this->firstname;
     }
 
-    public function getLastname() : string
+    public function getLastname() : ?string
     {
         return $this->lastname;
     }
@@ -110,7 +110,7 @@ final class AddressData implements ValueObject
         return $this->parentId;
     }
 
-    public function getPostcode() : string
+    public function getPostcode() : ?string
     {
         return $this->postcode;
     }

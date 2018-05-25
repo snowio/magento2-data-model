@@ -23,7 +23,7 @@ class OrderDataTest extends TestCase
     public function testFromJson()
     {
         $order = OrderData::fromJson($this->getOrderJson());
-        self::assertEquals("1", $order->getAdjustmentNegative());
+        self::assertEquals("", $order->getAdjustmentNegative());
         self::assertEquals("4", $order->getAdjustmentPositive());
         self::assertEquals("48,434,4363", $order->getAppliedRuleIds());
         self::assertEquals("5", $order->getBaseAdjustmentNegative());
@@ -177,7 +177,6 @@ class OrderDataTest extends TestCase
     public function getOrder()
     {
         return  OrderData::of("helham@test.com", "21.47", "100.032")
-            ->withAdjustmentNegative("1")
             ->withAdjustmentPositive("4")
             ->withAppliedRuleIds("48,434,4363")
             ->withBaseAdjustmentNegative("5")
@@ -319,7 +318,7 @@ class OrderDataTest extends TestCase
     public static function getOrderJson(): array
     {
         return [
-            "adjustment_negative" => "1",
+            "adjustment_negative" => null,
             "adjustment_positive" => "4",
             "applied_rule_ids" => "48,434,4363",
             "base_adjustment_negative" => "5",

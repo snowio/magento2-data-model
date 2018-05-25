@@ -7,33 +7,36 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class PaymentData implements ValueObject
 {
-    public static function of(string $accountStatus, string $ccLast4, string $method)
+    public static function create()
     {
-        return new self($accountStatus, $ccLast4, $method);
+        return new self();
     }
 
     public static function fromJson(array $json): self
     {
-        $result = self::of($json['account_status'], $json['cc_last4'], $json['method']);
+        $result = self::create();
+        $result->method = $json['method'] ?? null;
+        $result->ccLast4 = $json['cc_last4'] ?? null;
+        $result->accountStatus = $json['account_status'] ?? null;
         $result->additionalData = $json['additional_data'] ?? null;
         $result->additionalInformation = $json['additional_information'] ?? [];
         $result->addressStatus = $json['address_status'] ?? null;
-        $result->amountAuthorized = (string)$json['amount_authorized'] ?? null;
-        $result->amountCanceled = (string)$json['amount_canceled'] ?? null;
-        $result->amountOrdered = (string)$json['amount_ordered'] ?? null;
-        $result->amountPaid = (string)$json['amount_paid'] ?? null;
-        $result->amountRefunded = (string)$json['amount_refunded'] ?? null;
+        $result->amountAuthorized = (string)($json['amount_authorized'] ?? null);
+        $result->amountCanceled = (string)($json['amount_canceled'] ?? null);
+        $result->amountOrdered = (string)($json['amount_ordered'] ?? null);
+        $result->amountPaid = (string)($json['amount_paid'] ?? null);
+        $result->amountRefunded = (string)($json['amount_refunded'] ?? null);
         $result->anetTransMethod = $json['anet_trans_method'] ?? null;
-        $result->baseAmountAuthorized = (string)$json['base_amount_authorized'] ?? null;
-        $result->baseAmountCanceled = (string)$json['base_amount_canceled'] ?? null;
-        $result->baseAmountOrdered = (string)$json['base_amount_ordered'] ?? null;
-        $result->baseAmountPaid = (string)$json['base_amount_paid'] ?? null;
-        $result->baseAmountPaidOnline = (string)$json['base_amount_paid_online'] ?? null;
-        $result->baseAmountRefunded = (string)$json['base_amount_refunded'] ?? null;
-        $result->baseAmountRefundedOnline = (string)$json['base_amount_refunded_online'] ?? null;
-        $result->baseShippingAmount = (string)$json['base_shipping_amount'] ?? null;
-        $result->baseShippingCaptured = (string)$json['base_shipping_captured'] ?? null;
-        $result->baseShippingRefunded = (string)$json['base_shipping_refunded'] ?? null;
+        $result->baseAmountAuthorized = (string)($json['base_amount_authorized'] ?? null);
+        $result->baseAmountCanceled = (string)($json['base_amount_canceled'] ?? null);
+        $result->baseAmountOrdered = (string)($json['base_amount_ordered'] ?? null);
+        $result->baseAmountPaid = (string)($json['base_amount_paid'] ?? null);
+        $result->baseAmountPaidOnline = (string)($json['base_amount_paid_online'] ?? null);
+        $result->baseAmountRefunded = (string)($json['base_amount_refunded'] ?? null);
+        $result->baseAmountRefundedOnline = (string)($json['base_amount_refunded_online'] ?? null);
+        $result->baseShippingAmount = (string)($json['base_shipping_amount'] ?? null);
+        $result->baseShippingCaptured = (string)($json['base_shipping_captured'] ?? null);
+        $result->baseShippingRefunded = (string)($json['base_shipping_refunded'] ?? null);
         $result->ccApproval = $json['cc_approval'] ?? null;
         $result->ccAvsStatus = $json['cc_avs_status'] ?? null;
         $result->ccCidStatus = $json['cc_cid_status'] ?? null;
@@ -63,14 +66,14 @@ final class PaymentData implements ValueObject
         $result->poNumber = $json['po_number'] ?? null;
         $result->protectionEligibility = $json['protection_eligibility'] ?? null;
         $result->quotePaymentId = $json['quote_payment_id'] ?? null;
-        $result->shippingAmount = (string)$json['shipping_amount'] ?? null;
-        $result->shippingCaptured = (string)$json['shipping_captured'] ?? null;
-        $result->shippingRefunded = (string)$json['shipping_refunded'] ?? null;
+        $result->shippingAmount = (string)($json['shipping_amount'] ?? null);
+        $result->shippingCaptured = (string)($json['shipping_captured'] ?? null);
+        $result->shippingRefunded = (string)($json['shipping_refunded'] ?? null);
         $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         return $result;
     }
 
-    public function getAccountStatus() : string
+    public function getAccountStatus() : ?string
     {
         return $this->accountStatus;
     }
@@ -300,7 +303,7 @@ final class PaymentData implements ValueObject
         return $this->lastTransId;
     }
 
-    public function getMethod() : string
+    public function getMethod() : ?string
     {
         return $this->method;
     }
@@ -345,7 +348,7 @@ final class PaymentData implements ValueObject
         return $this->extensionAttributes;
     }
 
-    public function withAccountStatus(string $accountStatus): self
+    public function withAccountStatus(?string $accountStatus): self
     {
         $result = clone $this;
         $result->accountStatus = $accountStatus;
@@ -847,11 +850,8 @@ final class PaymentData implements ValueObject
     private $shippingRefunded;
     private $extensionAttributes;
 
-    private function __construct(string $accountStatus, string $ccLast4, string $method)
+    private function __construct()
     {
-        $this->accountStatus = $accountStatus;
-        $this->ccLast4 = $ccLast4;
-        $this->method = $method;
         $this->extensionAttributes = ExtensionAttributeSet::create();
     }
 
