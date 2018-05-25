@@ -348,7 +348,7 @@ final class PaymentData implements ValueObject
         return $this->extensionAttributes;
     }
 
-    public function withAccountStatus(string $accountStatus): self
+    public function withAccountStatus(?string $accountStatus): self
     {
         $result = clone $this;
         $result->accountStatus = $accountStatus;
