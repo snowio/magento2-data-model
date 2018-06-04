@@ -235,7 +235,7 @@ final class ProductData implements ValueObject
 
     public function equals($otherProductData): bool
     {
-        return $otherProductData instanceof ProductData &&
+        $equals =  $otherProductData instanceof ProductData &&
         ($this->sku === $otherProductData->sku) &&
         ($this->name === $otherProductData->name) &&
         ($this->status === $otherProductData->status) &&
@@ -248,6 +248,21 @@ final class ProductData implements ValueObject
         $this->tierPrices->equals($otherProductData->tierPrices) &&
         $this->productLinks->equals($otherProductData->productLinks) &&
         ($this->storeCode === $otherProductData->storeCode);
+
+        $mediaEquals = true;
+        if (
+            (isset($this->mediaGalleryEntries) && isset($otherProductData->mediaGalleryEntries)) &&
+            (null == $this->mediaGalleryEntries && null !== $otherProductData->mediaGalleryEntries) ||
+            (null !== $this->mediaGalleryEntries && null == $otherProductData->mediaGalleryEntries)
+        ) {
+            $mediaEquals = false;
+        }
+
+        if (null !== $this->mediaGalleryEntries && null !== $otherProductData->mediaGalleryEntries) { //both media gallleries are not null
+            $mediaEquals = $this->mediaGalleryEntries->equals($otherProductData->mediaGalleryEntries);
+        }
+
+        return $mediaEquals && $equals;
     }
 
     private $sku;
