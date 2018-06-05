@@ -331,4 +331,43 @@ class ProductDataTest extends TestCase
         );
         self::assertFalse((ProductData::of('test-product', 'test'))->equals(CustomAttribute::of('foo', 'bar')));
     }
+
+    public function testFalsyCheckMediaGalleryEntrySet()
+    {
+        # if both are null
+        $product11 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        $product12 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        self::assertTrue($product11->equals($product12));
+
+        // just one is null and the other is not set
+        $product11 = ProductData::of('snowio-test-product', 'Snowio Test Product');
+        $product12 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        self::assertTrue($product11->equals($product12));
+
+        // empty set is different than null
+        $product11 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(MediaGalleryEntrySet::create());
+        $product12 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        self::assertFalse($product11->equals($product12)); // @todo to fix
+
+        $product21 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        $product22 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(MediaGalleryEntrySet::create());
+        self::assertFalse($product21->equals($product22));
+
+        $product31 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        $product32 = ProductData::of('snowio-test-product', 'Snowio Test Product');
+        self::assertTrue($product31->equals($product32));
+
+        $product41 = ProductData::of('snowio-test-product', 'Snowio Test Product');
+        $product42 = ProductData::of('snowio-test-product', 'Snowio Test Product')
+            ->withMediaGalleryEntries(null);
+        self::assertTrue($product41->equals($product42));
+    }
 }
