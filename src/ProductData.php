@@ -247,22 +247,25 @@ final class ProductData implements ValueObject
         $this->customAttributes->equals($otherProductData->customAttributes) &&
         $this->tierPrices->equals($otherProductData->tierPrices) &&
         $this->productLinks->equals($otherProductData->productLinks) &&
+        $this->mediaGalleryEntriesAreEqual($otherProductData) &&
         ($this->storeCode === $otherProductData->storeCode);
 
-        $mediaEquals = true;
-        if (
-            (isset($this->mediaGalleryEntries) && isset($otherProductData->mediaGalleryEntries)) &&
-            (null == $this->mediaGalleryEntries && null !== $otherProductData->mediaGalleryEntries) ||
-            (null !== $this->mediaGalleryEntries && null == $otherProductData->mediaGalleryEntries)
-        ) {
-            $mediaEquals = false;
+        return $equals;
+    }
+
+    private function mediaGalleryEntriesAreEqual($otherProductData): bool
+    {
+        if ($this->mediaGalleryEntries === null && $otherProductData->mediaGalleryEntries === null) {
+            return true;
+        }
+        //and one is null but not the other (from above && clause we know they aren't both null)
+        if ($this->mediaGalleryEntries === null || $otherProductData->mediaGalleryEntries === null) {
+            return false;
         }
 
-        if (null !== $this->mediaGalleryEntries && null !== $otherProductData->mediaGalleryEntries) { //both media gallleries are not null
-            $mediaEquals = $this->mediaGalleryEntries->equals($otherProductData->mediaGalleryEntries);
-        }
-
-        return $mediaEquals && $equals;
+        //If both products have an empty items mediaGalleryEntries then they are equal - covered by the equals method
+        //If both products have items in mediaGalleryEntries then they could be equal - covered by the equals method
+        return $this->mediaGalleryEntries->equals($otherProductData->mediaGalleryEntries);
     }
 
     private $sku;
