@@ -10,7 +10,6 @@ use SnowIO\Magento2DataModel\Order\ItemData;
 
 class AddressDataTest extends TestCase
 {
-
     public function testToJson()
     {
         $address = self::getAddress();
