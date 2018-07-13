@@ -75,8 +75,8 @@ class PaymentDataTest extends TestCase
         self::assertEquals("0", $payment->getShippingRefunded());
         self::assertTrue(ExtensionAttributeSet::of([
             ExtensionAttribute::of('vault_payment_token', [
-                "entity_id" => 0,
-                "customer_id" => 0,
+                "entity_id" => "0",
+                "customer_id" => "0",
                 "public_hash" => "string",
                 "payment_method_code" => "string",
                 "type" => "string",
