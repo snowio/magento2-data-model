@@ -45,9 +45,7 @@ class AddressDataTest extends TestCase
         self::assertEquals("string", $address->getVatRequestDate());
         self::assertEquals("string", $address->getVatRequestId());
         self::assertEquals(0, $address->getVatRequestSuccess());
-        self::assertTrue(ExtensionAttributeSet::of([
-            ExtensionAttribute::of('area_code', 'AU89')
-        ])->equals($address->getExtensionAttributes()));
+        self::assertTrue(ExtensionAttributeSet::create()->equals($address->getExtensionAttributes()));
         self::assertTrue(self::getAddress()->equals($address));
     }
 
@@ -91,9 +89,7 @@ class AddressDataTest extends TestCase
             "vat_request_date" => "string",
             "vat_request_id" => "string",
             "vat_request_success" => 0,
-            "extension_attributes" => [
-                'area_code' => 'AU89'
-            ]
+            "extension_attributes" => [],
         ];
     }
 
@@ -125,9 +121,6 @@ class AddressDataTest extends TestCase
             ->withVatIsValid(0)
             ->withVatRequestDate("string")
             ->withVatRequestId("string")
-            ->withVatRequestSuccess(0)
-            ->withExtensionAttributes(ExtensionAttributeSet::of([
-                ExtensionAttribute::of('area_code', 'AU89')
-            ]));
+            ->withVatRequestSuccess(0);
     }
 }

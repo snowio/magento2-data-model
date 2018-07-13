@@ -41,7 +41,7 @@ final class AddressData implements ValueObject
         $result->vatRequestDate = $json['vat_request_date'] ?? null;
         $result->vatRequestId = $json['vat_request_id'] ?? null;
         $result->vatRequestSuccess = $json['vat_request_success'] ?? null;
-        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes']);
+        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         return $result;
     }
 
