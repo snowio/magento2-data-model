@@ -18,28 +18,28 @@ final class AddressData implements ValueObject
         $result->addressType = $json['address_type'] ?? null;
         $result->city = $json['city'] ?? null;
         $result->company = $json['company'] ?? null;
-        $result->countryId = $json['country_id'] ?? null;
-        $result->customerAddressId = $json['customer_address_id'] ?? null;
-        $result->customerId = $json['customer_id'] ?? null;
+        $result->countryId = (string) $json['country_id'] ?? null;
+        $result->customerAddressId = (string) $json['customer_address_id'] ?? null;
+        $result->customerId = (string) $json['customer_id'] ?? null;
         $result->email = $json['email'] ?? null;
-        $result->entityId = $json['entity_id'] ?? null;
+        $result->entityId = (string) $json['entity_id'] ?? null;
         $result->fax = $json['fax'] ?? null;
         $result->firstname = $json['firstname'] ?? null;
         $result->lastname = $json['lastname'] ?? null;
         $result->middlename = $json['middlename'] ?? null;
-        $result->parentId = $json['parent_id'] ?? null;
+        $result->parentId = (string) $json['parent_id'] ?? null;
         $result->postcode = $json['postcode'] ?? null;
         $result->prefix = $json['prefix'] ?? null;
         $result->region = $json['region'] ?? null;
         $result->regionCode = $json['region_code'] ?? null;
-        $result->regionId = $json['region_id'] ?? null;
+        $result->regionId = (string) $json['region_id'] ?? null;
         $result->street = $json['street'] ?? [];
         $result->suffix = $json['suffix'] ?? null;
         $result->telephone = $json['telephone'] ?? null;
-        $result->vatId = $json['vat_id'] ?? null;
+        $result->vatId = (string) $json['vat_id'] ?? null;
         $result->vatIsValid = $json['vat_is_valid'] ?? null;
         $result->vatRequestDate = $json['vat_request_date'] ?? null;
-        $result->vatRequestId = $json['vat_request_id'] ?? null;
+        $result->vatRequestId = (string) $json['vat_request_id'] ?? null;
         $result->vatRequestSuccess = $json['vat_request_success'] ?? null;
         $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         return $result;
@@ -65,12 +65,12 @@ final class AddressData implements ValueObject
         return $this->countryId;
     }
 
-    public function getCustomerAddressId(): ?int
+    public function getCustomerAddressId(): ?string
     {
         return $this->customerAddressId;
     }
 
-    public function getCustomerId() : ?int
+    public function getCustomerId() : ?string
     {
         return $this->customerId;
     }
@@ -80,7 +80,7 @@ final class AddressData implements ValueObject
         return $this->email;
     }
 
-    public function getEntityId() : ?int
+    public function getEntityId() : ?string
     {
         return $this->entityId;
     }
@@ -105,7 +105,7 @@ final class AddressData implements ValueObject
         return $this->middlename;
     }
 
-    public function getParentId() : ?int
+    public function getParentId() : ?string
     {
         return $this->parentId;
     }
@@ -130,7 +130,7 @@ final class AddressData implements ValueObject
         return $this->regionCode;
     }
 
-    public function getRegionId() : ?int
+    public function getRegionId() : ?string
     {
         return $this->regionId;
     }
@@ -209,14 +209,14 @@ final class AddressData implements ValueObject
         return $result;
     }
 
-    public function withCustomerAddressId(int $customerAddressId): self
+    public function withCustomerAddressId(string $customerAddressId): self
     {
         $result = clone $this;
         $result->customerAddressId = $customerAddressId;
         return $result;
     }
 
-    public function withCustomerId(int $customerId): self
+    public function withCustomerId(string $customerId): self
     {
         $result = clone $this;
         $result->customerId = $customerId;
@@ -230,7 +230,7 @@ final class AddressData implements ValueObject
         return $result;
     }
 
-    public function withEntityId(int $entityId): self
+    public function withEntityId(string $entityId): self
     {
         $result = clone $this;
         $result->entityId = $entityId;
@@ -265,7 +265,7 @@ final class AddressData implements ValueObject
         return $result;
     }
 
-    public function withParentId(int $parentId): self
+    public function withParentId(string $parentId): self
     {
         $result = clone $this;
         $result->parentId = $parentId;
@@ -300,7 +300,7 @@ final class AddressData implements ValueObject
         return $result;
     }
 
-    public function withRegionId(int $regionId): self
+    public function withRegionId(string $regionId): self
     {
         $result = clone $this;
         $result->regionId = $regionId;

@@ -53,7 +53,7 @@ class ItemDataTest extends TestCase
         self::assertEquals("0", $item->getDiscountInvoiced());
         self::assertEquals("0", $item->getDiscountPercent());
         self::assertEquals("0", $item->getDiscountRefunded());
-        self::assertEquals(100, $item->getEventId());
+        self::assertEquals("100", $item->getEventId());
         self::assertEquals("string", $item->getExtOrderItemId());
         self::assertEquals(1, $item->getFreeShipping());
         self::assertEquals("0", $item->getGwBasePrice());
@@ -62,7 +62,7 @@ class ItemDataTest extends TestCase
         self::assertEquals("0", $item->getGwBaseTaxAmount());
         self::assertEquals("0", $item->getGwBaseTaxAmountInvoiced());
         self::assertEquals("0", $item->getGwBaseTaxAmountRefunded());
-        self::assertEquals(0, $item->getGwId());
+        self::assertEquals("0", $item->getGwId());
         self::assertEquals("0", $item->getGwPrice());
         self::assertEquals("0", $item->getGwPriceInvoiced());
         self::assertEquals("0", $item->getGwPriceRefunded());
@@ -75,17 +75,17 @@ class ItemDataTest extends TestCase
         self::assertEquals("0", $item->getDiscountTaxCompensationRefunded());
         self::assertEquals(1, $item->getIsQtyDecimal());
         self::assertEquals(0, $item->getIsVirtual());
-        self::assertEquals(100, $item->getItemId());
+        self::assertEquals("100", $item->getItemId());
         self::assertEquals(1, $item->getLockedDoInvoice());
         self::assertEquals(1, $item->getLockedDoShip());
         self::assertEquals("string", $item->getName());
         self::assertEquals(0, $item->getNoDiscount());
-        self::assertEquals(10, $item->getOrderId());
+        self::assertEquals("10", $item->getOrderId());
         self::assertEquals("0", $item->getOriginalPrice());
-        self::assertEquals(10, $item->getParentItemId());
+        self::assertEquals("10", $item->getParentItemId());
         self::assertEquals("0", $item->getPrice());
         self::assertEquals("0", $item->getPriceInclTax());
-        self::assertEquals(10, $item->getProductId());
+        self::assertEquals("10", $item->getProductId());
         self::assertEquals("string", $item->getProductType());
         self::assertEquals("0", $item->getQtyBackordered());
         self::assertEquals("0", $item->getQtyCanceled());
@@ -94,13 +94,13 @@ class ItemDataTest extends TestCase
         self::assertEquals("0", $item->getQtyRefunded());
         self::assertEquals("0", $item->getQtyReturned());
         self::assertEquals("0", $item->getQtyShipped());
-        self::assertEquals(0, $item->getQuoteItemId());
+        self::assertEquals("0", $item->getQuoteItemId());
         self::assertEquals("0", $item->getRowInvoiced());
         self::assertEquals("0", $item->getRowTotal());
         self::assertEquals("0", $item->getRowTotalInclTax());
         self::assertEquals("0", $item->getRowWeight());
         self::assertEquals("string", $item->getSku());
-        self::assertEquals(0, $item->getStoreId());
+        self::assertEquals("0", $item->getStoreId());
         self::assertEquals("0", $item->getTaxAmount());
         self::assertEquals("0", $item->getTaxBeforeDiscount());
         self::assertEquals("0", $item->getTaxCanceled());
@@ -130,7 +130,7 @@ class ItemDataTest extends TestCase
         $otherItem = self::getItem();
         self::assertTrue($item->equals($otherItem));
         self::assertFalse(($item->withFreeShipping(0))->equals($otherItem));
-        self::assertFalse($item->equals(StatusHistoryData::of(3, 'foo', 2)));
+        self::assertFalse($item->equals(StatusHistoryData::of("3", 'foo', 2)));
     }
 
     public static function getItemJson(): array
@@ -269,7 +269,7 @@ class ItemDataTest extends TestCase
             ->withDiscountPercent("0")
             ->withDiscountRefunded("0")
             ->withProductOption(ProductOptionDataTest::getProductOption())
-            ->withEventId(100)
+            ->withEventId("100")
             ->withExtOrderItemId("string")
             ->withFreeShipping(1)
             ->withGwBasePrice("0")
@@ -278,7 +278,7 @@ class ItemDataTest extends TestCase
             ->withGwBaseTaxAmount("0")
             ->withGwBaseTaxAmountInvoiced("0")
             ->withGwBaseTaxAmountRefunded("0")
-            ->withGwId(0)
+            ->withGwId("0")
             ->withGwPrice("0")
             ->withGwPriceInvoiced("0")
             ->withGwPriceRefunded("0")
@@ -291,17 +291,17 @@ class ItemDataTest extends TestCase
             ->withDiscountTaxCompensationRefunded("0")
             ->withIsQtyDecimal(1)
             ->withIsVirtual(0)
-            ->withItemId(100)
+            ->withItemId("100")
             ->withLockedDoInvoice(1)
             ->withLockedDoShip(1)
             ->withName("string")
             ->withNoDiscount(0)
-            ->withOrderId(10)
+            ->withOrderId("10")
             ->withOriginalPrice("0")
-            ->withParentItemId(10)
+            ->withParentItemId("10")
             ->withPrice("0")
             ->withPriceInclTax("0")
-            ->withProductId(10)
+            ->withProductId("10")
             ->withProductType("string")
             ->withQtyBackordered("0")
             ->withQtyCanceled("0")
@@ -310,12 +310,12 @@ class ItemDataTest extends TestCase
             ->withQtyRefunded("0")
             ->withQtyReturned("0")
             ->withQtyShipped("0")
-            ->withQuoteItemId(0)
+            ->withQuoteItemId("0")
             ->withRowInvoiced("0")
             ->withRowTotal("0")
             ->withRowTotalInclTax("0")
             ->withRowWeight("0")
-            ->withStoreId(0)
+            ->withStoreId("0")
             ->withTaxAmount("0")
             ->withTaxBeforeDiscount("0")
             ->withTaxCanceled("0")

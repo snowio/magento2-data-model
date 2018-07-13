@@ -75,8 +75,8 @@ class OrderDataTest extends TestCase
         self::assertEquals("helham@test.com", $order->getCustomerEmail());
         self::assertEquals("Ben", $order->getCustomerFirstname());
         self::assertEquals(1, $order->getCustomerGender());
-        self::assertEquals(5, $order->getCustomerGroupId());
-        self::assertEquals(1006, $order->getCustomerId());
+        self::assertEquals("5", $order->getCustomerGroupId());
+        self::assertEquals("1006", $order->getCustomerId());
         self::assertEquals(0, $order->customerIsGuest());
         self::assertEquals("Helham", $order->getCustomerLastname());
         self::assertEquals("Stevenson", $order->getCustomerMiddlename());
@@ -92,7 +92,7 @@ class OrderDataTest extends TestCase
         self::assertEquals("76.893", $order->getDiscountRefunded());
         self::assertEquals(1, $order->getEditIncrement());
         self::assertEquals(1, $order->getEmailSent());
-        self::assertEquals(809, $order->getEntityId());
+        self::assertEquals("809", $order->getEntityId());
         self::assertEquals("web-customer-032089283", $order->getExtCustomerId());
         self::assertEquals("web-order-9833479223", $order->getExtOrderId());
         self::assertEquals(0, $order->getForcedShipmentWithInvoice());
@@ -110,8 +110,8 @@ class OrderDataTest extends TestCase
         self::assertEquals("100.9", $order->getPaymentAuthorizationAmount());
         self::assertEquals(1671675566, $order->getPaymentAuthExpiration());
         self::assertEquals("HI78YU", $order->getProtectCode());
-        self::assertEquals(21, $order->getQuoteAddressId());
-        self::assertEquals(23, $order->getQuoteId());
+        self::assertEquals("21", $order->getQuoteAddressId());
+        self::assertEquals("23", $order->getQuoteId());
         self::assertEquals("TestChildRelation", $order->getRelationChildId());
         self::assertEquals("8392UIH", $order->getRelationChildRealId());
         self::assertEquals("TestParentRelation", $order->getRelationParentId());
@@ -130,7 +130,7 @@ class OrderDataTest extends TestCase
         self::assertEquals("processing", $order->getState());
         self::assertEquals("processing", $order->getStatus());
         self::assertEquals("EUR", $order->getStoreCurrencyCode());
-        self::assertEquals(101, $order->getStoreId());
+        self::assertEquals("101", $order->getStoreId());
         self::assertEquals("Testing tools", $order->getStoreName());
         self::assertEquals("1.09", $order->getStoreToBaseRate());
         self::assertEquals("1.01", $order->getStoreToOrderRate());
@@ -170,7 +170,7 @@ class OrderDataTest extends TestCase
         self::assertFalse($order->equals($otherOrder));
         //change payment data in order
         $otherOrder = OrderData::fromJson($this->getOrderJson());
-        $otherOrder = $otherOrder->withPayment($otherOrder->getPayment()->withEntityId(389));
+        $otherOrder = $otherOrder->withPayment($otherOrder->getPayment()->withEntityId("389"));
         self::assertFalse($order->equals($otherOrder));
     }
 
@@ -218,7 +218,7 @@ class OrderDataTest extends TestCase
             ->withBaseTotalRefunded("94.43")
             ->withBaseToGlobalRate("89.48")
             ->withBaseToOrderRate("10.478")
-            ->withBillingAddressId(35)
+            ->withBillingAddressId("35")
             ->withCanShipPartially(1)
             ->withCanShipPartiallyItem(1)
             ->withCouponCode("329hr8943h3")
@@ -227,8 +227,8 @@ class OrderDataTest extends TestCase
             ->withCustomerEmail("helham@test.com")
             ->withCustomerFirstname("Ben")
             ->withCustomerGender(1)
-            ->withCustomerGroupId(5)
-            ->withCustomerId(1006)
+            ->withCustomerGroupId("5")
+            ->withCustomerId("1006")
             ->withCustomerIsGuest(0)
             ->withCustomerLastname("Helham")
             ->withCustomerMiddlename("Stevenson")
@@ -244,7 +244,7 @@ class OrderDataTest extends TestCase
             ->withDiscountRefunded("76.893")
             ->withEditIncrement(1)
             ->withEmailSent(1)
-            ->withEntityId(809)
+            ->withEntityId("809")
             ->withExtCustomerId("web-customer-032089283")
             ->withExtOrderId("web-order-9833479223")
             ->withForcedShipmentWithInvoice(0)
@@ -261,8 +261,8 @@ class OrderDataTest extends TestCase
             ->withPaymentAuthorizationAmount("100.9")
             ->withPaymentAuthExpiration(1671675566)
             ->withProtectCode("HI78YU")
-            ->withQuoteAddressId(21)
-            ->withQuoteId(23)
+            ->withQuoteAddressId("21")
+            ->withQuoteId("23")
             ->withItems(ItemDataCollection::of([ItemDataTest::getItem()]))
             ->withRelationChildId("TestChildRelation")
             ->withRelationChildRealId("8392UIH")
@@ -282,7 +282,7 @@ class OrderDataTest extends TestCase
             ->withState("processing")
             ->withStatus("processing")
             ->withStoreCurrencyCode("EUR")
-            ->withStoreId(101)
+            ->withStoreId("101")
             ->withStoreName("Testing tools")
             ->withStoreToBaseRate("1.09")
             ->withStoreToOrderRate("1.01")

@@ -23,20 +23,20 @@ class AddressDataTest extends TestCase
         self::assertEquals("string", $address->getCity());
         self::assertEquals("string", $address->getCompany());
         self::assertEquals("string", $address->getCountryId());
-        self::assertEquals(0, $address->getCustomerAddressId());
-        self::assertEquals(0, $address->getCustomerId());
+        self::assertEquals("0", $address->getCustomerAddressId());
+        self::assertEquals("0", $address->getCustomerId());
         self::assertEquals("string", $address->getEmail());
-        self::assertEquals(0, $address->getEntityId());
+        self::assertEquals("0", $address->getEntityId());
         self::assertEquals("string", $address->getFax());
         self::assertEquals("string", $address->getFirstname());
         self::assertEquals("string", $address->getLastname());
         self::assertEquals("string", $address->getMiddlename());
-        self::assertEquals(0, $address->getParentId());
+        self::assertEquals("0", $address->getParentId());
         self::assertEquals("string", $address->getPostcode());
         self::assertEquals("string", $address->getPrefix());
         self::assertEquals("string", $address->getRegion());
         self::assertEquals("string", $address->getRegionCode());
-        self::assertEquals(0, $address->getRegionId());
+        self::assertEquals("0", $address->getRegionId());
         self::assertEquals(["string"], $address->getStreet());
         self::assertEquals("string", $address->getSuffix());
         self::assertEquals("string", $address->getTelephone());
@@ -100,20 +100,20 @@ class AddressDataTest extends TestCase
             ->withCity("string")
             ->withCompany("string")
             ->withCountryId("string")
-            ->withCustomerAddressId(0)
-            ->withCustomerId(0)
+            ->withCustomerAddressId("0")
+            ->withCustomerId("0")
             ->withEmail("string")
-            ->withEntityId(0)
+            ->withEntityId("0")
             ->withFax("string")
             ->withFirstname("string")
             ->withLastname("string")
             ->withMiddlename("string")
-            ->withParentId(0)
+            ->withParentId("0")
             ->withPostcode("string")
             ->withPrefix("string")
             ->withRegion("string")
             ->withRegionCode("string")
-            ->withRegionId(0)
+            ->withRegionId("0")
             ->withStreet(['string'])
             ->withSuffix("string")
             ->withTelephone("string")

@@ -63,13 +63,13 @@ class PaymentDataTest extends TestCase
         self::assertEquals("string", $payment->getEcheckBankName());
         self::assertEquals("string", $payment->getEcheckRoutingNumber());
         self::assertEquals("string", $payment->getEcheckType());
-        self::assertEquals(0, $payment->getEntityId());
+        self::assertEquals("0", $payment->getEntityId());
         self::assertEquals("string", $payment->getLastTransId());
         self::assertEquals("string", $payment->getMethod());
-        self::assertEquals(0, $payment->getParentId());
+        self::assertEquals("0", $payment->getParentId());
         self::assertEquals("string", $payment->getPoNumber());
         self::assertEquals("string", $payment->getProtectionEligibility());
-        self::assertEquals(0, $payment->getQuotePaymentId());
+        self::assertEquals("0", $payment->getQuotePaymentId());
         self::assertEquals("0", $payment->getShippingAmount());
         self::assertEquals("0", $payment->getShippingCaptured());
         self::assertEquals("0", $payment->getShippingRefunded());
@@ -161,8 +161,8 @@ class PaymentDataTest extends TestCase
             "shipping_refunded" => "0",
             "extension_attributes" => [
                 "vault_payment_token" => [
-                    "entity_id" => 0,
-                    "customer_id" => 0,
+                    "entity_id" => "0",
+                    "customer_id" => "0",
                     "public_hash" => "string",
                     "payment_method_code" => "string",
                     "type" => "string",
@@ -225,21 +225,21 @@ class PaymentDataTest extends TestCase
             ->withEcheckBankName("string")
             ->withEcheckRoutingNumber("string")
             ->withEcheckType("string")
-            ->withEntityId(0)
+            ->withEntityId("0")
             ->withLastTransId("string")
             ->withMethod("string")
-            ->withParentId(0)
+            ->withParentId("0")
             ->withPoNumber("string")
             ->withProtectionEligibility("string")
-            ->withQuotePaymentId(0)
+            ->withQuotePaymentId("0")
             ->withShippingAmount("0")
             ->withShippingCaptured("0")
             ->withShippingRefunded("0")
             ->withExtensionAttributes(
                 ExtensionAttributeSet::of([
                     ExtensionAttribute::of("vault_payment_token", [
-                        "entity_id" => 0,
-                        "customer_id" => 0,
+                        "entity_id" => "0",
+                        "customer_id" => "0",
                         "public_hash" => "string",
                         "payment_method_code" => "string",
                         "type" => "string",

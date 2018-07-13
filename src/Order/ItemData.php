@@ -48,7 +48,7 @@ final class ItemData implements ValueObject
         $result->discountInvoiced = (string)( $json['discount_invoiced'] ?? null);
         $result->discountPercent =(string)(  $json['discount_percent'] ?? null);
         $result->discountRefunded = (string)( $json['discount_refunded'] ?? null);
-        $result->eventId = (int) ($json['event_id'] ?? null);
+        $result->eventId = (string) ($json['event_id'] ?? null);
         $result->extOrderItemId = (string)( $json['ext_order_item_id'] ?? null);
         $result->freeShipping = $json['free_shipping'] ?? null;
         $result->gwBasePrice = (string)( $json['gw_base_price'] ?? null);
@@ -57,7 +57,7 @@ final class ItemData implements ValueObject
         $result->gwBaseTaxAmount = (string)( $json['gw_base_tax_amount'] ?? null);
         $result->gwBaseTaxAmountInvoiced = (string)( $json['gw_base_tax_amount_invoiced'] ?? null);
         $result->gwBaseTaxAmountRefunded = (string)( $json['gw_base_tax_amount_refunded'] ?? null);
-        $result->gwId = $json['gw_id'] ?? null;
+        $result->gwId = (string) $json['gw_id'] ?? null;
         $result->gwPrice = (string)( $json['gw_price'] ?? null);
         $result->gwPriceInvoiced = (string)( $json['gw_price_invoiced'] ?? null);
         $result->gwPriceRefunded = (string)( $json['gw_price_refunded'] ?? null);
@@ -70,17 +70,17 @@ final class ItemData implements ValueObject
         $result->discountTaxCompensationRefunded = (string)( $json['discount_tax_compensation_refunded'] ?? null);
         $result->isQtyDecimal = $json['is_qty_decimal'] ?? null;
         $result->isVirtual = $json['is_virtual'] ?? null;
-        $result->itemId = $json['item_id'] ?? null;
+        $result->itemId = (string) $json['item_id'] ?? null;
         $result->lockedDoInvoice = $json['locked_do_invoice'] ?? null;
         $result->lockedDoShip = $json['locked_do_ship'] ?? null;
         $result->name = (string)( $json['name'] ?? null);
         $result->noDiscount = $json['no_discount'] ?? null;
-        $result->orderId = $json['order_id'] ?? null;
+        $result->orderId = (string) $json['order_id'] ?? null;
         $result->originalPrice = (string)( $json['original_price'] ?? null);
-        $result->parentItemId = $json['parent_item_id'] ?? null;
+        $result->parentItemId = (string) $json['parent_item_id'] ?? null;
         $result->price =(string)(  $json['price'] ?? null);
         $result->priceInclTax = (string)( $json['price_incl_tax'] ?? null);
-        $result->productId = $json['product_id'] ?? null;
+        $result->productId = (string) $json['product_id'] ?? null;
         $result->productType = (string)( $json['product_type'] ?? null);
         $result->qtyBackordered = (string)( $json['qty_backordered'] ?? null);
         $result->qtyCanceled = (string)( $json['qty_canceled'] ?? null);
@@ -89,12 +89,12 @@ final class ItemData implements ValueObject
         $result->qtyRefunded = (string)( $json['qty_refunded'] ?? null);
         $result->qtyReturned = (string)( $json['qty_returned'] ?? null);
         $result->qtyShipped = (string)( $json['qty_shipped'] ?? null);
-        $result->quoteItemId = $json['quote_item_id'] ?? null;
+        $result->quoteItemId = (string) $json['quote_item_id'] ?? null;
         $result->rowInvoiced =(string)(  $json['row_invoiced'] ?? null);
         $result->rowTotal = (string)( $json['row_total'] ?? null);
         $result->rowTotalInclTax = (string)( $json['row_total_incl_tax'] ?? null);
         $result->rowWeight = (string)( $json['row_weight'] ?? null);
-        $result->storeId = $json['store_id'] ?? null;
+        $result->storeId = (string) $json['store_id'] ?? null;
         $result->taxAmount = (string)( $json['tax_amount'] ?? null);
         $result->taxBeforeDiscount = (string)( $json['tax_before_discount'] ?? null);
         $result->taxCanceled = (string)( $json['tax_canceled'] ?? null);
@@ -270,7 +270,7 @@ final class ItemData implements ValueObject
         return $this->discountRefunded;
     }
 
-    public function getEventId() : ?int
+    public function getEventId() : ?string
     {
         return $this->eventId;
     }
@@ -315,7 +315,7 @@ final class ItemData implements ValueObject
         return $this->gwBaseTaxAmountRefunded;
     }
 
-    public function getGwId() : ?int
+    public function getGwId() : ?string
     {
         return $this->gwId;
     }
@@ -380,7 +380,7 @@ final class ItemData implements ValueObject
         return $this->isVirtual;
     }
 
-    public function getItemId() : ?int
+    public function getItemId() : ?string
     {
         return $this->itemId;
     }
@@ -405,7 +405,7 @@ final class ItemData implements ValueObject
         return $this->noDiscount;
     }
 
-    public function getOrderId() : ?int
+    public function getOrderId() : ?string
     {
         return $this->orderId;
     }
@@ -415,7 +415,7 @@ final class ItemData implements ValueObject
         return $this->originalPrice;
     }
 
-    public function getParentItemId() : ?int
+    public function getParentItemId() : ?string
     {
         return $this->parentItemId;
     }
@@ -430,7 +430,7 @@ final class ItemData implements ValueObject
         return $this->priceInclTax;
     }
 
-    public function getProductId(): ?int
+    public function getProductId(): ?string
     {
         return $this->productId;
     }
@@ -475,7 +475,7 @@ final class ItemData implements ValueObject
         return $this->qtyShipped;
     }
 
-    public function getQuoteItemId() : ?int
+    public function getQuoteItemId() : ?string
     {
         return $this->quoteItemId;
     }
@@ -505,7 +505,7 @@ final class ItemData implements ValueObject
         return $this->sku;
     }
 
-    public function getStoreId() : ?int
+    public function getStoreId() : ?string
     {
         return $this->storeId;
     }
@@ -807,7 +807,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withEventId(int $eventId): self
+    public function withEventId(string $eventId): self
     {
         $result = clone $this;
         $result->eventId = $eventId;
@@ -870,7 +870,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withGwId(int $gwId): self
+    public function withGwId(string $gwId): self
     {
         $result = clone $this;
         $result->gwId = $gwId;
@@ -961,7 +961,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withItemId(int $itemId): self
+    public function withItemId(string $itemId): self
     {
         $result = clone $this;
         $result->itemId = $itemId;
@@ -996,7 +996,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withOrderId(int $orderId): self
+    public function withOrderId(string $orderId): self
     {
         $result = clone $this;
         $result->orderId = $orderId;
@@ -1010,7 +1010,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withParentItemId(int $parentItemId): self
+    public function withParentItemId(string $parentItemId): self
     {
         $result = clone $this;
         $result->parentItemId = $parentItemId;
@@ -1031,7 +1031,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withProductId(int $productId): self
+    public function withProductId(string $productId): self
     {
         $result = clone $this;
         $result->productId = $productId;
@@ -1094,7 +1094,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withQuoteItemId(int $quoteItemId): self
+    public function withQuoteItemId(string $quoteItemId): self
     {
         $result = clone $this;
         $result->quoteItemId = $quoteItemId;
@@ -1129,7 +1129,7 @@ final class ItemData implements ValueObject
         return $result;
     }
 
-    public function withStoreId(int $storeId): self
+    public function withStoreId(string $storeId): self
     {
         $result = clone $this;
         $result->storeId = $storeId;

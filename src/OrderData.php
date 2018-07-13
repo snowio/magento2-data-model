@@ -65,7 +65,7 @@ final class OrderData implements ValueObject
         $result->baseTotalRefunded = (string)($json['base_total_refunded'] ?? null);
         $result->baseToGlobalRate = (string)($json['base_to_global_rate'] ?? null);
         $result->baseToOrderRate = (string)($json['base_to_order_rate'] ?? null);
-        $result->billingAddressId = $json['billing_address_id'] ?? null;
+        $result->billingAddressId = (string)($json['billing_address_id'] ?? null);
         $result->canShipPartially = $json['can_ship_partially'] ?? null;
         $result->canShipPartiallyItem = $json['can_ship_partially_item'] ?? null;
         $result->couponCode = $json['coupon_code'] ?? null;
@@ -73,8 +73,8 @@ final class OrderData implements ValueObject
         $result->customerDob = $json['customer_dob'] ?? null;
         $result->customerFirstname = $json['customer_firstname'] ?? null;
         $result->customerGender = $json['customer_gender'] ?? null;
-        $result->customerGroupId = $json['customer_group_id'] ?? null;
-        $result->customerId = $json['customer_id'] ?? null;
+        $result->customerGroupId = (string)($json['customer_group_id'] ?? null);
+        $result->customerId = (string) $json['customer_id'] ?? null;
         $result->customerIsGuest = $json['customer_is_guest'] ?? null;
         $result->customerLastname = $json['customer_lastname'] ?? null;
         $result->customerMiddlename = $json['customer_middlename'] ?? null;
@@ -90,7 +90,7 @@ final class OrderData implements ValueObject
         $result->discountRefunded = (string)($json['discount_refunded'] ?? null);
         $result->editIncrement = $json['edit_increment'] ?? null;
         $result->emailSent = $json['email_sent'] ?? null;
-        $result->entityId = $json['entity_id'] ?? null;
+        $result->entityId = (string) $json['entity_id'] ?? null;
         $result->extCustomerId = $json['ext_customer_id'] ?? null;
         $result->extOrderId = $json['ext_order_id'] ?? null;
         $result->forcedShipmentWithInvoice = $json['forced_shipment_with_invoice'] ?? null;
@@ -100,20 +100,20 @@ final class OrderData implements ValueObject
         $result->discountTaxCompensationRefunded = (string)($json['discount_tax_compensation_refunded'] ?? null);
         $result->holdBeforeState = $json['hold_before_state'] ?? null;
         $result->holdBeforeStatus = $json['hold_before_status'] ?? null;
-        $result->incrementId = $json['increment_id'] ?? null;
+        $result->incrementId = (string) $json['increment_id'] ?? null;
         $result->isVirtual = $json['is_virtual'] ?? null;
         $result->orderCurrencyCode = $json['order_currency_code'] ?? null;
         $result->originalIncrementId = $json['original_increment_id'] ?? null;
         $result->paymentAuthorizationAmount = (string)($json['payment_authorization_amount'] ?? null);
         $result->paymentAuthExpiration = $json['payment_auth_expiration'] ?? null;
         $result->protectCode = $json['protect_code'] ?? null;
-        $result->quoteAddressId = $json['quote_address_id'] ?? null;
-        $result->quoteId = $json['quote_id'] ?? null;
-        $result->relationChildId = $json['relation_child_id'] ?? null;
-        $result->relationChildRealId = $json['relation_child_real_id'] ?? null;
-        $result->relationParentId = $json['relation_parent_id'] ?? null;
+        $result->quoteAddressId = (string) $json['quote_address_id'] ?? null;
+        $result->quoteId = (string) $json['quote_id'] ?? null;
+        $result->relationChildId = (string) $json['relation_child_id'] ?? null;
+        $result->relationChildRealId = (string) $json['relation_child_real_id'] ?? null;
+        $result->relationParentId = (string) $json['relation_parent_id'] ?? null;
         $result->relationParentRealId = $json['relation_parent_real_id'] ?? null;
-        $result->remoteIp = $json['remote_ip'] ?? null;
+        $result->remoteIp = (string) $json['remote_ip'] ?? null;
         $result->shippingAmount = (string)($json['shipping_amount'] ?? null);
         $result->shippingCanceled = (string)($json['shipping_canceled'] ?? null);
         $result->shippingDescription = $json['shipping_description'] ?? null;
@@ -128,7 +128,7 @@ final class OrderData implements ValueObject
         $result->state = $json['state'] ?? null;
         $result->status = $json['status'] ?? null;
         $result->storeCurrencyCode = $json['store_currency_code'] ?? null;
-        $result->storeId = $json['store_id'] ?? null;
+        $result->storeId = (string) $json['store_id'] ?? null;
         $result->storeName = $json['store_name'] ?? null;
         $result->storeToBaseRate = (string)($json['store_to_base_rate'] ?? null);
         $result->storeToOrderRate = (string)($json['store_to_order_rate'] ?? null);
@@ -458,7 +458,7 @@ final class OrderData implements ValueObject
         return $result;
     }
 
-    public function withBillingAddressId(int $billingAddressId) : self
+    public function withBillingAddressId(string $billingAddressId) : self
     {
         $result = clone $this;
         $result->billingAddressId = $billingAddressId;
@@ -521,14 +521,14 @@ final class OrderData implements ValueObject
         return $result;
     }
 
-    public function withCustomerGroupId(int $customerGroupId) : self
+    public function withCustomerGroupId(string $customerGroupId) : self
     {
         $result = clone $this;
         $result->customerGroupId = $customerGroupId;
         return $result;
     }
 
-    public function withCustomerId(int $customerId) : self
+    public function withCustomerId(string $customerId) : self
     {
         $result = clone $this;
         $result->customerId = $customerId;
@@ -640,7 +640,7 @@ final class OrderData implements ValueObject
         return $result;
     }
 
-    public function withEntityId(int $entityId) : self
+    public function withEntityId(string $entityId) : self
     {
         $result = clone $this;
         $result->entityId = $entityId;
@@ -759,14 +759,14 @@ final class OrderData implements ValueObject
         return $result;
     }
 
-    public function withQuoteAddressId(int $quoteAddressId) : self
+    public function withQuoteAddressId(string $quoteAddressId) : self
     {
         $result = clone $this;
         $result->quoteAddressId = $quoteAddressId;
         return $result;
     }
 
-    public function withQuoteId(int $quoteId) : self
+    public function withQuoteId(string $quoteId) : self
     {
         $result = clone $this;
         $result->quoteId = $quoteId;
@@ -899,7 +899,7 @@ final class OrderData implements ValueObject
         return $result;
     }
 
-    public function withStoreId(int $storeId) : self
+    public function withStoreId(string $storeId) : self
     {
         $result = clone $this;
         $result->storeId = $storeId;
@@ -1324,7 +1324,7 @@ final class OrderData implements ValueObject
         return $this->baseToOrderRate;
     }
 
-    public function getBillingAddressId(): ?int
+    public function getBillingAddressId(): ?string
     {
         return $this->billingAddressId;
     }
@@ -1369,12 +1369,12 @@ final class OrderData implements ValueObject
         return $this->customerGender;
     }
 
-    public function getCustomerGroupId(): ?int
+    public function getCustomerGroupId(): ?string
     {
         return $this->customerGroupId;
     }
 
-    public function getCustomerId(): ?int
+    public function getCustomerId(): ?string
     {
         return $this->customerId;
     }
@@ -1454,7 +1454,7 @@ final class OrderData implements ValueObject
         return $this->emailSent;
     }
 
-    public function getEntityId(): ?int
+    public function getEntityId(): ?string
     {
         return $this->entityId;
     }
@@ -1544,12 +1544,12 @@ final class OrderData implements ValueObject
         return $this->protectCode;
     }
 
-    public function getQuoteAddressId(): ?int
+    public function getQuoteAddressId(): ?string
     {
         return $this->quoteAddressId;
     }
 
-    public function getQuoteId(): ?int
+    public function getQuoteId(): ?string
     {
         return $this->quoteId;
     }
@@ -1644,7 +1644,7 @@ final class OrderData implements ValueObject
         return $this->storeCurrencyCode;
     }
 
-    public function getStoreId(): ?int
+    public function getStoreId(): ?string
     {
         return $this->storeId;
     }
@@ -1840,7 +1840,7 @@ final class OrderData implements ValueObject
             "base_total_refunded" => $this->baseTotalRefunded,
             "base_to_global_rate" => $this->baseToGlobalRate,
             "base_to_order_rate" => $this->baseToOrderRate,
-            "billing_address_id" => $this->billingAddressId,
+            "billing_address_id" => (string) $this->billingAddressId,
             "can_ship_partially" => $this->canShipPartially,
             "can_ship_partially_item" => $this->canShipPartiallyItem,
             "coupon_code" => $this->couponCode,
@@ -1849,8 +1849,8 @@ final class OrderData implements ValueObject
             "customer_email" => $this->customerEmail,
             "customer_firstname" => $this->customerFirstname,
             "customer_gender" => $this->customerGender,
-            "customer_group_id" => $this->customerGroupId,
-            "customer_id" => $this->customerId,
+            "customer_group_id" => (string) $this->customerGroupId,
+            "customer_id" => (string) $this->customerId,
             "customer_is_guest" => $this->customerIsGuest,
             "customer_lastname" => $this->customerLastname,
             "customer_middlename" => $this->customerMiddlename,
@@ -1866,9 +1866,9 @@ final class OrderData implements ValueObject
             "discount_refunded" => $this->discountRefunded,
             "edit_increment" => $this->editIncrement,
             "email_sent" => $this->emailSent,
-            "entity_id" => $this->entityId,
-            "ext_customer_id" => $this->extCustomerId,
-            "ext_order_id" => $this->extOrderId,
+            "entity_id" => (string) $this->entityId,
+            "ext_customer_id" => (string) $this->extCustomerId,
+            "ext_order_id" => (string) $this->extOrderId,
             "forced_shipment_with_invoice" => $this->forcedShipmentWithInvoice,
             "global_currency_code" => $this->globalCurrencyCode,
             "grand_total" => $this->grandTotal,
@@ -1877,19 +1877,19 @@ final class OrderData implements ValueObject
             "discount_tax_compensation_refunded" => $this->discountTaxCompensationRefunded,
             "hold_before_state" => $this->holdBeforeState,
             "hold_before_status" => $this->holdBeforeStatus,
-            "increment_id" => $this->incrementId,
+            "increment_id" =>(string) $this->incrementId,
             "is_virtual" => $this->isVirtual,
             "order_currency_code" => $this->orderCurrencyCode,
-            "original_increment_id" => $this->originalIncrementId,
+            "original_increment_id" => (string) $this->originalIncrementId,
             "payment_authorization_amount" => $this->paymentAuthorizationAmount,
             "payment_auth_expiration" => $this->paymentAuthExpiration,
             "protect_code" => $this->protectCode,
-            "quote_address_id" => $this->quoteAddressId,
-            "quote_id" => $this->quoteId,
-            "relation_child_id" => $this->relationChildId,
-            "relation_child_real_id" => $this->relationChildRealId,
-            "relation_parent_id" => $this->relationParentId,
-            "relation_parent_real_id" => $this->relationParentRealId,
+            "quote_address_id" => (string) $this->quoteAddressId,
+            "quote_id" => (string) $this->quoteId,
+            "relation_child_id" => (string) $this->relationChildId,
+            "relation_child_real_id" => (string) $this->relationChildRealId,
+            "relation_parent_id" => (string) $this->relationParentId,
+            "relation_parent_real_id" => (string) $this->relationParentRealId,
             "remote_ip" => $this->remoteIp,
             "shipping_amount" => $this->shippingAmount,
             "shipping_canceled" => $this->shippingCanceled,
@@ -1904,7 +1904,7 @@ final class OrderData implements ValueObject
             "state" => $this->state,
             "status" => $this->status,
             "store_currency_code" => $this->storeCurrencyCode,
-            "store_id" => $this->storeId,
+            "store_id" => (string) $this->storeId,
             "store_name" => $this->storeName,
             "store_to_base_rate" => $this->storeToBaseRate,
             "store_to_order_rate" => $this->storeToOrderRate,
