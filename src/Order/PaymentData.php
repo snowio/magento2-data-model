@@ -53,19 +53,19 @@ final class PaymentData implements ValueObject
         $result->ccSsStartYear = $json['cc_ss_start_year'] ?? null;
         $result->ccStatus = $json['cc_status'] ?? null;
         $result->ccStatusDescription = $json['cc_status_description'] ?? null;
-        $result->ccTransId = $json['cc_trans_id'] ?? null;
+        $result->ccTransId = (string) $json['cc_trans_id'] ?? null;
         $result->ccType = $json['cc_type'] ?? null;
         $result->echeckAccountName = $json['echeck_account_name'] ?? null;
         $result->echeckAccountType = $json['echeck_account_type'] ?? null;
         $result->echeckBankName = $json['echeck_bank_name'] ?? null;
         $result->echeckRoutingNumber = $json['echeck_routing_number'] ?? null;
         $result->echeckType = $json['echeck_type'] ?? null;
-        $result->entityId = $json['entity_id'] ?? null;
-        $result->lastTransId = $json['last_trans_id'] ?? null;
-        $result->parentId = $json['parent_id'] ?? null;
+        $result->entityId = (string) $json['entity_id'] ?? null;
+        $result->lastTransId = (string) $json['last_trans_id'] ?? null;
+        $result->parentId = (string) $json['parent_id'] ?? null;
         $result->poNumber = $json['po_number'] ?? null;
         $result->protectionEligibility = $json['protection_eligibility'] ?? null;
-        $result->quotePaymentId = $json['quote_payment_id'] ?? null;
+        $result->quotePaymentId = (string) $json['quote_payment_id'] ?? null;
         $result->shippingAmount = (string)($json['shipping_amount'] ?? null);
         $result->shippingCaptured = (string)($json['shipping_captured'] ?? null);
         $result->shippingRefunded = (string)($json['shipping_refunded'] ?? null);
@@ -293,7 +293,7 @@ final class PaymentData implements ValueObject
         return $this->echeckType;
     }
 
-    public function getEntityId(): ?int
+    public function getEntityId(): ?string
     {
         return $this->entityId;
     }
@@ -308,7 +308,7 @@ final class PaymentData implements ValueObject
         return $this->method;
     }
 
-    public function getParentId() : ?int
+    public function getParentId() : ?string
     {
         return $this->parentId;
     }
@@ -323,7 +323,7 @@ final class PaymentData implements ValueObject
         return $this->protectionEligibility;
     }
 
-    public function getQuotePaymentId() : ?int
+    public function getQuotePaymentId() : ?string
     {
         return $this->quotePaymentId;
     }
@@ -656,7 +656,7 @@ final class PaymentData implements ValueObject
         return $result;
     }
 
-    public function withEntityId(int $entityId): self
+    public function withEntityId(string $entityId): self
     {
         $result = clone $this;
         $result->entityId = $entityId;
@@ -677,7 +677,7 @@ final class PaymentData implements ValueObject
         return $result;
     }
 
-    public function withParentId(int $parentId): self
+    public function withParentId(string $parentId): self
     {
         $result = clone $this;
         $result->parentId = $parentId;
@@ -698,7 +698,7 @@ final class PaymentData implements ValueObject
         return $result;
     }
 
-    public function withQuotePaymentId(int $quotePaymentId): self
+    public function withQuotePaymentId(string $quotePaymentId): self
     {
         $result = clone $this;
         $result->quotePaymentId = $quotePaymentId;

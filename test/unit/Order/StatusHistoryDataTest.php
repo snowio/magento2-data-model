@@ -26,11 +26,11 @@ class StatusHistoryDataTest extends TestCase
 
         self::assertEquals("string", $statusHistory->getComment());
         self::assertEquals("string", $statusHistory->getCreatedAt());
-        self::assertEquals(0, $statusHistory->getEntityId());
+        self::assertEquals("0", $statusHistory->getEntityId());
         self::assertEquals("string", $statusHistory->getEntityName());
         self::assertEquals(0, $statusHistory->getIsCustomerNotified());
         self::assertEquals(0, $statusHistory->getIsVisibleOnFront());
-        self::assertEquals(0, $statusHistory->getParentId());
+        self::assertEquals("0", $statusHistory->getParentId());
         self::assertEquals("string", $statusHistory->getStatus());
         self::assertTrue(ExtensionAttributeSet::of([])->equals($statusHistory->getExtensionAttributes()));
 
@@ -69,9 +69,9 @@ class StatusHistoryDataTest extends TestCase
 
     public static function getStatusHistory(): StatusHistoryData
     {
-        return StatusHistoryData::of(0, "string", 0)
+        return StatusHistoryData::of("0", "string", 0)
             ->withCreatedAt("string")
-            ->withEntityId(0)
+            ->withEntityId("0")
             ->withEntityName("string")
             ->withIsVisibleOnFront(0)
             ->withStatus('string');

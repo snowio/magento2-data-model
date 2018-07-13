@@ -7,16 +7,16 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class StatusHistoryData implements ValueObject
 {
-    public static function of(int $parentId, string $comment, int $isCustomerNotified): self
+    public static function of(string $parentId, string $comment, int $isCustomerNotified): self
     {
         return new self($parentId, $comment, $isCustomerNotified);
     }
     
     public static function fromJson(array $json): self
     {
-        $result = self::of($json['parent_id'], $json['comment'], $json['is_customer_notified']);
+        $result = self::of((string) $json['parent_id'], $json['comment'], $json['is_customer_notified']);
         $result->createdAt = $json['created_at'] ?? null;
-        $result->entityId = $json['entity_id'] ?? null;
+        $result->entityId = (string) $json['entity_id'] ?? null;
         $result->entityName = $json['entity_name'] ?? null;
         $result->isVisibleOnFront = $json['is_visible_on_front'] ?? null;
         $result->status = $json['status'] ?? null;
@@ -41,7 +41,7 @@ final class StatusHistoryData implements ValueObject
         return $result;
     }
 
-    public function withEntityId(int $entityId): self
+    public function withEntityId(string $entityId): self
     {
         $result = clone $this;
         $result->entityId = $entityId;
@@ -86,7 +86,7 @@ final class StatusHistoryData implements ValueObject
         return $this->createdAt;
     }
 
-    public function getEntityId(): ?int
+    public function getEntityId(): ?string
     {
         return $this->entityId;
     }
@@ -106,7 +106,7 @@ final class StatusHistoryData implements ValueObject
         return $this->isVisibleOnFront;
     }
 
-    public function getParentId() : int
+    public function getParentId() : string
     {
         return $this->parentId;
     }
@@ -136,7 +136,7 @@ final class StatusHistoryData implements ValueObject
         ];
     }
     
-    private function __construct(int $parentId, string $comment, int $isCustomerNotified)
+    private function __construct(string $parentId, string $comment, int $isCustomerNotified)
     {
         $this->parentId = $parentId;
         $this->isCustomerNotified = $isCustomerNotified;

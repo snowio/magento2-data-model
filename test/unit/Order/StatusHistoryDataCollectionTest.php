@@ -11,18 +11,18 @@ class StatusHistoryDataCollectionTest extends TestCase
     public function testWither()
     {
         $statusHistoryData = StatusHistoryDataCollection::of([
-            StatusHistoryData::of(1, 'test', 0),
-            StatusHistoryData::of(1, 'test 3', 0),
+            StatusHistoryData::of("1", 'test', 0),
+            StatusHistoryData::of("1", 'test 3', 0),
         ]);
 
         $statusHistoryData = $statusHistoryData->with(
-            StatusHistoryData::of(2, ' test 2', 0)
+            StatusHistoryData::of("2", ' test 2', 0)
         );
 
         self::assertTrue(StatusHistoryDataCollection::of([
-            StatusHistoryData::of(1, 'test', 0),
-            StatusHistoryData::of(1, 'test 3', 0),
-            StatusHistoryData::of(2, ' test 2', 0)
+            StatusHistoryData::of("1", 'test', 0),
+            StatusHistoryData::of("1", 'test 3', 0),
+            StatusHistoryData::of("2", ' test 2', 0)
         ])->equals($statusHistoryData));
     }
 }
