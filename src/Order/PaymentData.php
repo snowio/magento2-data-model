@@ -60,12 +60,12 @@ final class PaymentData implements ValueObject
         $result->echeckBankName = $json['echeck_bank_name'] ?? null;
         $result->echeckRoutingNumber = $json['echeck_routing_number'] ?? null;
         $result->echeckType = $json['echeck_type'] ?? null;
-        $result->entityId = (string) $json['entity_id'] ?? null;
-        $result->lastTransId = (string) $json['last_trans_id'] ?? null;
-        $result->parentId = (string) $json['parent_id'] ?? null;
+        $result->entityId = (string) ($json['entity_id'] ?? null);
+        $result->lastTransId = (string) ($json['last_trans_id'] ?? null);
+        $result->parentId = (string) ($json['parent_id'] ?? null);
         $result->poNumber = $json['po_number'] ?? null;
         $result->protectionEligibility = $json['protection_eligibility'] ?? null;
-        $result->quotePaymentId = (string) $json['quote_payment_id'] ?? null;
+        $result->quotePaymentId = (string) ($json['quote_payment_id'] ?? null);
         $result->shippingAmount = (string)($json['shipping_amount'] ?? null);
         $result->shippingCaptured = (string)($json['shipping_captured'] ?? null);
         $result->shippingRefunded = (string)($json['shipping_refunded'] ?? null);
