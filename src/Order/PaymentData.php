@@ -53,7 +53,7 @@ final class PaymentData implements ValueObject
         $result->ccSsStartYear = $json['cc_ss_start_year'] ?? null;
         $result->ccStatus = $json['cc_status'] ?? null;
         $result->ccStatusDescription = $json['cc_status_description'] ?? null;
-        $result->ccTransId = (string) $json['cc_trans_id'] ?? null;
+        $result->ccTransId = (string) ($json['cc_trans_id'] ?? null);
         $result->ccType = $json['cc_type'] ?? null;
         $result->echeckAccountName = $json['echeck_account_name'] ?? null;
         $result->echeckAccountType = $json['echeck_account_type'] ?? null;
