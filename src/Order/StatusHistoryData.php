@@ -14,7 +14,7 @@ final class StatusHistoryData implements ValueObject
     
     public static function fromJson(array $json): self
     {
-        $result = self::of((string) $json['parent_id'], $json['comment'], $json['is_customer_notified']);
+        $result = self::of((string) $json['parent_id'], $json['comment'], $json['is_customer_notified'] ?? 0);
         $result->createdAt = $json['created_at'] ?? null;
         $result->entityId = (string) ($json['entity_id'] ?? null);
         $result->entityName = $json['entity_name'] ?? null;
