@@ -17,6 +17,7 @@ use SnowIO\Magento2DataModel\ProductLinkSet;
 use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
 use SnowIO\Magento2DataModel\ProductVisibility;
+use SnowIO\Magento2DataModel\SpecialPrice;
 use SnowIO\Magento2DataModel\StockItem;
 use SnowIO\Magento2DataModel\TierPrice;
 use SnowIO\Magento2DataModel\TierPriceSet;
@@ -102,7 +103,14 @@ class ProductDataTest extends TestCase
                     'part_number' => 4894379374,
                     'manufacturer_reference' => '49j03j94r',
                 ]),
-            ]));
+            ]))
+            ->withSpecialPriceItem(SpecialPrice::of(
+                'ms_uk' ,
+                '7.65',
+                'BMP124',
+                '2019-12-04 13:48:05',
+                '2019-12-07 00:00:00'
+            ));
 
         self::assertSame(
             TierPriceSet::of([TierPrice::of(1, 1, '100')])->toJson(),
@@ -133,6 +141,13 @@ class ProductDataTest extends TestCase
                 'stock_id' => 1,
                 'qty' => 300,
             ]),
+            ExtensionAttribute::of('special_price', [
+                "store_id" => 'ms_uk',
+                "price" => '7.65',
+                "sku" => 'BMP124',
+                "price_from" => '2019-12-04 13:48:05',
+                "price_to" => '2019-12-07 00:00:00'
+            ])
         ])->equals($product->getExtensionAttributes()));
         $expectedCustomAttributes = CustomAttributeSet::create()
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
@@ -273,7 +288,7 @@ class ProductDataTest extends TestCase
         ], $product2->toJson());
     }
 
-        public function testWithCustomAttributeSet()
+    public function testWithCustomAttributeSet()
     {
         $product = ProductData::of('snowio-test-product', 'Snowio Test Product Updated!!')
             ->withCustomAttributes(CustomAttributeSet::of([
