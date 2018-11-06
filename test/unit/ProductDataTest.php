@@ -105,7 +105,7 @@ class ProductDataTest extends TestCase
                 ]),
             ]))
             ->withSpecialPriceItem(SpecialPrice::of(
-                'ms_uk' ,
+                '1' ,
                 '7.65',
                 'BMP124',
                 '2019-12-04 13:48:05',
@@ -142,7 +142,7 @@ class ProductDataTest extends TestCase
                 'qty' => 300,
             ]),
             ExtensionAttribute::of('special_price', [
-                "store_id" => 'ms_uk',
+                "store_id" => '1',
                 "price" => '7.65',
                 "sku" => 'BMP124',
                 "price_from" => '2019-12-04 13:48:05',

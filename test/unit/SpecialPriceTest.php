@@ -19,7 +19,7 @@ class SpecialPriceTest extends TestCase
         );
         self::assertEquals([
             "price" => "7.65",
-            "store_code" => "1",
+            "store_id" => "1",
             "sku" => "BMP124",
             "price_from" => '2019-12-04 13:48:05',
             "price_to" => '2019-12-07 00:00:00'

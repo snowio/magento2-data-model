@@ -5,21 +5,21 @@ final class SpecialPrice implements ValueObject
 {
     const CODE = 'special_price';
 
-    private $storeCode;
+    private $storeId;
     private $price;
     private $sku;
     private $priceFrom;
     private $priceTo;
 
-    public static function of(string $storeCode, string $price, string $sku, string $priceFrom, string $priceTo)
+    public static function of(string $storeId, string $price, string $sku, string $priceFrom, string $priceTo)
     {
-        $specialPrice = new self($storeCode, $price, $sku, $priceFrom, $priceTo);
+        $specialPrice = new self($storeId, $price, $sku, $priceFrom, $priceTo);
         return $specialPrice;
     }
 
-    private function __construct(string $storeCode, string $price, string $sku, string $priceFrom, string $priceTo)
+    private function __construct(string $storeId, string $price, string $sku, string $priceFrom, string $priceTo)
     {
-        $this->storeCode = $storeCode;
+        $this->storeId = $storeId;
         $this->price = $price;
         $this->sku = $sku;
         $this->priceFrom = $priceFrom;
@@ -29,7 +29,7 @@ final class SpecialPrice implements ValueObject
     public function equals($object): bool
     {
         return ($object instanceof SpecialPrice) &&
-            ($this->storeCode === $object->storeCode) &&
+            ($this->storeId === $object->storeId) &&
             ($this->price === $object->price) &&
             ($this->sku === $object->sku);
     }
@@ -37,7 +37,7 @@ final class SpecialPrice implements ValueObject
     public function toJson(): array
     {
         return [
-            "store_code" => $this->getStoreId(),
+            "store_id" => $this->getStoreId(),
             "price" => $this->getPrice(),
             "sku" => $this->getSku(),
             "price_from" => $this->getPriceFrom(),
@@ -91,16 +91,16 @@ final class SpecialPrice implements ValueObject
      */
     public function getStoreId(): string
     {
-        return $this->storeCode;
+        return $this->storeId;
     }
 
     /**
-     * @param int $storeCode
+     * @param int $storeId
      */
-    public function withStoreId(string $storeCode): self
+    public function withStoreId(string $storeId): self
     {
         $result = clone $this;
-        $result->storeCode = $storeCode;
+        $result->storeId = $storeId;
         return $result;
     }
 
