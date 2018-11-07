@@ -31,7 +31,10 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
 
     private static function getKey(SpecialPrice $specialPrice): string
     {
-        return sprintf('%s-%s',
+        return sprintf('%s-%s-%s-%s-%s',
+            $specialPrice->getStoreId(),
+            $specialPrice->getPrice(),
+            $specialPrice->getSku(),
             str_replace(' ', '_', $specialPrice->getPriceFrom()),
             str_replace(' ', '_', $specialPrice->getPriceTo())
         );

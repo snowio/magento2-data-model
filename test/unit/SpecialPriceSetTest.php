@@ -42,7 +42,9 @@ class SpecialPriceSetTest extends TestCase
             )
         );
 
-        self::assertInstanceOf(SpecialPrice::class, $specialPriceSet->get('2019-12-04_13:48:05-2019-12-07_00:00:00'));
+        self::assertInstanceOf(SpecialPrice::class, $specialPriceSet->get(
+            '1-7.65-BMP124-2019-12-04_13:48:05-2019-12-07_00:00:00'
+        ));
         self::assertNull($specialPriceSet->get('any-invalid-key'));
     }
 
