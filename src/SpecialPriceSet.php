@@ -5,6 +5,10 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait;
 
+    /**
+     * @param SpecialPrice $specialPrice
+     * @return SpecialPriceSet
+     */
     public function withSpecialPrice(SpecialPrice $specialPrice): self
     {
         $result = clone $this;
@@ -12,7 +16,10 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
         $result->items[$key] = $specialPrice;
         return $result;
     }
-    
+
+    /**
+     * @return array
+     */
     public function toJson(): array
     {
         return array_map(function (SpecialPrice $specialPrice) {
@@ -20,15 +27,26 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
         }, array_values($this->items));
     }
 
+    /**
+     * SpecialPriceSet constructor.
+     */
     private function __construct()
     {
     }
 
+    /**
+     * @param string $key
+     * @return null|SpecialPrice
+     */
     public function get(string $key): ?SpecialPrice
     {
         return $this->items[$key] ?? null;
     }
 
+    /**
+     * @param SpecialPrice $specialPrice
+     * @return string
+     */
     private static function getKey(SpecialPrice $specialPrice): string
     {
         return sprintf('%s-%s-%s-%s-%s',
@@ -40,6 +58,11 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
         );
     }
 
+    /**
+     * @param SpecialPrice $specialPrice
+     * @param SpecialPrice $otherSpecialPrice
+     * @return bool
+     */
     private static function itemsAreEqual(
         SpecialPrice $specialPrice,
         SpecialPrice $otherSpecialPrice

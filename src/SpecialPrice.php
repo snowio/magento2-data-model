@@ -11,12 +11,28 @@ final class SpecialPrice implements ValueObject
     private $priceFrom;
     private $priceTo;
 
-    public static function of(string $storeId, string $price, string $sku, string $priceFrom, string $priceTo)
+    /**
+     * @param string $storeId
+     * @param string $price
+     * @param string $sku
+     * @param string $priceFrom
+     * @param string $priceTo
+     * @return SpecialPrice
+     */
+    public static function of(string $storeId, string $price, string $sku, string $priceFrom, string $priceTo): SpecialPrice
     {
         $specialPrice = new self($storeId, $price, $sku, $priceFrom, $priceTo);
         return $specialPrice;
     }
 
+    /**
+     * SpecialPrice constructor.
+     * @param string $storeId
+     * @param string $price
+     * @param string $sku
+     * @param string $priceFrom
+     * @param string $priceTo
+     */
     private function __construct(string $storeId, string $price, string $sku, string $priceFrom, string $priceTo)
     {
         $this->storeId = $storeId;
@@ -26,6 +42,10 @@ final class SpecialPrice implements ValueObject
         $this->priceTo = $priceTo;
     }
 
+    /**
+     * @param $object
+     * @return bool
+     */
     public function equals($object): bool
     {
         return ($object instanceof SpecialPrice) &&
@@ -34,6 +54,9 @@ final class SpecialPrice implements ValueObject
             ($this->sku === $object->sku);
     }
 
+    /**
+     * @return array
+     */
     public function toJson(): array
     {
         return [
@@ -45,13 +68,16 @@ final class SpecialPrice implements ValueObject
         ];
     }
 
+    /**
+     * @return ExtensionAttribute
+     */
     public function asExtensionAttribute(): ExtensionAttribute
     {
         return ExtensionAttribute::of(self::CODE, $this->toJson());
     }
 
     /**
-     * @return float
+     * @return string
      */
     public function getPrice(): string
     {
@@ -59,7 +85,8 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @param float $price
+     * @param string $price
+     * @return SpecialPrice
      */
     public function withPrice(string $price): self
     {
@@ -78,6 +105,7 @@ final class SpecialPrice implements ValueObject
 
     /**
      * @param string $sku
+     * @return SpecialPrice
      */
     public function withSku(string $sku): self
     {
@@ -87,7 +115,8 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @return int
+     * @author Liam Toohey (lt@amp.co)
+     * @return string
      */
     public function getStoreId(): string
     {
@@ -95,7 +124,8 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @param int $storeId
+     * @param string $storeId
+     * @return SpecialPrice
      */
     public function withStoreId(string $storeId): self
     {
@@ -105,7 +135,7 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPriceFrom()
     {
@@ -113,7 +143,8 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @param mixed $priceFrom
+     * @param $priceFrom
+     * @return SpecialPrice
      */
     public function withPriceFrom($priceFrom): self
     {
@@ -123,7 +154,7 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPriceTo()
     {
@@ -131,7 +162,8 @@ final class SpecialPrice implements ValueObject
     }
 
     /**
-     * @param mixed $priceTo
+     * @param $priceTo
+     * @return SpecialPrice
      */
     public function withPriceTo($priceTo): self
     {
