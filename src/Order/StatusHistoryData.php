@@ -7,14 +7,14 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class StatusHistoryData implements ValueObject
 {
-    public static function of(string $parentId, string $comment, int $isCustomerNotified): self
+    public static function of(string $parentId, string $comment = '', int $isCustomerNotified = 0): self
     {
         return new self($parentId, $comment, $isCustomerNotified);
     }
     
     public static function fromJson(array $json): self
     {
-        $result = self::of((string) $json['parent_id'], $json['comment'], $json['is_customer_notified'] ?? 0);
+        $result = self::of((string) $json['parent_id'], $json['comment'], $json['is_customer_notified']);
         $result->createdAt = $json['created_at'] ?? null;
         $result->entityId = (string) ($json['entity_id'] ?? null);
         $result->entityName = $json['entity_name'] ?? null;
