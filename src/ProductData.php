@@ -146,12 +146,12 @@ final class ProductData implements ValueObject
             ->withExtensionAttribute($stockItem->asExtensionAttribute());
         return $result;
     }
-    
-    public function withSpecialPriceItem(SpecialPrice $specialPrice): self
+
+    public function withSpecialPriceSet(SpecialPriceSet $specialPriceSet): self
     {
         $result = clone $this;
         $result->extensionAttributes = $this->extensionAttributes
-            ->withExtensionAttribute($specialPrice->asExtensionAttribute());
+            ->withExtensionAttribute($specialPriceSet->asExtensionAttribute());
         return $result;
     }
 
