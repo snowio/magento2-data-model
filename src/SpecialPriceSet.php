@@ -5,6 +5,8 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
 {
     use SetTrait;
 
+    const CODE = 'special_price';
+
     /**
      * @param SpecialPrice $specialPrice
      * @return SpecialPriceSet
@@ -25,6 +27,14 @@ final class SpecialPriceSet implements \IteratorAggregate, ValueObject
         return array_map(function (SpecialPrice $specialPrice) {
             return $specialPrice->toJson();
         }, array_values($this->items));
+    }
+
+    /**
+     * @return ExtensionAttribute
+     */
+    public function asExtensionAttribute(): ExtensionAttribute
+    {
+        return ExtensionAttribute::of(self::CODE, $this->toJson());
     }
 
     /**

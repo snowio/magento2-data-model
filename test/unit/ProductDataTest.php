@@ -18,6 +18,7 @@ use SnowIO\Magento2DataModel\ProductStatus;
 use SnowIO\Magento2DataModel\ProductTypeId;
 use SnowIO\Magento2DataModel\ProductVisibility;
 use SnowIO\Magento2DataModel\SpecialPrice;
+use SnowIO\Magento2DataModel\SpecialPriceSet;
 use SnowIO\Magento2DataModel\StockItem;
 use SnowIO\Magento2DataModel\TierPrice;
 use SnowIO\Magento2DataModel\TierPriceSet;
@@ -104,13 +105,13 @@ class ProductDataTest extends TestCase
                     'manufacturer_reference' => '49j03j94r',
                 ]),
             ]))
-            ->withSpecialPriceItem(SpecialPrice::of(
+            ->withSpecialPriceSet(SpecialPriceSet::create()->withSpecialPrice(SpecialPrice::of(
                 '1' ,
                 '7.65',
                 'BMP124',
                 '2019-12-04 13:48:05',
                 '2019-12-07 00:00:00'
-            ));
+            )));
 
         self::assertSame(
             TierPriceSet::of([TierPrice::of(1, 1, '100')])->toJson(),
@@ -141,13 +142,13 @@ class ProductDataTest extends TestCase
                 'stock_id' => 1,
                 'qty' => 300,
             ]),
-            ExtensionAttribute::of('special_price', [
+            ExtensionAttribute::of('special_price', [[
                 "store_id" => '1',
                 "price" => '7.65',
                 "sku" => 'BMP124',
                 "price_from" => '2019-12-04 13:48:05',
                 "price_to" => '2019-12-07 00:00:00'
-            ])
+            ]])
         ])->equals($product->getExtensionAttributes()));
         $expectedCustomAttributes = CustomAttributeSet::create()
             ->withCustomAttribute(CustomAttribute::of('length', '100'))
