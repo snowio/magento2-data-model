@@ -34,6 +34,7 @@ final class ShipmentData extends BaseValueObject
         return (new self())
             ->withItems(ItemSet::create())
             ->withTracks(TrackSet::create())
+            ->withArguments(Arguments::create())
             ->withPackages(PackageCollection::create());
     }
 
@@ -66,7 +67,7 @@ final class ShipmentData extends BaseValueObject
             "items" => $this->getItems()->toJson(),
             "notify" => $this->getNotify(),
             "appendComment" => $this->getAppendComment(),
-            "comment" => $this->getComment()->toJson(),
+            "comment" => $this->getComment() ? $this->getComment()->toJson() : null,
             "tracks" => $this->getTracks()->toJson(),
             "packages" => $this->getPackages()->toJson(),
             "arguments" => $this->getArguments()->toJson(),
