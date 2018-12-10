@@ -31,10 +31,10 @@ final class StatusHistoryDataCollection extends Collection
         }, $this->items));
     }
 
-    protected function isEqual($item, $otherItemData): bool
+    protected function isEqual($package, $otherPackageData): bool
     {
-        return $item instanceof StatusHistoryData
-        && $otherItemData instanceof StatusHistoryData
-        && $item->equals($otherItemData);
+        return $package instanceof StatusHistoryData
+        && $otherPackageData instanceof StatusHistoryData
+        && $package->equals($otherPackageData);
     }
 }
