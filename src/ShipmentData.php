@@ -4,7 +4,6 @@ namespace SnowIO\Magento2DataModel;
 
 use SnowIO\Magento2DataModel\Shipment\Arguments;
 use SnowIO\Magento2DataModel\Shipment\Comment;
-use SnowIO\Magento2DataModel\Shipment\Item;
 use SnowIO\Magento2DataModel\Shipment\ItemSet;
 use SnowIO\Magento2DataModel\Shipment\PackageCollection;
 use SnowIO\Magento2DataModel\Shipment\TrackSet;
