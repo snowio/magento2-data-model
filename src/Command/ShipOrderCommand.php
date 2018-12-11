@@ -6,18 +6,18 @@ use SnowIO\Magento2DataModel\ShipmentData;
 
 class ShipOrderCommand extends Command
 {
-    public static function of(int $orderId, ShipmentData $shipmentData): self
+    public static function of(int $orderIncrementId, ShipmentData $shipmentData): self
     {
         $command = new self();
-        $command->orderId = $orderId;
+        $command->orderIncrementId = $orderIncrementId;
         $command->shipmentData = $shipmentData;
         return $command
-            ->withCommandGroupId("ship_order.order.{$orderId}");
+            ->withCommandGroupId("ship_order.order.{$orderIncrementId}");
     }
 
-    public function getOrderId(): string
+    public function orderIncrementId(): string
     {
-        return $this->orderId;
+        return $this->orderIncrementId;
     }
 
     public function getShipmentData(): ShipmentData
@@ -36,12 +36,12 @@ class ShipOrderCommand extends Command
     {
         return parent::toJson()
         + $this->shipmentData->toJson()
-        + ['orderId' => $this->orderId];
+        + ['orderIncrementId' => $this->orderIncrementId];
     }
 
     /** @var ShipmentData */
     private $shipmentData;
-    private $orderId;
+    private $orderIncrementId;
 
     private function __construct()
     {
