@@ -23,14 +23,17 @@ final class ShipmentData extends BaseValueObject
     {
         /** @var ShipmentData $result */
         $result = self::create();
-        $result = isset($json['tracks']) ? $result->withTracks(TrackSet::fromJson($json['tracks'])) : $result;
+        $result->tracks = TrackSet::fromJson($json['tracks'] ?? []);
         return $result;
     }
+
+    /** @var TrackSet $tracks */
+    private $tracks;
 
     public function toJson() : array
     {
         return [
-            "tracks" => $this->getTracks()->toJson(),
+            "tracks" => $this->tracks->toJson(),
         ];
     }
 }

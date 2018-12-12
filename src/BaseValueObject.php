@@ -1,6 +1,8 @@
 <?php
 namespace SnowIO\Magento2DataModel;
 
+use Closure;
+
 abstract class BaseValueObject implements ValueObject
 {
 
@@ -8,79 +10,95 @@ abstract class BaseValueObject implements ValueObject
     {
         switch (substr($method, 0, 3)) {
             case 'get':
-                return $this->getData(
-                    $this->underScore(substr($method, 3))
-                );
+                $property = lcfirst(substr($method, 3));
+                $this->assertPropertyExists($property);
+                return $this->getObjectProperty($this, $property);
         }
 
         switch (substr($method, 0, 4)) {
             case 'with':
-                return $this->handleWith(
-                    $this->underScore(substr($method, 4)),
-                    $args
-                );
-            default :
-                $argString = print_r($args, 1);
-                $fullName = get_class($this) . "::" . $method . "({$argString})";
-                throw new \Exception("Invalid method $fullName");
+                $property = lcfirst(substr($method, 4));
+                $this->assertPropertyExists($property);
+                return $this->handleWith($property, $args);
+        }
+
+        $this->throwInvalidMethodException($method, $args);
+    }
+
+    private function assertPropertyExists(string $property)
+    {
+        if (!in_array($property, $this->getPropertyNames())) {
+            throw new MagentoDataException("Property $property is not defined in " . get_class($this));
         }
     }
 
-    public function __get($name)
+    private function & getObjectProperty($object, $property)
     {
-        return $this->getData($this->underScore($name));
-    }
-
-
-    private function underScore($name)
-    {
-        return strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $name));
+        $value = &Closure::bind(function & () use ($property) {
+            return $this->$property;
+        }, $object, $object)->__invoke();
+        return $value;
     }
 
     private function handleWith(string $key, $value)
     {
         $result = clone $this;
-        $result->setData($key, $value);
+        $property = &$this->getObjectProperty($result, $key);
+        $property = $value[0];
         return $result;
     }
 
-    private function setData(string $key, $value)
+    private function throwInvalidMethodException($method, $args)
     {
-        $this->data[$key] = $value[0];
+        $argString = print_r($args, 1);
+        $fullName = get_class($this) . "::" . $method . "({$argString})";
+        throw new MagentoDataException("Invalid method $fullName");
     }
 
-    public abstract static function fromJson(array $json);
-    public abstract function toJson() : array;
-
-    protected $data;
-
-    private function getData($key)
+    private function getObjectData()
     {
-        return $this->data[$key] ?? null;
+        return array_merge(...array_map(function ($name) {
+            return [$name => $this->getObjectProperty($this, $name)];
+        }, $this->getPropertyNames()));
     }
 
-    private function hasData($key)
+    private function getPropertyNames()
     {
-        return isset($this->data[$key]);
+        $reflection = new \ReflectionClass($this);
+        $filter = $this->getPropertyFilter();
+        $properties = $reflection->getProperties($filter);
+        $properties = array_map(function (\ReflectionProperty $property) {
+            return $property->getName();
+        }, $properties);
+        return $properties;
     }
 
-    public static abstract function create();
+    private function getPropertyFilter()
+    {
+        return \ReflectionProperty::IS_PUBLIC |
+        \ReflectionProperty::IS_PROTECTED |
+        \ReflectionProperty::IS_PRIVATE;
+    }
+
+    public function __get($name)
+    {
+        $property = lcfirst(substr($name, 3));
+        $this->assertPropertyExists($property);
+        return $this->getObjectProperty($this, $property);
+    }
 
     public function equals($other) : bool
     {
-        if (!($other instanceof self)) return false;
+        if (!($other instanceof self)) {
+            return false;
+        }
 
         $result = true;
-
-        foreach ($this->data as $key => $value) {
-            if (!$other->hasData($key)) {
-                return false;
-            }
-
+        foreach ($this->getObjectData() as $key => $value) {
             if (method_exists($value, 'equals')) {
-                $result = $result && $value->equals($other->getData($key));
+                $result = $result && $value->equals($this->getObjectProperty($other, $key));
             } elseif (is_scalar($value)) {
-                $result = $result && $value === $other->getData($key);
+                $result = $result && $value === $this->getObjectProperty($other, $key);
             } else {
                 throw new MagentoDataException(sprintf("Invalid type %s", get_class($value)));
             }
@@ -88,6 +106,10 @@ abstract class BaseValueObject implements ValueObject
 
         return $result;
     }
+
+    abstract public static function fromJson(array $json);
+    abstract public function toJson() : array;
+    abstract public static function create();
 
     protected function __construct()
     {

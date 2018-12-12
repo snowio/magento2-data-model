@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
-
 namespace SnowIO\Magento2DataModel\Shipment;
-
 
 use SnowIO\Magento2DataModel\BaseValueObject;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
@@ -21,13 +19,11 @@ use SnowIO\Magento2DataModel\ExtensionAttributeSet;
  */
 final class Track extends BaseValueObject
 {
-
     public static function create() : self
     {
         return (new self())
             ->withExtensionAttributes(ExtensionAttributeSet::create());
     }
-
 
     public static function fromJson(array $json) : self
     {
@@ -43,10 +39,20 @@ final class Track extends BaseValueObject
     public function toJson() : array
     {
         return [
-            'title' => $this->getTitle(),
-            'track_number' => $this->getTrackNumber(),
-            'carrier_code' => $this->getCarrierCode(),
-            'extension_attributes' => $this->getExtensionAttributes()->toJson()
+            'title' => $this->title,
+            'track_number' => $this->trackNumber,
+            'carrier_code' => $this->carrierCode,
+            'extension_attributes' => $this->extensionAttributes->toJson()
         ];
+    }
+
+    private $title;
+    private $trackNumber;
+    private $carrierCode;
+    /** @var  ExtensionAttributeSet */
+    private $extensionAttributes;
+
+    protected function __construct()
+    {
     }
 }

@@ -2,10 +2,6 @@
 namespace SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
-use SnowIO\Magento2DataModel\Shipment\Arguments;
-use SnowIO\Magento2DataModel\Shipment\Comment;
-use SnowIO\Magento2DataModel\Shipment\ItemSet;
-use SnowIO\Magento2DataModel\Shipment\PackageCollection;
 use SnowIO\Magento2DataModel\Shipment\Track;
 use SnowIO\Magento2DataModel\Shipment\TrackSet;
 use SnowIO\Magento2DataModel\ShipmentData;
@@ -23,6 +19,15 @@ class ShipmentDataTest extends TestCase
         $json = $this->getShipmentsJson();
         $shipmentData = ShipmentData::fromJson($json);
         self::assertTrue($shipmentData->getTracks()->equals(TrackSet::fromJson($json['tracks'])));
+    }
+
+    /**
+     * @expectedException \SnowIO\Magento2DataModel\MagentoDataException
+     */
+    public function testFunctionalToNonExpectedFunction()
+    {
+        $shipmentData = ShipmentData::fromJson($this->getShipmentsJson());
+        $shipmentData->getFooBar();
     }
 
     public function testEquals()

@@ -48,5 +48,4 @@ final class TrackSet implements \IteratorAggregate, ValueObject
     {
         return $track->equals($otherTrack);
     }
-
 }

@@ -45,6 +45,5 @@ class ShipOrderCommand extends Command
 
     private function __construct()
     {
-
     }
 }
