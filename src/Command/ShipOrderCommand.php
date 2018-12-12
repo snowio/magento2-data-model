@@ -6,7 +6,7 @@ use SnowIO\Magento2DataModel\ShipmentData;
 
 class ShipOrderCommand extends Command
 {
-    public static function of(int $orderIncrementId, ShipmentData $shipmentData): self
+    public static function of(string $orderIncrementId, ShipmentData $shipmentData): self
     {
         $command = new self();
         $command->orderIncrementId = $orderIncrementId;
