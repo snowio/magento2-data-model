@@ -4,18 +4,25 @@ namespace SnowIO\Magento2DataModel;
 
 use SnowIO\Magento2DataModel\Shipment\TrackSet;
 
-/**
- * Class ShipmentData
- * @package SnowIO\Magento2DataModel
- * @method TrackSet getTracks()
- * @method ShipmentData withTracks(TrackSet $tracks)
- */
-final class ShipmentData extends BaseValueObject
+final class ShipmentData implements ValueObject
 {
     public static function create(): self
     {
-        return (new self())
-            ->withTracks(TrackSet::create());
+        $result = new self();
+        $result->tracks = TrackSet::create();
+        return $result;
+    }
+
+    public function getTracks(): TrackSet
+    {
+        return $this->tracks;
+    }
+
+    public function withTracks(TrackSet $tracks): self
+    {
+        $result = clone $this;
+        $result->tracks = $tracks;
+        return $result;
     }
 
     public static function fromJson(array $json): self
@@ -34,5 +41,11 @@ final class ShipmentData extends BaseValueObject
         return [
             "tracks" => $this->tracks->toJson(),
         ];
+    }
+
+    public function equals($other): bool
+    {
+        return $other instanceof $this &&
+            $this->tracks->equals($other->tracks);
     }
 }

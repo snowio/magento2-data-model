@@ -21,15 +21,6 @@ class ShipmentDataTest extends TestCase
         self::assertTrue($shipmentData->getTracks()->equals(TrackSet::fromJson($json['tracks'])));
     }
 
-    /**
-     * @expectedException \SnowIO\Magento2DataModel\MagentoDataException
-     */
-    public function testFunctionalToNonExpectedFunction()
-    {
-        $shipmentData = ShipmentData::fromJson($this->getShipmentsJson());
-        $shipmentData->getFooBar();
-    }
-
     public function testEquals()
     {
         $shipmentData = ShipmentData::fromJson($this->getShipmentsJson());
