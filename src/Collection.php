@@ -67,7 +67,7 @@ abstract class Collection implements \IteratorAggregate, ValueObject
         return -1;
     }
 
-    abstract protected function isEqual($package, $otherPackage);
+    abstract protected function isEqual($item, $otherItem);
 
     protected $items = [];
     protected function __construct()
