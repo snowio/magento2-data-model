@@ -30,10 +30,10 @@ final class ItemDataCollection extends Collection
         }, $this->items));
     }
 
-    protected function isEqual($package, $otherPackageData): bool
+    protected function isEqual($item, $otherItemData): bool
     {
-        return $package instanceof ItemData
-        && $otherPackageData instanceof ItemData
-        && $package->equals($otherPackageData);
+        return $item instanceof ItemData
+        && $otherItemData instanceof ItemData
+        && $item->equals($otherItemData);
     }
 }
