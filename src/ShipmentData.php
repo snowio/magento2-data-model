@@ -18,7 +18,6 @@ final class ShipmentData extends BaseValueObject
             ->withTracks(TrackSet::create());
     }
 
-
     public static function fromJson(array $json): self
     {
         /** @var ShipmentData $result */
