@@ -7,14 +7,14 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class StatusHistoryData implements ValueObject
 {
-    public static function of(string $parentId, string $comment = '', int $isCustomerNotified = 0): self
+    public static function of(string $parentId, ?string $comment, ?int $isCustomerNotified): self
     {
         return new self($parentId, $comment, $isCustomerNotified);
     }
     
     public static function fromJson(array $json): self
     {
-        $result = self::of((string) $json['parent_id'], $json['comment'] ?? '', $json['is_customer_notified'] = 0);
+        $result = self::of((string) $json['parent_id'], $json['comment'], $json['is_customer_notified']);
         $result->createdAt = $json['created_at'] ?? null;
         $result->entityId = (string) ($json['entity_id'] ?? null);
         $result->entityName = $json['entity_name'] ?? null;
@@ -29,7 +29,7 @@ final class StatusHistoryData implements ValueObject
     private $entityId;
     private $entityName;
     private $isCustomerNotified;
-    private $isVisibleOnFront;
+    private $isVisibleOnFront = 0;
     private $parentId;
     private $status;
     private $extensionAttributes;
@@ -76,7 +76,7 @@ final class StatusHistoryData implements ValueObject
         return $result;
     }
 
-    public function getComment(): string
+    public function getComment(): ?string
     {
         return $this->comment;
     }
@@ -96,7 +96,7 @@ final class StatusHistoryData implements ValueObject
         return $this->entityName;
     }
 
-    public function getIsCustomerNotified(): int
+    public function getIsCustomerNotified(): ?int
     {
         return $this->isCustomerNotified;
     }
@@ -136,7 +136,7 @@ final class StatusHistoryData implements ValueObject
         ];
     }
     
-    private function __construct(string $parentId, string $comment, int $isCustomerNotified)
+    private function __construct(string $parentId, ?string $comment, ?int $isCustomerNotified)
     {
         $this->parentId = $parentId;
         $this->isCustomerNotified = $isCustomerNotified;
