@@ -5,7 +5,7 @@ namespace SnowIO\Magento2DataModel;
 
 use SnowIO\Magento2DataModel\CreditMemo\CreditMemoItemCollection;
 
-class CreditMemoData implements ValueObject
+final class CreditMemoData implements ValueObject
 {
     public function GetAdjustment()
     {
@@ -250,6 +250,11 @@ class CreditMemoData implements ValueObject
     public function getUpdatedAt()
     {
         return $this->data['updated_at'] ?? null;
+    }
+
+    public function getExtensionAttributes()
+    {
+        return $this->data['extension_attributes'] ?? null;
     }
 
     public function withItems($items)
@@ -595,6 +600,13 @@ class CreditMemoData implements ValueObject
         return $result;
     }
 
+    public function withExtensionAttributes($extensionAttributes)
+    {
+        $result = clone $this;
+        $result->data['extension_attributes'] = $extensionAttributes;
+        return $result;
+    }
+
     public static function fromJson(array $json)
     {
         return new self($json);
@@ -606,6 +618,7 @@ class CreditMemoData implements ValueObject
     {
         $this->data = $data;
         $this->data['items'] = CreditMemoItemCollection::fromJson($this->data['items']);
+        $this->data['extension_attributes'] = ExtensionAttributeSet::fromJson($this->data['extension_attributes']);
     }
 
     public function equals($object): bool
@@ -617,7 +630,8 @@ class CreditMemoData implements ValueObject
     {
         return  array_merge(
             $this->data,
-            ['items' => $this->data['items'] === null ? [] : $this->data['items']->toJson()]
+            ['items' => $this->data['items'] === null ? [] : $this->data['items']->toJson()],
+            ['extension_attributes' => $this->data['extension_attributes'] === null ? [] : $this->data['extension_attributes']->toJson()]
         );
     }
 }
