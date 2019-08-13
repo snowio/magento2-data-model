@@ -424,7 +424,8 @@ class CreditMemoItemData
     private function __construct(array $data)
     {
         $this->data = $data;
-        $this->data['extension_attributes'] = ExtensionAttributeSet::fromJson($this->data['extension_attributes']);
+        $this->data['extension_attributes'] =
+            ExtensionAttributeSet::fromJson($this->data['extension_attributes'] ?? []);
     }
 
     public function toJson()

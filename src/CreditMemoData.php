@@ -618,7 +618,8 @@ final class CreditMemoData implements ValueObject
     {
         $this->data = $data;
         $this->data['items'] = CreditMemoItemCollection::fromJson($this->data['items']);
-        $this->data['extension_attributes'] = ExtensionAttributeSet::fromJson($this->data['extension_attributes']);
+        $this->data['extension_attributes'] =
+            ExtensionAttributeSet::fromJson($this->data['extension_attributes'] ?? []);
     }
 
     public function equals($object): bool
