@@ -600,7 +600,7 @@ final class CreditMemoData implements ValueObject
         return $result;
     }
 
-    public function withExtensionAttributes($extensionAttributes)
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
     {
         $result = clone $this;
         $result->data['extension_attributes'] = $extensionAttributes;

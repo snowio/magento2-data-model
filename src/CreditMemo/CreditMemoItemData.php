@@ -2,6 +2,8 @@
 
 namespace SnowIO\Magento2DataModel\CreditMemo;
 
+use SnowIO\Magento2DataModel\ExtensionAttributeSet;
+
 class CreditMemoItemData
 {
     public static function fromJson(array $json): self
@@ -410,7 +412,7 @@ class CreditMemoItemData
         return $result;
     }
 
-    public function withExtensionAttributes($extensionAttributes)
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
     {
         $result = clone $this;
         $result->data['extension_attributes'] = $extensionAttributes;
@@ -422,11 +424,19 @@ class CreditMemoItemData
     private function __construct(array $data)
     {
         $this->data = $data;
+        $this->data['extension_attributes'] = ExtensionAttributeSet::fromJson($this->data['extension_attributes']);
     }
 
     public function toJson()
     {
-        return $this->data;
+        return array_merge(
+            $this->data,
+            [
+                'extension_attributes' =>
+                    $this->data['extension_attributes'] === null ?
+                        [] : $this->data['extension_attributes']->toJson()
+            ]
+        );
     }
 
     public function equals($otherItemData)
