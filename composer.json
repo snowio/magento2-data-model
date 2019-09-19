@@ -8,12 +8,15 @@
             "SnowIO\\Magento2DataModel\\": "src"
         }
     },
+    "repositories": [
+        {"type": "composer", "url": "https://repo.packagist.com/snowio/"}
+    ],
     "autoload-dev": {
         "psr-4": {
             "SnowIO\\Magento2DataModel\\Test\\": "test/unit"
         }
     },
     "require": {
-        "joshdifabio/transform": "^0.1.0"
+        "snowio/transform": "^1.0"
     }
 }

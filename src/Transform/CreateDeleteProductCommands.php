@@ -1,10 +1,10 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
-use Joshdifabio\Transform\Distinct;
-use Joshdifabio\Transform\MapElements;
-use Joshdifabio\Transform\Pipeline;
-use Joshdifabio\Transform\Transform;
+use SnowIO\Transform\Distinct;
+use SnowIO\Transform\MapElements;
+use SnowIO\Transform\Pipeline;
+use SnowIO\Transform\Transform;
 use SnowIO\Magento2DataModel\ProductData;
 use SnowIO\Magento2DataModel\Command\DeleteProductCommand;
 

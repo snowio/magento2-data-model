@@ -1,12 +1,12 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
-use Joshdifabio\Transform\Distinct;
-use Joshdifabio\Transform\Filter;
-use Joshdifabio\Transform\MapElements;
-use Joshdifabio\Transform\MapValues;
-use Joshdifabio\Transform\Pipeline;
-use Joshdifabio\Transform\Transform;
+use SnowIO\Transform\Distinct;
+use SnowIO\Transform\Filter;
+use SnowIO\Transform\MapElements;
+use SnowIO\Transform\MapValues;
+use SnowIO\Transform\Pipeline;
+use SnowIO\Transform\Transform;
 use SnowIO\Magento2DataModel\CategoryData;
 use SnowIO\Magento2DataModel\Command\MoveCategoryCommand;
 

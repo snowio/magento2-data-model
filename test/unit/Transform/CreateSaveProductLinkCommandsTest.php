@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Magento2DataModel\Test\Transform;
 
-use Joshdifabio\Transform\Kv;
+use SnowIO\Transform\Kv;
 use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\ProductLinkAssociation;
 use SnowIO\Magento2DataModel\Transform\CreateSaveProductLinkCommands;

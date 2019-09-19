@@ -1,15 +1,15 @@
 <?php
 namespace SnowIO\Magento2DataModel\Transform;
 
-use Joshdifabio\Transform\CoGbkResult;
-use Joshdifabio\Transform\CoGroupByKey;
-use Joshdifabio\Transform\FlatMapElements;
-use Joshdifabio\Transform\FluentTransformTrait;
-use Joshdifabio\Transform\Kv;
-use Joshdifabio\Transform\Pipeline;
-use Joshdifabio\Transform\Transform;
-use Joshdifabio\Transform\Values;
-use Joshdifabio\Transform\WithKeys;
+use SnowIO\Transform\CoGbkResult;
+use SnowIO\Transform\CoGroupByKey;
+use SnowIO\Transform\FlatMapElements;
+use SnowIO\Transform\FluentTransformTrait;
+use SnowIO\Transform\Kv;
+use SnowIO\Transform\Pipeline;
+use SnowIO\Transform\Transform;
+use SnowIO\Transform\Values;
+use SnowIO\Transform\WithKeys;
 
 final class GetDeletedItems implements Transform
 {
