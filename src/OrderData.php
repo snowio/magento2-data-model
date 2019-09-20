@@ -9,19 +9,18 @@ use SnowIO\Magento2DataModel\Order\StatusHistoryDataCollection;
 
 final class OrderData implements ValueObject
 {
-    public static function of(string $customerEmail, string $baseGrandTotal, string $grandTotal): self
+    public static function create(): self
     {
-        return new self($customerEmail, $baseGrandTotal, $grandTotal);
+        return new self();
     }
 
 
     public static function fromJson(array $json): self
     {
-        $result = self::of(
-            (string)$json['customer_email'],
-            (string)$json['base_grand_total'],
-            (string)$json['grand_total']
-        );
+        $result = new self;
+        $result->baseGrandTotal = $json['base_grand_total'];
+        $result->customerEmail = $json['customer_email'];
+        $result->grandTotal = $json['grand_total'];
         $result->adjustmentNegative = (string)($json['adjustment_negative'] ?? null);
         $result->adjustmentPositive = (string)($json['adjustment_positive'] ?? null);
         $result->appliedRuleIds = $json['applied_rule_ids'] ?? null;
@@ -168,6 +167,20 @@ final class OrderData implements ValueObject
     {
         $result = clone $this;
         $result->adjustmentNegative = $adjustmentNegative;
+        return $result;
+    }
+
+    public function withGrandTotal(string $grandTotal) : self
+    {
+        $result = clone $this;
+        $result->grandTotal = $grandTotal;
+        return $result;
+    }
+
+    public function withBaseGrandTotal(string $baseGrandTotal) : self
+    {
+        $result = clone $this;
+        $result->baseGrandTotal = $baseGrandTotal;
         return $result;
     }
 
@@ -2081,11 +2094,8 @@ final class OrderData implements ValueObject
     /** @var  ExtensionAttributeSet */
     private $extensionAttributes;
 
-    private function __construct($customerEmail, $baseGrandTotal, $grandTotal)
+    private function __construct()
     {
-        $this->customerEmail = $customerEmail;
-        $this->baseGrandTotal = $baseGrandTotal;
-        $this->grandTotal = $grandTotal;
         $this->extensionAttributes = ExtensionAttributeSet::create();
         $this->items = ItemDataCollection::create();
         $this->statusHistories = StatusHistoryDataCollection::create();

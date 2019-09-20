@@ -176,7 +176,10 @@ class OrderDataTest extends TestCase
 
     public function getOrder()
     {
-        return  OrderData::of("helham@test.com", "21.47", "100.032")
+        return  OrderData::create()
+            ->withCustomerEmail("helham@test.com")
+            ->withBaseGrandTotal("21.47")
+            ->withGrandTotal("100.032")
             ->withAdjustmentPositive("4")
             ->withAppliedRuleIds("48,434,4363")
             ->withBaseAdjustmentNegative("5")
