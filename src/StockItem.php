@@ -78,14 +78,27 @@ final class StockItem implements ValueObject
         return $result;
     }
 
-    public function equals($extensionAttribute): bool
+    public function withUseConfigBackorders(bool $useConfigBackorders): self
     {
-        return ($extensionAttribute instanceof StockItem) &&
-            ($this->stockId === $extensionAttribute->stockId) &&
-            ($this->quantity === $extensionAttribute->quantity) &&
-            ($this->isInStock === $extensionAttribute->isInStock) &&
-            ($this->manageStock === $extensionAttribute->manageStock) &&
-            ($this->useConfigManageStock === $extensionAttribute->useConfigManageStock);
+        $result = clone $this;
+        $result->useConfigBackorders = $useConfigBackorders;
+        return $result;
+    }
+
+    public function getUseConfigBackorders(): bool
+    {
+        return $this->useConfigBackorders;
+    }
+
+    public function equals($other): bool
+    {
+        return ($other instanceof StockItem) &&
+            ($this->stockId === $other->stockId) &&
+            ($this->quantity === $other->quantity) &&
+            ($this->isInStock === $other->isInStock) &&
+            ($this->manageStock === $other->manageStock) &&
+            ($this->useConfigBackorders === $other->useConfigBackorders) &&
+            ($this->useConfigManageStock === $other->useConfigManageStock);
     }
 
     public static function fromJson(array $json)
@@ -121,6 +134,9 @@ final class StockItem implements ValueObject
         if (isset($this->useConfigManageStock)) {
             $json['use_config_manage_stock'] = $this->useConfigManageStock;
         }
+        if (isset($this->useConfigBackorders)) {
+            $json['use_config_backorders'] = $this->useConfigBackorders;
+        }
         return $json;
     }
 
@@ -133,6 +149,7 @@ final class StockItem implements ValueObject
     private $quantity;
     private $isInStock;
     private $manageStock;
+    private $useConfigBackorders;
     private $useConfigManageStock;
 
     protected function __construct()
