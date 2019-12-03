@@ -5,6 +5,7 @@ namespace SnowIO\Magento2DataModel;
 
 trait EavEntityTrait
 {
+    use ExtensionAttributeTrait;
     public function getCustomAttributes(): CustomAttributeSet
     {
         return $this->customAttributes;
@@ -37,31 +38,8 @@ trait EavEntityTrait
         return $result;
     }
 
-    public function getExtensionAttributes(): ExtensionAttributeSet
-    {
-        return $this->extensionAttributes;
-    }
-
-    public function withExtensionAttribute(ExtensionAttribute $extensionAttribute): self
-    {
-        $result = clone $this;
-        $result->extensionAttributes = $result->extensionAttributes
-            ->withExtensionAttribute($extensionAttribute);
-        return $result;
-    }
-
-    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
-    {
-        $result = clone $this;
-        $result->extensionAttributes = $extensionAttributes;
-        return $result;
-    }
-
     private $storeCode = 'admin';
 
     /** @var CustomAttributeSet */
     private $customAttributes;
-
-    /** @var ExtensionAttributeSet */
-    private $extensionAttributes;
 }
