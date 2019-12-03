@@ -19,11 +19,13 @@ class StockItemTest extends TestCase
 
         $stockItem = $stockItem
             ->withInStock(true)
+            ->withUseConfigBackorders(true)
             ->withManageStock(false);
 
         self::assertEquals([
             'stock_id' => 1,
             'qty' => 100,
+            'use_config_backorders' => true,
             'is_in_stock' => true,
             'manage_stock' => false,
         ], $stockItem->toJson());
@@ -40,6 +42,9 @@ class StockItemTest extends TestCase
 
         $stockItem = $stockItem->withQuantity(1000);
         self::assertEquals(1000, $stockItem->getQuantity());
+
+        $stockItem = $stockItem->withUseConfigBackorders(true);
+        self::assertEquals(true, $stockItem->getUseConfigBackorders());
     }
 
     public function testEquals()
@@ -48,6 +53,7 @@ class StockItemTest extends TestCase
         self::assertTrue($stockItem->equals(StockItem::of(1, 100)));
         self::assertFalse($stockItem->equals(StockItem::of(1, 1000)));
         self::assertFalse($stockItem->equals(StockItem::of(10, 100)));
+        self::assertFalse($stockItem->equals(StockItem::of(1, 100)->withUseConfigBackorders(true)));
         self::assertFalse($stockItem->equals(ExtensionAttribute::of('stock_size', 1000)));
         self::assertFalse($stockItem->equals(ExtensionAttribute::of('stock_item', 100)));
     }
