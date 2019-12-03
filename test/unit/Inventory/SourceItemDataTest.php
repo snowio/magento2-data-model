@@ -2,6 +2,7 @@
 namespace SnowIO\Magento2DataModel\Test\Inventory;
 
 use PHPUnit\Framework\TestCase;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
 
 class SourceItemDataTest extends TestCase
 {
@@ -31,6 +32,12 @@ class SourceItemDataTest extends TestCase
         self::assertFalse(
             $sourceItem->withQuantity(40)
                 ->equals(SourceItemHelpers::getSourceItem('1', '1'))
+        );
+        self::assertFalse(
+            $sourceItem->equals(
+                SourceItemHelpers::getSourceItem('1', '1')
+                    ->withExtensionAttribute(ExtensionAttribute::of('1', '2'))
+            )
         );
     }
 

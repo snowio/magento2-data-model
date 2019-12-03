@@ -86,7 +86,8 @@ class SourceItemData
             $this->sku === $other->sku &&
             $this->sourceCode === $other->sourceCode &&
             $this->quantity === $other->quantity &&
-            $this->status === $other->status;
+            $this->status === $other->status &&
+            $this->extensionAttributes->equals($other->extensionAttributes);
     }
 
     private function __construct()
