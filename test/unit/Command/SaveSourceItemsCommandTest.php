@@ -12,10 +12,12 @@ class SaveSourceItemsCommandTest extends TestCase
         $command = SaveSourceItemsCommand::of(SourceItemHelpers::getSourceItems())
             ->withShardingKey('sku')
             ->withCommandGroupId("source_item.sku")
+            ->withStore("admin")
             ->withTimestamp(123);
         self::assertEquals([
             '@timestamp' => 123,
             '@shardingKey' => 'sku',
+            "@store" => "admin",
             '@commandGroupId' => 'source_item.sku',
             'sourceItems' => SourceItemHelpers::getSourceItemsJson(),
         ], $command->toJson());
