@@ -28,8 +28,8 @@ class AddressDataTest extends TestCase
         self::assertEquals("string", $address->getEmail());
         self::assertEquals("0", $address->getEntityId());
         self::assertEquals("string", $address->getFax());
-        self::assertEquals("string", $address->getFirstname());
-        self::assertEquals("string", $address->getLastname());
+        self::assertEquals("firstname", $address->getFirstname());
+        self::assertEquals("lastname", $address->getLastname());
         self::assertEquals("string", $address->getMiddlename());
         self::assertEquals("0", $address->getParentId());
         self::assertEquals("string", $address->getPostcode());
@@ -70,8 +70,8 @@ class AddressDataTest extends TestCase
             "email" => "string",
             "entity_id" => 0,
             "fax" => "string",
-            "firstname" => "string",
-            "lastname" => "string",
+            "firstname" => "firstname",
+            "lastname" => "lastname",
             "middlename" => "string",
             "parent_id" => 0,
             "postcode" => "string",
@@ -105,8 +105,8 @@ class AddressDataTest extends TestCase
             ->withEmail("string")
             ->withEntityId("0")
             ->withFax("string")
-            ->withFirstname("string")
-            ->withLastname("string")
+            ->withFirstname("firstname")
+            ->withLastname("lastname")
             ->withMiddlename("string")
             ->withParentId("0")
             ->withPostcode("string")

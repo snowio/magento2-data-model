@@ -383,7 +383,7 @@ final class AddressData implements ValueObject
             "email" => $this->email,
             "entity_id" => $this->entityId,
             "fax" => $this->fax,
-            "firstname" => $this->lastname,
+            "firstname" => $this->firstname,
             "lastname" => $this->lastname,
             "middlename" => $this->middlename,
             "parent_id" => $this->parentId,
