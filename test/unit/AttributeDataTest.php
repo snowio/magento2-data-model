@@ -14,7 +14,7 @@ class AttributeDataTest extends TestCase
 {
     public function testToJson()
     {
-        $attribute = AttributeData::of('diameter', FrontendInput::TEXT, 'Diameter');
+        $attribute = AttributeData::of('diameter', FrontendInput::TEXT, 'Diameter')->withSwatchInputType(null);
         self::assertEquals([
             'attribute_code' => 'diameter',
             'is_required' => false,

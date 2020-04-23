@@ -72,7 +72,9 @@ final class AttributeData implements ValueObject
 
     public function withSwatchInputType(?string $swatchInputType): self
     {
-        SwatchInputType::validateType($swatchInputType);
+        if ($swatchInputType) {
+            SwatchInputType::validateType($swatchInputType);
+        }
         $result = clone $this;
         $result->swatchInputType = $swatchInputType;
         return $result;
