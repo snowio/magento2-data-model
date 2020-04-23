@@ -65,16 +65,36 @@ final class AttributeData implements ValueObject
         return $result;
     }
 
+    public function getSwatchInputType(): ?string
+    {
+        return $this->swatchInputType;
+    }
+
+    public function withSwatchInputType(?string $swatchInputType): self
+    {
+        if ($swatchInputType) {
+            SwatchInputType::validateType($swatchInputType);
+        }
+        $result = clone $this;
+        $result->swatchInputType = $swatchInputType;
+        return $result;
+    }
 
     public function toJson(): array
     {
-        return [
+        $json = [
             'attribute_code' => $this->attributeCode,
             'is_required' => $this->isRequired,
             'frontend_input' => $this->frontendInput,
             'default_frontend_label' => $this->defaultFrontendLabel,
             'scope' => $this->scope,
         ];
+
+        if ($this->swatchInputType) {
+            $json['swatch_input_type'] = $this->swatchInputType;
+        }
+
+        return $json;
     }
 
     public function equals($attribute): bool
@@ -84,6 +104,7 @@ final class AttributeData implements ValueObject
             ($this->isRequired === $attribute->isRequired) &&
             ($this->frontendInput === $attribute->frontendInput) &&
             ($this->defaultFrontendLabel === $attribute->defaultFrontendLabel) &&
+            ($this->swatchInputType === $attribute->swatchInputType) &&
             ($this->scope === $attribute->scope);
     }
 
@@ -92,6 +113,7 @@ final class AttributeData implements ValueObject
     private $frontendInput;
     private $defaultFrontendLabel;
     private $scope = AttributeScope::GLOBAL;
+    private $swatchInputType = null;
 
     private function __construct(string $attributeCode, string $frontendInput)
     {
