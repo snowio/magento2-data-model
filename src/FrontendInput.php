@@ -16,8 +16,6 @@ final class FrontendInput
     const HIDDEN = 'hidden';
     const MULTILINE = 'multiline';
     const MEDIA_IMAGE = 'media_image';
-    const SWATCH_VISUAL = 'swatch_visual';
-    const SWATCH_TEXT = 'swatch_text';
 
     const ALL = [
         self::TEXT,
@@ -31,8 +29,6 @@ final class FrontendInput
         self::IMAGE,
         self::HIDDEN,
         self::MULTILINE,
-        self::MEDIA_IMAGE,
-        self::SWATCH_VISUAL,
-        self::SWATCH_TEXT,
+        self::MEDIA_IMAGE
     ];
 }
