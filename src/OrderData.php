@@ -1172,7 +1172,7 @@ final class OrderData implements ValueObject
         return $this->baseDiscountRefunded;
     }
 
-    public function getBaseGrandTotal(): string
+    public function getBaseGrandTotal()
     {
         return $this->baseGrandTotal;
     }
