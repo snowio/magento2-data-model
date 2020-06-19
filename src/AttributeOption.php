@@ -75,7 +75,8 @@ final class AttributeOption implements ValueObject
         return $attributeOption instanceof AttributeOption &&
             ($this->attributeCode === $attributeOption->attributeCode) &&
             ($this->value === $attributeOption->value) &&
-            ($this->label === $attributeOption->label);
+            ($this->label === $attributeOption->label) &&
+            ($this->storeLabels->equals($attributeOption->storeLabels));
     }
 
     private $attributeCode;
