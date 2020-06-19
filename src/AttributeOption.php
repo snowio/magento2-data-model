@@ -76,6 +76,7 @@ final class AttributeOption implements ValueObject
             ($this->attributeCode === $attributeOption->attributeCode) &&
             ($this->value === $attributeOption->value) &&
             ($this->label === $attributeOption->label) &&
+            ($this->sortOrder === $attributeOption->sortOrder) &&
             ($this->storeLabels->equals($attributeOption->storeLabels));
     }
 
