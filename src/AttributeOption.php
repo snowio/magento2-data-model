@@ -34,9 +34,23 @@ final class AttributeOption implements ValueObject
         return $result;
     }
 
+    public function withStoreLabels(AttributeOptionStoreLabelSet $storeLabels)
+    {
+        $result = clone $this;
+        $result->storeLabels = $storeLabels;
+        return $result;
+    }
+
+    public function withSortOrder(int $sortOrder)
+    {
+        $result = clone $this;
+        $result->sortOrder = $sortOrder;
+        return $result;
+    }
+
     public function toJson(): array
     {
-        return [
+        $json = [
             'entity_type' => self::PRODUCT_ENTITY_TYPE,
             'attribute_code' => $this->attributeCode,
             'option' => [
@@ -44,6 +58,16 @@ final class AttributeOption implements ValueObject
                 'label' => $this->label,
             ],
         ];
+
+        if ($this->sortOrder) {
+            $json['option']['sort_order'] = $this->sortOrder;
+        }
+
+        if (!$this->storeLabels->isEmpty()) {
+            $json['option']['store_labels'] =  $this->storeLabels->toJson();
+        }
+
+        return $json;
     }
 
     public function equals($attributeOption): bool
@@ -51,17 +75,22 @@ final class AttributeOption implements ValueObject
         return $attributeOption instanceof AttributeOption &&
             ($this->attributeCode === $attributeOption->attributeCode) &&
             ($this->value === $attributeOption->value) &&
-            ($this->label === $attributeOption->label);
+            ($this->label === $attributeOption->label) &&
+            ($this->sortOrder === $attributeOption->sortOrder) &&
+            ($this->storeLabels->equals($attributeOption->storeLabels));
     }
 
     private $attributeCode;
     private $value;
     private $label;
+    private $storeLabels;
+    private $sortOrder;
 
     private function __construct(string $attributeCode, string $value, string $label)
     {
         $this->attributeCode = $attributeCode;
         $this->value = $value;
         $this->label = $label;
+        $this->storeLabels = AttributeOptionStoreLabelSet::create();
     }
 }
