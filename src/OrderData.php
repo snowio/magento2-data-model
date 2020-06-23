@@ -1527,7 +1527,7 @@ final class OrderData implements ValueObject
         return $this->incrementId;
     }
 
-    public function getIsVirtual(): ?int
+    public function getIsVirtual()
     {
         return $this->isVirtual;
     }
