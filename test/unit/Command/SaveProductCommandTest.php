@@ -16,7 +16,7 @@ class SaveProductCommandTest extends TestCase
         self::assertEquals([
             '@store' => 'admin',
             '@shardingKey' => 'test-product',
-            '@commandGroupId' => 'product.test-product',
+            '@commandGroupId' => 'product.admin.test-product',
             'sku' => 'test-product',
             'product' => [
                 'sku' => 'test-product',
