@@ -10,13 +10,13 @@ class SaveCustomerCommandTest extends TestCase
 {
     public function testToJson()
     {
-        $command = SaveCustomerCommand::of(CustomerData::of('test@amp.co'))
+        $command = SaveCustomerCommand::of(CustomerData::of('test@amp.co')->withId(1))
         ->withTimestamp(1509530316);
         self::assertEquals([
             '@timestamp' => (float)1509530316,
-            'customerId' => 0,
+            'customerId' => 1,
             'customer' => [
-                'id' => null,
+                'id' => 1,
                 'email' => 'test@amp.co',
                 'firstname' => null,
                 'lastname' => null,

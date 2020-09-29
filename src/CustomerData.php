@@ -42,7 +42,6 @@ final class CustomerData implements ValueObject
     public function toJson(): array
     {
         $json = [
-            'id' => (int) $this->id,
             'email' => $this->email,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
@@ -64,6 +63,10 @@ final class CustomerData implements ValueObject
             'extension_attributes' => $this->extensionAttributes->toJson(),
             'custom_attributes' => $this->customAttributes->toJson()
         ];
+
+        if ($this->id) {
+            $json['id'] = $this->id;
+        }
 
         // optionals
         if ($this->addresses->count()) {

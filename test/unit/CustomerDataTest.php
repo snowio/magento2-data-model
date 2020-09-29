@@ -17,7 +17,6 @@ class CustomerDataTest extends TestCase
     public function testToJson()
     {
         self::assertSame([
-            'id' => 0,
             'email' => 'test@amp.co',
             'firstname' => null,
             'lastname' => null,
@@ -246,7 +245,6 @@ class CustomerDataTest extends TestCase
     public function testGetters()
     {
         $customer = CustomerData::of('test@amp.co')
-            ->withId(1)
             ->withStoreId(1)
             ->withWebsiteId(1)
             ->withGroupId(1)
@@ -295,7 +293,6 @@ class CustomerDataTest extends TestCase
             );
 
         self::assertEquals([
-            'id' => $customer->getId(),
             'email' => $customer->getEmail(),
             'firstname' => $customer->getFirstname(),
             'lastname' => $customer->getLastname(),
@@ -318,6 +315,7 @@ class CustomerDataTest extends TestCase
             'extension_attributes' => $customer->getExtensionAttributes()->toJson(),
             'custom_attributes' => $customer->getCustomAttributes()->toJson()
         ], $customer->toJson());
+        self::assertNull($customer->getId());
     }
 
     public function testEqualsComplete()
