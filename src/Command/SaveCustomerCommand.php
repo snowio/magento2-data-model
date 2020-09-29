@@ -31,7 +31,7 @@ final class SaveCustomerCommand extends Command
 
         $json = $parentJson + ['customer' => $this->customerData->toJson()];
 
-        if ($this->customerData->getId()) {
+        if ($this->customerData->getId() !== null) {
            $json += ['customerId' => (int) $this->customerData->getId()];
         }
 
