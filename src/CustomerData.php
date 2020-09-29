@@ -64,7 +64,7 @@ final class CustomerData implements ValueObject
             'custom_attributes' => $this->customAttributes->toJson()
         ];
 
-        if ($this->id) {
+        if ($this->id !== null) {
             $json['id'] = $this->id;
         }
 
