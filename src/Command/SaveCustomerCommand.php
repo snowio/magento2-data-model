@@ -27,10 +27,15 @@ final class SaveCustomerCommand extends Command
 
     public function toJson(): array
     {
-        return parent::toJson() + [
-            'customerId' => (int) $this->customerData->getId(),
-            'customer' => $this->customerData->toJson(),
-        ];
+        $parentJson = parent::toJson();
+
+        $json = $parentJson + ['customer' => $this->customerData->toJson()];
+
+        if ($this->customerData->getId()) {
+           $json += ['customerId' => (int) $this->customerData->getId()];
+        }
+
+        return $json;
     }
 
     /** @var CustomerData */
