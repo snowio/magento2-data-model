@@ -6,6 +6,9 @@ before_install:
   - if [[ -n $PACKAGIST_TOKEN ]]; then composer config http-basic.repo.packagist.com token $PACKAGIST_TOKEN; fi
 cache:
   directories: $HOME/.composer/cache
-before_script: composer install --no-interaction --dev
+before_script:
+  - phpenv config-add travis.php.ini
+  - composer install --no-interaction --dev
+
 script: vendor/bin/phpunit --coverage-clover=coverage.xml
 after_success: bash <(curl -s https://codecov.io/bash)
