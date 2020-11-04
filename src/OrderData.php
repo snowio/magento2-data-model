@@ -1492,7 +1492,7 @@ final class OrderData implements ValueObject
         return $this->globalCurrencyCode;
     }
 
-    public function getGrandTotal(): ?string
+    public function getGrandTotal()
     {
         return $this->grandTotal;
     }
