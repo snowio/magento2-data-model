@@ -13,7 +13,7 @@ final class Item implements ValueObject
     private $description;
     /** @var int|null $entityId */
     private $entityId;
-    /** @var ExtensionAttributeSet|null */
+    /** @var ExtensionAttributeSet */
     private $extensionAttributes;
     /** @var string|null $name */
     private $name;
@@ -46,9 +46,7 @@ final class Item implements ValueObject
         $result->additionalData = $json['additional_data'] ?? null;
         $result->description = $json['description'] ?? null;
         $result->entityId = $json['entity_id'] ?? null;
-        $result->extensionAttributes = isset($json['extension_attributes']) ?
-            ExtensionAttributeSet::fromJson($json['extension_attributes']) :
-            null;
+        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         $result->name = $json['name'] ?? null;
         $result->orderItemId = $json['order_item_id'];
         $result->parentId = $json['parent_id'] ?? null;
@@ -289,16 +287,23 @@ final class Item implements ValueObject
         return $clone;
     }
 
-    public function getExtensionAttributes()
+    /**
+     * @return ExtensionAttributeSet
+     */
+    public function getExtensionAttributes(): ExtensionAttributeSet
     {
         return $this->extensionAttributes;
     }
 
-    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): self
+    /**
+     * @param ExtensionAttributeSet $extensionAttributes
+     * @return Item
+     */
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): Item
     {
-        $result = clone $this;
-        $result->extensionAttributes = $extensionAttributes;
-        return $result;
+        $clone = clone $this;
+        $clone->extensionAttributes = $extensionAttributes;
+        return $clone;
     }
     
     public function toJson() : array
@@ -307,7 +312,7 @@ final class Item implements ValueObject
             'additional_data' => $this->additionalData ?? null,
             'description' => $this->description ?? null,
             'entity_id' => $this->entityId ?? null,
-            'extension_attributes' => $this->extensionAttributes ? $this->extensionAttributes->toJson() : null,
+            'extension_attributes' => $this->extensionAttributes->toJson(),
             'name' => $this->name ?? null,
             'order_item_id' => $this->orderItemId,
             'parent_id' => $this->parentId ?? null,

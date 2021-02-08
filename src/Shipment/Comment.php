@@ -19,7 +19,7 @@ final class Comment implements ValueObject
     private $createdAt;
     /** @var int|null $entityId */
     private $entityId;
-    /** @var ExtensionAttributeSet|null */
+    /** @var ExtensionAttributeSet */
     private $extensionAttributes;
 
     public static function create() : self
@@ -37,9 +37,7 @@ final class Comment implements ValueObject
         $result->parentId = $json['parent_id'];
         $result->createdAt = $json['created_at'] ?? null;
         $result->entityId = $json['entity_id'] ?? null;
-        $result->extensionAttributes = isset($json['extension_attributes']) ? 
-            ExtensionAttributeSet::fromJson($json['extension_attributes']) :
-            null;
+        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         return $result;
     }
 
@@ -157,16 +155,23 @@ final class Comment implements ValueObject
         return $clone;
     }
 
-    public function getExtensionAttributes()
+    /**
+     * @return ExtensionAttributeSet
+     */
+    public function getExtensionAttributes(): ExtensionAttributeSet
     {
         return $this->extensionAttributes;
     }
 
-    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): self
+    /**
+     * @param ExtensionAttributeSet $extensionAttributes
+     * @return Comment
+     */
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): Comment
     {
-        $result = clone $this;
-        $result->extensionAttributes = $extensionAttributes;
-        return $result;
+        $clone = clone $this;
+        $clone->extensionAttributes = $extensionAttributes;
+        return $clone;
     }
     
     public function toJson() : array
@@ -178,7 +183,7 @@ final class Comment implements ValueObject
             'parent_id' => $this->parentId,
             'created_at' => $this->createdAt ?? null,
             'entity_id' => $this->entityId ?? null,
-            'extension_attributes' => $this->extensionAttributes ? $this->extensionAttributes->toJson() : null
+            'extension_attributes' => $this->extensionAttributes->toJson()
         ];
     }
 

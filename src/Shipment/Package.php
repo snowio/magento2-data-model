@@ -7,7 +7,7 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class Package implements ValueObject
 {
-    /** @var ExtensionAttributeSet|null */
+    /** @var ExtensionAttributeSet */
     private $extensionAttributes;
 
     public static function create() : self
@@ -19,28 +19,33 @@ final class Package implements ValueObject
     public static function fromJson(array $json) : self
     {
         $result = new self();
-        $result->extensionAttributes = isset($json['extension_attributes']) ? 
-            ExtensionAttributeSet::fromJson($json['extension_attributes']) :
-            null;
+        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         return $result;
     }
-    
-    public function getExtensionAttributes()
+
+    /**
+     * @return ExtensionAttributeSet
+     */
+    public function getExtensionAttributes(): ExtensionAttributeSet
     {
         return $this->extensionAttributes;
     }
 
-    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): self
+    /**
+     * @param ExtensionAttributeSet $extensionAttributes
+     * @return Package
+     */
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): Package
     {
-        $result = clone $this;
-        $result->extensionAttributes = $extensionAttributes;
-        return $result;
+        $clone = clone $this;
+        $clone->extensionAttributes = $extensionAttributes;
+        return $clone;
     }
     
     public function toJson() : array
     {
         return [
-            'extension_attributes' => $this->extensionAttributes ? $this->extensionAttributes->toJson() : null
+            'extension_attributes' => $this->extensionAttributes->toJson()
         ];
     }
 
