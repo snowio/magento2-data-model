@@ -7,32 +7,12 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class Item implements ValueObject
 {
-    /** @var string|null $additionalData */
-    private $additionalData;
-    /** @var string|null $description */
-    private $description;
-    /** @var int|null $entityId */
-    private $entityId;
-    /** @var ExtensionAttributeSet */
-    private $extensionAttributes;
-    /** @var string|null $name */
-    private $name;
-    /** @var int $orderItemId */
+    /** @var string $orderItemId */
     private $orderItemId;
-    /** @var int|null $parentId */
-    private $parentId;
-    /** @var float|null $price */
-    private $price;
-    /** @var int|null $productId */
-    private $productId;
     /** @var int $qty */
     private $qty;
-    /** @var float|null $rowTotal */
-    private $rowTotal;
-    /** @var string|null $sku */
-    private $sku;
-    /** @var float|null $weight */
-    private $weight;
+    /** @var ExtensionAttributeSet */
+    private $extensionAttributes;
 
     public static function create() : self
     {
@@ -43,171 +23,28 @@ final class Item implements ValueObject
     public static function fromJson(array $json) : self
     {
         $result = new self();
-        $result->additionalData = $json['additional_data'] ?? null;
-        $result->description = $json['description'] ?? null;
-        $result->entityId = $json['entity_id'] ?? null;
-        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
-        $result->name = $json['name'] ?? null;
         $result->orderItemId = $json['order_item_id'];
-        $result->parentId = $json['parent_id'] ?? null;
-        $result->price = $json['price'] ?? null;
-        $result->productId = $json['product_id'] ?? null;
         $result->qty = $json['qty'];
-        $result->rowTotal = $json['row_total'] ?? null;
-        $result->sku = $json['sku'] ?? null;
-        $result->weight = $json['weight'] ?? null;
+        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
         return $result;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getAdditionalData(): ?string
-    {
-        return $this->additionalData;
-    }
-
-    /**
-     * @param string|null $additionalData
-     * @return Item
-     */
-    public function withAdditionalData(?string $additionalData): Item
-    {
-        $clone = clone $this;
-        $clone->additionalData = $additionalData;
-        return $clone;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string|null $description
-     * @return Item
-     */
-    public function withDescription(?string $description): Item
-    {
-        $clone = clone $this;
-        $clone->description = $description;
-        return $clone;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getEntityId(): ?int
-    {
-        return $this->entityId;
-    }
-
-    /**
-     * @param int|null $entityId
-     * @return Item
-     */
-    public function withEntityId(?int $entityId): Item
-    {
-        $clone = clone $this;
-        $clone->entityId = $entityId;
-        return $clone;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string|null $name
-     * @return Item
-     */
-    public function withName(?string $name): Item
-    {
-        $clone = clone $this;
-        $clone->name = $name;
-        return $clone;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrderItemId(): int
+    public function getOrderItemId(): string
     {
         return $this->orderItemId;
     }
 
     /**
-     * @param int $orderItemId
+     * @param string $orderItemId
      * @return Item
      */
-    public function withOrderItemId(int $orderItemId): Item
+    public function withOrderItemId(string $orderItemId): Item
     {
         $clone = clone $this;
         $clone->orderItemId = $orderItemId;
-        return $clone;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getParentId(): ?int
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * @param int|null $parentId
-     * @return Item
-     */
-    public function withParentId(?int $parentId): Item
-    {
-        $clone = clone $this;
-        $clone->parentId = $parentId;
-        return $clone;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param float|null $price
-     * @return Item
-     */
-    public function withPrice(?float $price): Item
-    {
-        $clone = clone $this;
-        $clone->price = $price;
-        return $clone;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getProductId(): ?int
-    {
-        return $this->productId;
-    }
-
-    /**
-     * @param int|null $productId
-     * @return Item
-     */
-    public function withProductId(?int $productId): Item
-    {
-        $clone = clone $this;
-        $clone->productId = $productId;
         return $clone;
     }
 
@@ -227,63 +64,6 @@ final class Item implements ValueObject
     {
         $clone = clone $this;
         $clone->qty = $qty;
-        return $clone;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getRowTotal(): ?float
-    {
-        return $this->rowTotal;
-    }
-
-    /**
-     * @param float|null $rowTotal
-     * @return Item
-     */
-    public function withRowTotal(?float $rowTotal): Item
-    {
-        $clone = clone $this;
-        $clone->rowTotal = $rowTotal;
-        return $clone;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSku(): ?string
-    {
-        return $this->sku;
-    }
-
-    /**
-     * @param string|null $sku
-     * @return Item
-     */
-    public function withSku(?string $sku): Item
-    {
-        $clone = clone $this;
-        $clone->sku = $sku;
-        return $clone;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getWeight(): ?float
-    {
-        return $this->weight;
-    }
-
-    /**
-     * @param float|null $weight
-     * @return Item
-     */
-    public function withWeight(?float $weight): Item
-    {
-        $clone = clone $this;
-        $clone->weight = $weight;
         return $clone;
     }
 
@@ -308,39 +88,24 @@ final class Item implements ValueObject
     
     public function toJson() : array
     {
-        return [
-            'additional_data' => $this->additionalData ?? null,
-            'description' => $this->description ?? null,
-            'entity_id' => $this->entityId ?? null,
-            'extension_attributes' => $this->extensionAttributes->toJson(),
-            'name' => $this->name ?? null,
-            'order_item_id' => $this->orderItemId,
-            'parent_id' => $this->parentId ?? null,
-            'price' => $this->price ?? null,
-            'product_id' => $this->productId ?? null,
-            'qty' => $this->qty,
-            'row_total' => $this->rowTotal ?? null,
-            'sku' => $this->sku ?? null,
-            'weight' => $this->weight ?? null
-        ];
+        $json = [];
+
+        $json['order_item_id'] = $this->orderItemId;
+        $json['qty'] = $this->qty;
+
+        if (!$this->getExtensionAttributes()->isEmpty()) {
+            $json['extension_attributes'] = $this->getExtensionAttributes();
+        }
+
+        return $json;
     }
 
     public function equals($other): bool
     {
         return $other instanceof self &&
-            $this->additionalData === $other->additionalData &&
-            $this->description === $other->description &&
-            $this->entityId === $other->entityId &&
-            $this->extensionAttributes->equals($other->extensionAttributes);
-            $this->name === $other->name &&
             $this->orderItemId === $other->orderItemId &&
-            $this->parentId === $other->parentId &&
-            $this->price === $other->price &&
-            $this->productId === $other->productId &&
             $this->qty === $other->qty &&
-            $this->rowTotal === $other->rowTotal &&
-            $this->sku === $other->sku &&
-            $this->weight === $other->weight;
+            $this->extensionAttributes->equals($other->extensionAttributes);
     }
 
     protected function __construct()
