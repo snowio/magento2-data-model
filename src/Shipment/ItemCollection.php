@@ -14,6 +14,11 @@ final class ItemCollection extends Collection
         return $result;
     }
 
+    public function map(callable $function)
+    {
+        return array_map($function, $this->items);
+    }
+
     public static function fromJson(array $json): self
     {
         $result = self::create();
