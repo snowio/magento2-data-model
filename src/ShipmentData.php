@@ -12,6 +12,8 @@ use SnowIO\Magento2DataModel\Shipment\TrackSet;
 
 final class ShipmentData implements ValueObject
 {
+    /** @var string|null $orderIncrement */
+    private $orderIncrement;
     /** @var CommentCollection $comments */
     private $comments;
     /** @var ItemCollection $items */
@@ -36,6 +38,25 @@ final class ShipmentData implements ValueObject
         $result->items = ItemCollection::create();
         $result->comments = CommentCollection::create();
         return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrderIncrement(): ?string
+    {
+        return $this->orderIncrement;
+    }
+
+    /**
+     * @param string|null $orderIncrement
+     * @return ShipmentData
+     */
+    public function withOrderIncrement(?string $orderIncrement): ShipmentData
+    {
+        $clone = clone $this;
+        $clone->orderIncrement = $orderIncrement;
+        return $clone;
     }
 
     /**
@@ -175,6 +196,7 @@ final class ShipmentData implements ValueObject
     {
         /** @var ShipmentData $result */
         $result = self::create();
+        $result->orderIncrement = $json['order_increment'] ?? null;
         $result->arguments = Argument::fromJson($json['arguments'] ?? []);
         $result->notify = $json['notify'] ?? false;
         $result->appendComment = $json['append_comment'] ?? false;
@@ -189,6 +211,9 @@ final class ShipmentData implements ValueObject
     {
         $json = [];
 
+        if ($this->getOrderIncrement()) {
+            $json['order_increment'] = $this->getOrderIncrement();
+        }
         if (!$this->getTracks()->isEmpty()) {
             $json['tracks'] = $this->getTracks()->toJson();
         }
@@ -217,6 +242,7 @@ final class ShipmentData implements ValueObject
     public function equals($other): bool
     {
         return $other instanceof $this &&
+            $this->orderIncrement === $other->getOrderIncrement() &&
             $this->arguments->equals($other->arguments) &&
             $this->notify === $other->notify &&
             $this->appendComment === $other->appendComment &&
