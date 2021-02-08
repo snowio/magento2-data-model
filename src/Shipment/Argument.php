@@ -35,6 +35,11 @@ final class Argument implements ValueObject
         $clone->extensionAttributes = $extensionAttributes;
         return $clone;
     }
+    
+    public function isEmpty()
+    {
+        return $this->extensionAttributes->isEmpty();
+    }
 
     public static function fromJson(array $json) : self
     {

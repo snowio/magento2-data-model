@@ -9,6 +9,7 @@ use SnowIO\Magento2DataModel\Shipment\Comment;
 use SnowIO\Magento2DataModel\Shipment\CommentCollection;
 use SnowIO\Magento2DataModel\Shipment\Item;
 use SnowIO\Magento2DataModel\Shipment\ItemCollection;
+use SnowIO\Magento2DataModel\Shipment\Package;
 use SnowIO\Magento2DataModel\Shipment\PackageCollection;
 use SnowIO\Magento2DataModel\Shipment\Track;
 use SnowIO\Magento2DataModel\Shipment\TrackSet;
@@ -63,16 +64,18 @@ class ShipmentDataTest extends TestCase
                 ->withOrderItemId(1)
                 ->withQty(1)
             )->toJson(),
-            "packages" => PackageCollection::create()->toJson(),
+            "packages" => PackageCollection::create()->with(
+                Package::create()
+                    ->withExtensionAttributes(
+                        ExtensionAttributeSet::create()
+                            ->withExtensionAttribute(ExtensionAttribute::of('code','value')
+                        )
+                    )
+                )->toJson(),
             "tracks" => TrackSet::of([Track::create()
                 ->withCarrierCode('test_carrier')
-                ->withDescription('test description')
-                ->withOrderId(100)
-                ->withParentId(200)
-                ->withQty(1)
                 ->withTitle('test title')
                 ->withTrackNumber("1211TRACKTEST")
-                ->withWeight(10)
             ])->toJson(),
         ];
     }

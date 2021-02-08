@@ -12,7 +12,6 @@ use SnowIO\Magento2DataModel\Shipment\TrackSet;
 
 final class ShipmentData implements ValueObject
 {
-
     /** @var CommentCollection $comments */
     private $comments;
     /** @var ItemCollection $items */
@@ -23,14 +22,15 @@ final class ShipmentData implements ValueObject
     private $tracks;
     /** @var Argument $arguments */
     private $arguments;
-    /** @var boolean $notify */
-    private $notify = false;
-    /** @var boolean $appendComment */
-    private $appendComment = false;
+    /** @var boolean|null $notify */
+    private $notify;
+    /** @var boolean|null $appendComment */
+    private $appendComment;
 
     public static function create(): self
     {
         $result = new self();
+        $result->arguments = Argument::create();
         $result->tracks = TrackSet::create();
         $result->packages = PackageCollection::create();
         $result->items = ItemCollection::create();
@@ -134,18 +134,18 @@ final class ShipmentData implements ValueObject
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isNotify(): bool
+    public function getNotify(): ?bool
     {
         return $this->notify;
     }
 
     /**
-     * @param bool $notify
+     * @param bool|null $notify
      * @return ShipmentData
      */
-    public function withNotify(bool $notify): ShipmentData
+    public function withNotify(?bool $notify): ShipmentData
     {
         $clone = clone $this;
         $clone->notify = $notify;
@@ -153,18 +153,18 @@ final class ShipmentData implements ValueObject
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isAppendComment(): bool
+    public function getAppendComment(): ?bool
     {
         return $this->appendComment;
     }
 
     /**
-     * @param bool $appendComment
+     * @param bool|null $appendComment
      * @return ShipmentData
      */
-    public function withAppendComment(bool $appendComment): ShipmentData
+    public function withAppendComment(?bool $appendComment): ShipmentData
     {
         $clone = clone $this;
         $clone->appendComment = $appendComment;
@@ -187,15 +187,31 @@ final class ShipmentData implements ValueObject
 
     public function toJson() : array
     {
-        return [
-            "arguments" => $this->arguments->toJson(),
-            "notify" => $this->notify ?? false,
-            "append_comment" => $this->appendComment ?? false,
-            "comments" => $this->comments->toJson(),
-            "items" => $this->items->toJson(),
-            "packages" => $this->packages->toJson(),
-            "tracks" => $this->tracks->toJson(),
-        ];
+        $json = [];
+
+        if (!$this->getTracks()->isEmpty()) {
+            $json['tracks'] = $this->getTracks()->toJson();
+        }
+        if (!$this->getArguments()->isEmpty()) {
+            $json['arguments'] = $this->getArguments()->toJson();
+        }
+        if (!$this->getComments()->isEmpty()) {
+            $json['comments'] = $this->getComments()->toJson();
+        }
+        if (!$this->getItems()->isEmpty()) {
+            $json['items'] = $this->getItems()->toJson();
+        }
+        if (!$this->getPackages()->isEmpty()) {
+            $json['packages'] = $this->getPackages()->toJson();
+        }
+        if ($this->getNotify()) {
+            $json['notify'] = $this->getNotify();
+        }
+        if ($this->getAppendComment()) {
+            $json['append_comment'] = $this->getAppendComment();
+        }
+
+        return $json;
     }
 
     public function equals($other): bool
