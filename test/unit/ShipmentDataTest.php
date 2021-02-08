@@ -2,7 +2,9 @@
 namespace SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
+use SnowIO\Magento2DataModel\Shipment\Argument;
 use SnowIO\Magento2DataModel\Shipment\Comment;
 use SnowIO\Magento2DataModel\Shipment\CommentCollection;
 use SnowIO\Magento2DataModel\Shipment\Item;
@@ -43,31 +45,25 @@ class ShipmentDataTest extends TestCase
     private function getShipmentsJson()
     {
         return [
-            "billing_address_id" => 1,
+            "arguments" => Argument::create()->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('code1', 'value1'),
+                    ExtensionAttribute::of('code2', 'value2')
+                ])
+            )->toJson(),
+            "notify" => true,
+            "append_comment" => true,
             "comments" => CommentCollection::create()->with(Comment::create()
                 ->withComment("test comment")
                 ->withIsCustomerNotified(1)
                 ->withIsVisibleOnFront(1)
                 ->withParentId(200)
             )->toJson(),
-            "created_at" => "2021-02-08 12:00:00",
-            "customer_id" => null,
-            "email_sent" => null,
-            "entity_id" => null,
-            "extension_attributes" => ExtensionAttributeSet::create()->toJson(),
-            "increment_id" => null,
             "items" => ItemCollection::create()->with(Item::create()
                 ->withOrderItemId(1)
                 ->withQty(1)
             )->toJson(),
-            "order_id" => 100,
             "packages" => PackageCollection::create()->toJson(),
-            "shipment_status" => null,
-            "shipping_address_id" => null,
-            "shipping_label" => null,
-            "store_id" => null,
-            "total_qty" => null,
-            "total_weight" => null,
             "tracks" => TrackSet::of([Track::create()
                 ->withCarrierCode('test_carrier')
                 ->withDescription('test description')
