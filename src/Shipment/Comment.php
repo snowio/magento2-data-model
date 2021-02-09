@@ -176,15 +176,31 @@ final class Comment implements ValueObject
     
     public function toJson() : array
     {
-        return [
-            'comment' => $this->comment,
-            'is_customer_notified' => $this->isCustomerNotified,
-            'is_visible_on_front' => $this->isVisibleOnFront,
-            'parent_id' => $this->parentId,
-            'created_at' => $this->createdAt ?? null,
-            'entity_id' => $this->entityId ?? null,
-            'extension_attributes' => $this->extensionAttributes->toJson()
-        ];
+        $json = [];
+
+        if ($this->getComment()) {
+            $json['comment'] = $this->getComment();
+        }
+        if ($this->getIsCustomerNotified()) {
+            $json['is_customer_notified'] = $this->getIsCustomerNotified();
+        }
+        if ($this->getIsVisibleOnFront()) {
+            $json['is_visible_on_front'] = $this->getIsVisibleOnFront();
+        }
+        if ($this->getParentId()) {
+            $json['parent_id'] = $this->getParentId();
+        }
+        if ($this->getCreatedAt()) {
+            $json['created_at'] = $this->getCreatedAt();
+        }
+        if ($this->getEntityId()) {
+            $json['entity_id'] = $this->getEntityId();
+        }
+        if (!$this->getExtensionAttributes()->isEmpty()) {
+            $json['extension_attributes'] = $this->extensionAttributes->toJson();
+        }
+        
+        return $json;
     }
 
     public function equals($other): bool
