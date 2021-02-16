@@ -2,6 +2,15 @@
 namespace SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
+use SnowIO\Magento2DataModel\ExtensionAttributeSet;
+use SnowIO\Magento2DataModel\Shipment\Argument;
+use SnowIO\Magento2DataModel\Shipment\Comment;
+use SnowIO\Magento2DataModel\Shipment\CommentCollection;
+use SnowIO\Magento2DataModel\Shipment\Item;
+use SnowIO\Magento2DataModel\Shipment\ItemCollection;
+use SnowIO\Magento2DataModel\Shipment\Package;
+use SnowIO\Magento2DataModel\Shipment\PackageCollection;
 use SnowIO\Magento2DataModel\Shipment\Track;
 use SnowIO\Magento2DataModel\Shipment\TrackSet;
 use SnowIO\Magento2DataModel\ShipmentData;
@@ -34,25 +43,41 @@ class ShipmentDataTest extends TestCase
         self::assertFalse($shipmentData->equals($otherShipmentData));
     }
 
-    public function testWitherToSet()
-    {
-        $json = $this->getShipmentsJson();
-        $shipmentData = ShipmentData::create()
-            ->withTracks(TrackSet::fromJson($json['tracks']));
-        self::assertTrue($shipmentData->equals(ShipmentData::fromJson($json)));
-    }
-
     private function getShipmentsJson()
     {
         return [
-            "tracks" => [
-                [
-                    "extension_attributes" => [],
-                    "track_number" => "string",
-                    "title" => "string",
-                    "carrier_code" => "string"
-                ]
-            ],
+            "order_increment" => "100",
+            "arguments" => Argument::create()->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('code1', 'value1'),
+                    ExtensionAttribute::of('code2', 'value2')
+                ])
+            )->toJson(),
+            "notify" => true,
+            "append_comment" => true,
+            "comments" => CommentCollection::create()->with(Comment::create()
+                ->withComment("test comment")
+                ->withIsCustomerNotified(1)
+                ->withIsVisibleOnFront(1)
+                ->withParentId(200)
+            )->toJson(),
+            "items" => ItemCollection::create()->with(Item::create()
+                ->withOrderItemId(1)
+                ->withQty(1)
+            )->toJson(),
+            "packages" => PackageCollection::create()->with(
+                Package::create()
+                    ->withExtensionAttributes(
+                        ExtensionAttributeSet::create()
+                            ->withExtensionAttribute(ExtensionAttribute::of('code','value')
+                        )
+                    )
+                )->toJson(),
+            "tracks" => TrackSet::of([Track::create()
+                ->withCarrierCode('test_carrier')
+                ->withTitle('test title')
+                ->withTrackNumber("1211TRACKTEST")
+            ])->toJson(),
         ];
     }
 }

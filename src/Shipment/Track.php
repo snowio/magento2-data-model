@@ -7,6 +7,15 @@ use SnowIO\Magento2DataModel\ValueObject;
 
 final class Track implements ValueObject
 {
+    /** @var string $carrierCode */
+    private $carrierCode;
+    /** @var string $title */
+    private $title;
+    /** @var ExtensionAttributeSet */
+    private $extensionAttributes;
+    /** @var string $trackNumber */
+    private $trackNumber;
+
     public static function create() : self
     {
         return (new self())
@@ -16,85 +25,107 @@ final class Track implements ValueObject
     public static function fromJson(array $json) : self
     {
         $result = new self();
-        $result->trackNumber = $json['track_number'];
-        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes']);
-        $result->title = $json['title'];
         $result->carrierCode = $json['carrier_code'];
+        $result->title = $json['title'];
+        $result->extensionAttributes = ExtensionAttributeSet::fromJson($json['extension_attributes'] ?? []);
+        $result->trackNumber = $json['track_number'];
         return $result;
     }
 
-    public function getTrackNumber()
-    {
-        return $this->trackNumber;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getCarrierCode()
+    /**
+     * @return string
+     */
+    public function getCarrierCode(): string
     {
         return $this->carrierCode;
     }
 
-    public function getExtensionAttributes()
+    /**
+     * @param string $carrierCode
+     * @return Track
+     */
+    public function withCarrierCode(string $carrierCode): Track
+    {
+        $clone = clone $this;
+        $clone->carrierCode = $carrierCode;
+        return $clone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return Track
+     */
+    public function withTitle(string $title): Track
+    {
+        $clone = clone $this;
+        $clone->title = $title;
+        return $clone;
+    }
+
+    /**
+     * @return ExtensionAttributeSet
+     */
+    public function getExtensionAttributes(): ExtensionAttributeSet
     {
         return $this->extensionAttributes;
     }
 
-    public function withTrackNumber(string $trackNumber): self
+    /**
+     * @param ExtensionAttributeSet $extensionAttributes
+     * @return Track
+     */
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): Track
     {
-        $result = clone $this;
-        $result->trackNumber = $trackNumber;
-        return $result;
+        $clone = clone $this;
+        $clone->extensionAttributes = $extensionAttributes;
+        return $clone;
     }
 
-    public function withTitle(string $title): self
+    /**
+     * @return string
+     */
+    public function getTrackNumber(): string
     {
-        $result = clone $this;
-        $result->title = $title;
-        return $result;
+        return $this->trackNumber;
     }
 
-    public function withCarrierCode(string $carrierCode): self
+    /**
+     * @param string $trackNumber
+     * @return Track
+     */
+    public function withTrackNumber(string $trackNumber): Track
     {
-        $result = clone $this;
-        $result->carrierCode = $carrierCode;
-        return $result;
-    }
-
-    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes): self
-    {
-        $result = clone $this;
-        $result->extensionAttributes = $extensionAttributes;
-        return $result;
+        $clone = clone $this;
+        $clone->trackNumber = $trackNumber;
+        return $clone;
     }
     
     public function toJson() : array
     {
         return [
-            'title' => $this->title,
-            'track_number' => $this->trackNumber,
             'carrier_code' => $this->carrierCode,
-            'extension_attributes' => $this->extensionAttributes->toJson()
+            'title' => $this->title,
+            'extension_attributes' => $this->extensionAttributes->toJson(),
+            'track_number' => $this->trackNumber
         ];
     }
 
     public function equals($other): bool
     {
         return $other instanceof self &&
-        $this->title === $other->title &&
-        $this->trackNumber === $other->trackNumber &&
-        $this->carrierCode === $other->carrierCode &&
-        $this->extensionAttributes->equals($other->extensionAttributes);
+            $this->carrierCode === $other->carrierCode &&
+            $this->title === $other->title &&
+            $this->extensionAttributes->equals($other->extensionAttributes) &&
+            $this->trackNumber === $other->trackNumber;
     }
-
-    private $title;
-    private $trackNumber;
-    private $carrierCode;
-    /** @var  ExtensionAttributeSet */
-    private $extensionAttributes;
 
     protected function __construct()
     {
