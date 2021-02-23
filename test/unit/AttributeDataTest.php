@@ -21,6 +21,15 @@ class AttributeDataTest extends TestCase
             'default_frontend_label' => 'Diameter',
             'scope' => AttributeScope::GLOBAL,
         ], $attribute->toJson());
+
+        $attribute = AttributeData::of('Diameter', FrontendInput::TEXT, 'Diameter');
+        self::assertEquals([
+            'attribute_code' => 'diameter',
+            'is_required' => false,
+            'frontend_input' => 'text',
+            'default_frontend_label' => 'Diameter',
+            'scope' => AttributeScope::GLOBAL,
+        ], $attribute->toJson());
     }
 
     public function testWithers()

@@ -30,7 +30,7 @@ class AttributeGroupTest extends TestCase
             ->withAttributes(AttributeDataSet::of([
                 AttributeData::of('size')->withSortOrder(1),
                 AttributeData::of('color')->withSortOrder(3),
-                AttributeData::of('density')->withSortOrder(1),
+                AttributeData::of('Density')->withSortOrder(1),
             ]))->withAttribute(AttributeData::of('volume')->withSortOrder(19));
 
         self::assertTrue(AttributeDataSet::of([
