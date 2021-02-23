@@ -95,7 +95,7 @@ final class AttributeData implements ValueObject
 
     private function __construct(string $attributeCode, string $frontendInput)
     {
-        $this->attributeCode = $attributeCode;
+        $this->attributeCode = strtolower($attributeCode);
         $this->frontendInput = $frontendInput;
     }
 }
