@@ -196,10 +196,10 @@ final class ShipmentData implements ValueObject
     {
         /** @var ShipmentData $result */
         $result = self::create();
-        $result->orderIncrement = $json['order_increment_id'] ?? null;
+        $result->orderIncrement = $json['orderIncrementId'] ?? null;
         $result->arguments = Argument::fromJson($json['arguments'] ?? []);
         $result->notify = $json['notify'] ?? false;
-        $result->appendComment = $json['append_comment'] ?? false;
+        $result->appendComment = $json['appendComment'] ?? false;
         $result->comments = CommentCollection::fromJson($json['comments'] ?? []);
         $result->items = ItemCollection::fromJson($json['items']);
         $result->packages = PackageCollection::fromJson($json['packages'] ?? []);
@@ -212,7 +212,7 @@ final class ShipmentData implements ValueObject
         $json = [];
 
         if ($this->getOrderIncrement()) {
-            $json['order_increment_id'] = $this->getOrderIncrement();
+            $json['orderIncrementId'] = $this->getOrderIncrement();
         }
         if (!$this->getTracks()->isEmpty()) {
             $json['tracks'] = $this->getTracks()->toJson();
@@ -233,7 +233,7 @@ final class ShipmentData implements ValueObject
             $json['notify'] = $this->getNotify();
         }
         if ($this->getAppendComment()) {
-            $json['append_comment'] = $this->getAppendComment();
+            $json['appendComment'] = $this->getAppendComment();
         }
 
         return $json;
