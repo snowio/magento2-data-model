@@ -46,7 +46,7 @@ class ShipmentDataTest extends TestCase
     private function getShipmentsJson()
     {
         return [
-            "order_increment" => "100",
+            "order_increment_id" => "100",
             "arguments" => Argument::create()->withExtensionAttributes(
                 ExtensionAttributeSet::of([
                     ExtensionAttribute::of('code1', 'value1'),
