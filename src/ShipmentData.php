@@ -196,7 +196,7 @@ final class ShipmentData implements ValueObject
     {
         /** @var ShipmentData $result */
         $result = self::create();
-        $result->orderIncrement = $json['order_increment'] ?? null;
+        $result->orderIncrement = $json['order_increment_id'] ?? null;
         $result->arguments = Argument::fromJson($json['arguments'] ?? []);
         $result->notify = $json['notify'] ?? false;
         $result->appendComment = $json['append_comment'] ?? false;
@@ -212,7 +212,7 @@ final class ShipmentData implements ValueObject
         $json = [];
 
         if ($this->getOrderIncrement()) {
-            $json['order_increment'] = $this->getOrderIncrement();
+            $json['order_increment_id'] = $this->getOrderIncrement();
         }
         if (!$this->getTracks()->isEmpty()) {
             $json['tracks'] = $this->getTracks()->toJson();
