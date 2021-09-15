@@ -6,7 +6,7 @@ use SnowIO\Magento2DataModel\Command\SaveSourceItemsCommand;
 use SnowIO\Magento2DataModel\MagentoDataException;
 use SnowIO\Magento2DataModel\SetTrait;
 
-class SourceItemDataSet
+class SourceItemDataSet implements \IteratorAggregate
 {
     use SetTrait;
 
