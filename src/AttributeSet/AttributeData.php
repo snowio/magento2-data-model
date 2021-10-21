@@ -9,7 +9,7 @@ final class AttributeData implements ValueObject
     public static function of(string $code): self
     {
         $attributeData = new self;
-        $attributeData->code = $code;
+        $attributeData->code = strtolower($code);
         return $attributeData;
     }
 
