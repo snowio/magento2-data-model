@@ -18,6 +18,18 @@ final class DeleteProductCommand extends Command
         return $this->sku;
     }
 
+    public function getStoreCode(): string
+    {
+        return $this->storeCode;
+    }
+
+    public function withStoreCode(string $storeCode): self
+    {
+        $result = clone $this;
+        $result->storeCode = $storeCode;
+        return $result;
+    }
+
     public function equals($object): bool
     {
         return $object instanceof self
@@ -27,12 +39,13 @@ final class DeleteProductCommand extends Command
 
     public function toJson(): array
     {
-        return parent::toJson() + [
+        return parent::toJson() + array_merge([
             'sku' => $this->sku,
-        ];
+        ], ($this->storeCode ?  ['@store' => $this->storeCode] : []));
     }
 
     private $sku;
+    private $storeCode;
 
     private function __construct()
     {
