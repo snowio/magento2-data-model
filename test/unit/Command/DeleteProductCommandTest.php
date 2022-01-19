@@ -19,6 +19,18 @@ class DeleteProductCommandTest extends TestCase
         ], $command->toJson());
     }
 
+    public function testStoreCode()
+    {
+        $command = DeleteProductCommand::of('test-product')->withStoreCode('admin')->withTimestamp(123);
+        self::assertEquals([
+            '@timestamp' => (float)123,
+            '@store' => 'admin',
+            '@shardingKey' => 'test-product',
+            '@commandGroupId' => 'product.test-product',
+            'sku' => 'test-product',
+        ], $command->toJson());
+    }
+
     public function testAccessors()
     {
         $command = DeleteProductCommand::of('test-product');
