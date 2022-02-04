@@ -27,10 +27,16 @@ class SaveSourceItemsCommand extends Command
 
     public function toJson(): array
     {
-        return parent::toJson() + [
+        $json = parent::toJson() + [
             "sourceItems" => $this->sourceItems->toJson(),
             "@store" => $this->store,
         ];
+
+        if ($this->store) {
+            $json["@store"] = $this->store;
+        }
+
+        return $json;
     }
 
     /** @var SourceItemDataSet */
