@@ -29,7 +29,6 @@ class SaveSourceItemsCommand extends Command
     {
         $json = parent::toJson() + [
             "sourceItems" => $this->sourceItems->toJson(),
-            "@store" => $this->store,
         ];
 
         if ($this->store) {
