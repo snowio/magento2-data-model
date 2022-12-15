@@ -548,7 +548,7 @@ final class OrderData implements ValueObject
         return $result;
     }
 
-    public function withCustomerIsGuest(int $customerIsGuest) : self
+    public function withCustomerIsGuest($customerIsGuest) : self
     {
         $result = clone $this;
         $result->customerIsGuest = $customerIsGuest;
@@ -1392,7 +1392,7 @@ final class OrderData implements ValueObject
         return $this->customerId;
     }
 
-    public function customerIsGuest(): ?int
+    public function customerIsGuest()
     {
         return $this->customerIsGuest;
     }
