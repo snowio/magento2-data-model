@@ -18,6 +18,18 @@ abstract class Command implements ValueObject
         return $result;
     }
 
+    public function getNotify(): ?bool
+    {
+        return $this->notify;
+    }
+
+    public function withNotify(bool $notify)
+    {
+        $result = clone $this;
+        $result->notify = $notify;
+        return $result;
+    }
+
     public function getShardingKey(): ?string
     {
         return $this->shardingKey;
@@ -58,6 +70,10 @@ abstract class Command implements ValueObject
             $json['@timestamp'] = $this->timestamp;
         }
 
+        if (isset($this->notify)) {
+            $json['@notify'] = $this->notify;
+        }
+
         if (isset($this->shardingKey)) {
             $json['@shardingKey'] = $this->shardingKey;
         }
@@ -70,6 +86,7 @@ abstract class Command implements ValueObject
     }
 
     private $timestamp;
+    private $notify;
     private $commandGroupId;
     private $shardingKey;
 }
