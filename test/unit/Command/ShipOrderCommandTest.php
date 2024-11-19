@@ -29,6 +29,7 @@ class ShipOrderCommandTest extends TestCase
 
         self::assertEquals([
             'orderIncrementId' => 323323,
+            'items' => [],
             'tracks' => [
                 [
                     'extension_attributes' => [],

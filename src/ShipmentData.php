@@ -209,7 +209,9 @@ final class ShipmentData implements ValueObject
 
     public function toJson() : array
     {
-        $json = [];
+        $json = [
+            "items" => []
+        ];
 
         if ($this->getOrderIncrement()) {
             $json['orderIncrementId'] = $this->getOrderIncrement();
