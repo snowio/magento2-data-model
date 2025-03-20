@@ -11,9 +11,7 @@ final class MediaGalleryEntry implements ValueObject
     private $file = null;
     private $disabled = false;
     private $position = 0;
-    /**
-     * TODO add content and extention_attributes
-     */
+    private $extensionAttributes;
 
     public static function of(string $mediaType, string $label)
     {
@@ -99,17 +97,36 @@ final class MediaGalleryEntry implements ValueObject
             ($this->disabled === $object->disabled) &&
             ($this->file === $object->file) &&
             ($this->label === $object->label) &&
+            ($this->extensionAttributes->equals($object->getExtensionAttributes())) &&
             ($this->position === $object->position) &&
             (empty(array_diff($this->types, $object->types)) && empty(array_diff($object->types, $this->types)));
     }
 
     public static function fromJson($json): MediaGalleryEntry
     {
-        return self::of($json['media_type'], $json['label'])
+        $result = self::of($json['media_type'], $json['label'])
             ->withFile($json['file'])
             ->withDisabled($json['disabled'])
             ->withTypes($json['types'])
             ->withPosition($json['position']);
+
+        if (isset($json['extension_attributes'])) {
+            $result = $result->withExtensionAttributes(ExtensionAttributeSet::fromJson($json['extension_attributes']));
+        }
+
+        return $result;
+    }
+
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
+    {
+        $result = clone $this;
+        $result->extensionAttributes = $extensionAttributes;
+        return $result;
+    }
+
+    public function getExtensionAttributes(): ExtensionAttributeSet
+    {
+        return $this->extensionAttributes;
     }
 
     public function toJson(): array
@@ -122,6 +139,10 @@ final class MediaGalleryEntry implements ValueObject
             'types' => $this->types,
         ];
 
+        if ($this->extensionAttributes->count()) {
+            $json['extension_attributes'] = $this->extensionAttributes->toJson();
+        }
+
         if ($this->file !== null) {
             $json['file'] = $this->file;
         }
@@ -133,5 +154,6 @@ final class MediaGalleryEntry implements ValueObject
     {
         $this->mediaType = $mediaType;
         $this->label = $label;
+        $this->extensionAttributes = ExtensionAttributeSet::create();
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace  SnowIO\Magento2DataModel\Test;
 
 use PHPUnit\Framework\TestCase;
+use SnowIO\Magento2DataModel\ExtensionAttribute;
+use SnowIO\Magento2DataModel\ExtensionAttributeSet;
 use SnowIO\Magento2DataModel\MediaGalleryEntry;
 
 class MediaGalleryEntryTest extends TestCase
@@ -60,10 +62,30 @@ class MediaGalleryEntryTest extends TestCase
             ->withFile('path/image.jpg')
             ->withTypes(['image', 'small_image', 'thumbnail'])
             ->withDisabled(true)
-            ->withPosition(1);
+            ->withPosition(1)
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('video_content', [
+                        "media_type" => 'external-video',
+                        "video_provider" => 'youtube',
+                        "video_url" => 'https://www.youtube.com/watch?v=fake',
+                        "video_title" => 'Video title',
+                        "video_description" => 'Video description',
+                        "video_metadata" => '',
+                    ])
+                ])
+            );
 
         $this->assertEquals(1, $mediaGallery->getDisabled());
         $this->assertEquals(1, $mediaGallery->getPosition());
+        $this->assertEquals(['video_content'=> [
+            'media_type' => 'external-video',
+            'video_provider' => 'youtube',
+            'video_url' => 'https://www.youtube.com/watch?v=fake',
+            'video_title' => 'Video title',
+            'video_description' => 'Video description',
+            'video_metadata' => '',
+        ]], $mediaGallery->getExtensionAttributes()->toJson());
         $this->assertEquals('path/image.jpg', $mediaGallery->getFile());
         $this->assertEquals(['image', 'small_image', 'thumbnail'], $mediaGallery->getTypes());
     }
@@ -76,15 +98,84 @@ class MediaGalleryEntryTest extends TestCase
             'position' => 0,
             'disabled' => false,
             'file' => 'path/image.jpg',
-            'types' => ['image', 'small_image', 'thumbnail']
+            'types' => ['image', 'small_image', 'thumbnail'],
+            'extension_attributes' => [
+                'test' => 1
+            ],
         ]);
 
         $mediaGallery2 = MediaGalleryEntry::of('image', 'Label')
             ->withFile('path/image.jpg')
             ->withTypes(['image', 'small_image', 'thumbnail'])
             ->withDisabled(false)
-            ->withPosition(0);
+            ->withPosition(0)
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 1)
+                ])
+            );
 
         $this->assertTrue($mediaGallery->equals($mediaGallery2));
+    }
+
+    public function testEmptyCustomAttribute()
+    {
+        $mediaGallery = MediaGalleryEntry::of('image', 'Label')
+            ->withFile('path/image.jpg')
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([])
+            );
+
+        $this->assertEquals([
+            'media_type' => 'image',
+            'label' => 'Label',
+            'position' => 0,
+            'disabled' => false,
+            'types' => [],
+            'file' => 'path/image.jpg',
+        ], $mediaGallery->toJson());
+
+        $mediaGallery = MediaGalleryEntry::of('image', 'Label')
+            ->withFile('path/image.jpg')
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 1)
+                ])
+            );
+
+        $this->assertEquals([
+            'media_type' => 'image',
+            'label' => 'Label',
+            'position' => 0,
+            'disabled' => false,
+            'types' => [],
+            'file' => 'path/image.jpg',
+            'extension_attributes' => [
+                'test' => 1
+            ],
+        ], $mediaGallery->toJson());
+    }
+
+    public function testSimpleCustomAttribute()
+    {
+        $mediaGallery = MediaGalleryEntry::of('image', 'Label')
+            ->withFile('path/image.jpg')
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 1)
+                ])
+            );
+
+        $this->assertEquals([
+            'media_type' => 'image',
+            'label' => 'Label',
+            'position' => 0,
+            'disabled' => false,
+            'types' => [],
+            'file' => 'path/image.jpg',
+            'extension_attributes' => [
+                'test' => 1
+            ],
+        ], $mediaGallery->toJson());
     }
 }
