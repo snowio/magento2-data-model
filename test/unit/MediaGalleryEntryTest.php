@@ -126,5 +126,48 @@ class MediaGalleryEntryTest extends TestCase
             'types' => [],
             'file' => 'path/image.jpg',
         ], $mediaGallery->toJson());
+
+        $mediaGallery = MediaGalleryEntry::of('image', 'Label')
+            ->withFile('path/image.jpg')
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 1)
+                ])
+            );
+
+        $this->assertEquals([
+            'media_type' => 'image',
+            'label' => 'Label',
+            'position' => 0,
+            'disabled' => false,
+            'types' => [],
+            'file' => 'path/image.jpg',
+            'extension_attributes' => [
+                'test' => 1
+            ],
+        ], $mediaGallery->toJson());
+    }
+
+    public function testSimpleCustomAttribute()
+    {
+        $mediaGallery = MediaGalleryEntry::of('image', 'Label')
+            ->withFile('path/image.jpg')
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 1)
+                ])
+            );
+
+        $this->assertEquals([
+            'media_type' => 'image',
+            'label' => 'Label',
+            'position' => 0,
+            'disabled' => false,
+            'types' => [],
+            'file' => 'path/image.jpg',
+            'extension_attributes' => [
+                'test' => 1
+            ],
+        ], $mediaGallery->toJson());
     }
 }
