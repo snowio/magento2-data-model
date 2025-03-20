@@ -98,14 +98,22 @@ class MediaGalleryEntryTest extends TestCase
             'position' => 0,
             'disabled' => false,
             'file' => 'path/image.jpg',
-            'types' => ['image', 'small_image', 'thumbnail']
+            'types' => ['image', 'small_image', 'thumbnail'],
+            'extension_attributes' => [
+                'test' => 1
+            ],
         ]);
 
         $mediaGallery2 = MediaGalleryEntry::of('image', 'Label')
             ->withFile('path/image.jpg')
             ->withTypes(['image', 'small_image', 'thumbnail'])
             ->withDisabled(false)
-            ->withPosition(0);
+            ->withPosition(0)
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([
+                    ExtensionAttribute::of('test', 1)
+                ])
+            );
 
         $this->assertTrue($mediaGallery->equals($mediaGallery2));
     }
