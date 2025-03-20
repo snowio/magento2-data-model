@@ -109,4 +109,22 @@ class MediaGalleryEntryTest extends TestCase
 
         $this->assertTrue($mediaGallery->equals($mediaGallery2));
     }
+
+    public function testEmptyCustomAttribute()
+    {
+        $mediaGallery = MediaGalleryEntry::of('image', 'Label')
+            ->withFile('path/image.jpg')
+            ->withExtensionAttributes(
+                ExtensionAttributeSet::of([])
+            );
+
+        $this->assertEquals([
+            'media_type' => 'image',
+            'label' => 'Label',
+            'position' => 0,
+            'disabled' => false,
+            'types' => [],
+            'file' => 'path/image.jpg',
+        ], $mediaGallery->toJson());
+    }
 }
