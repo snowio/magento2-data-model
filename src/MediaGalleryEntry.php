@@ -97,17 +97,24 @@ final class MediaGalleryEntry implements ValueObject
             ($this->disabled === $object->disabled) &&
             ($this->file === $object->file) &&
             ($this->label === $object->label) &&
+            ($this->extensionAttributes->equals($object->getExtensionAttributes())) &&
             ($this->position === $object->position) &&
             (empty(array_diff($this->types, $object->types)) && empty(array_diff($object->types, $this->types)));
     }
 
     public static function fromJson($json): MediaGalleryEntry
     {
-        return self::of($json['media_type'], $json['label'])
+        $result = self::of($json['media_type'], $json['label'])
             ->withFile($json['file'])
             ->withDisabled($json['disabled'])
             ->withTypes($json['types'])
             ->withPosition($json['position']);
+
+        if (isset($json['extension_attributes'])) {
+            $result = $result->withExtensionAttributes(ExtensionAttributeSet::fromJson($json['extension_attributes']));
+        }
+
+        return $result;
     }
 
     public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
