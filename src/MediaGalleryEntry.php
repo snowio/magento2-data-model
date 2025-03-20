@@ -11,9 +11,7 @@ final class MediaGalleryEntry implements ValueObject
     private $file = null;
     private $disabled = false;
     private $position = 0;
-    /**
-     * TODO add content and extention_attributes
-     */
+    private $extensionAttributes;
 
     public static function of(string $mediaType, string $label)
     {
@@ -112,6 +110,18 @@ final class MediaGalleryEntry implements ValueObject
             ->withPosition($json['position']);
     }
 
+    public function withExtensionAttributes(ExtensionAttributeSet $extensionAttributes)
+    {
+        $result = clone $this;
+        $result->extensionAttributes = $extensionAttributes;
+        return $result;
+    }
+
+    public function getExtensionAttributes(): ExtensionAttributeSet
+    {
+        return $this->extensionAttributes;
+    }
+
     public function toJson(): array
     {
         $json = [
@@ -121,6 +131,10 @@ final class MediaGalleryEntry implements ValueObject
             'disabled' => $this->disabled,
             'types' => $this->types,
         ];
+
+        if ($this->extensionAttributes->count()) {
+            $json['extension_attributes'] = $this->extensionAttributes->toJson();
+        }
 
         if ($this->file !== null) {
             $json['file'] = $this->file;
@@ -133,5 +147,6 @@ final class MediaGalleryEntry implements ValueObject
     {
         $this->mediaType = $mediaType;
         $this->label = $label;
+        $this->extensionAttributes = ExtensionAttributeSet::create();
     }
 }
