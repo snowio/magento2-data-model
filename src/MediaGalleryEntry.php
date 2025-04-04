@@ -119,7 +119,6 @@ final class MediaGalleryEntry implements ValueObject
         if (isset($json['content'])) {
             $result = $result->withContent(MediaGalleryEntryContent::fromJson($json['content']));
         }
-
         return $result;
     }
 
