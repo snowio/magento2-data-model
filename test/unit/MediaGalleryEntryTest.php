@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use SnowIO\Magento2DataModel\ExtensionAttribute;
 use SnowIO\Magento2DataModel\ExtensionAttributeSet;
 use SnowIO\Magento2DataModel\MediaGalleryEntry;
+use SnowIO\Magento2DataModel\MediaGalleryEntryContent;
 
 class MediaGalleryEntryTest extends TestCase
 {
@@ -14,6 +15,7 @@ class MediaGalleryEntryTest extends TestCase
     {
         $mediaGallery = MediaGalleryEntry::of('image', 'Label')
             ->withFile('path/image.jpg')
+            ->withContent(MediaGalleryEntryContent::of('type', 'name', 'encoded'))
             ->withTypes(['image', 'small_image', 'thumbnail']);
 
         $this->assertEquals([
@@ -21,6 +23,11 @@ class MediaGalleryEntryTest extends TestCase
                 'label' => 'Label',
                 'position' => 0,
                 'disabled' => false,
+                'content' => [
+                    'type' => 'type',
+                    'name' => 'name',
+                    'base64_encoded_data' => 'encoded',
+                ],
                 'file' => 'path/image.jpg',
                 'types' => ['image', 'small_image', 'thumbnail']
         ], $mediaGallery->toJson());
@@ -33,6 +40,11 @@ class MediaGalleryEntryTest extends TestCase
             'label' => 'Label',
             'position' => 0,
             'disabled' => false,
+            'content' => [
+                'base64_encoded_data' => base64_encode('test'),
+                'type' => 'image/png',
+                'name' => 'test',
+            ],
             'file' => 'path/image.jpg',
             'types' => ['image', 'small_image', 'thumbnail']
         ]);
@@ -42,6 +54,11 @@ class MediaGalleryEntryTest extends TestCase
             'label' => 'Label',
             'position' => 0,
             'disabled' => false,
+            'content' => [
+                'base64_encoded_data' => base64_encode('test'),
+                'type' => 'image/png',
+                'name' => 'test',
+            ],
             'file' => 'path/image.jpg',
             'types' => ['image', 'small_image', 'thumbnail']
         ], $mediaGallery->toJson());
@@ -97,6 +114,11 @@ class MediaGalleryEntryTest extends TestCase
             'label' => 'Label',
             'position' => 0,
             'disabled' => false,
+            'content' => [
+                'type' => 'type',
+                'name' => 'name',
+                'base64_encoded_data' => 'encoded',
+            ],
             'file' => 'path/image.jpg',
             'types' => ['image', 'small_image', 'thumbnail'],
             'extension_attributes' => [
@@ -109,6 +131,7 @@ class MediaGalleryEntryTest extends TestCase
             ->withTypes(['image', 'small_image', 'thumbnail'])
             ->withDisabled(false)
             ->withPosition(0)
+            ->withContent(MediaGalleryEntryContent::of('type', 'name', 'encoded'))
             ->withExtensionAttributes(
                 ExtensionAttributeSet::of([
                     ExtensionAttribute::of('test', 1)
