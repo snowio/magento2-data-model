@@ -11,6 +11,7 @@ final class MediaGalleryEntry implements ValueObject
     private $file = null;
     private $disabled = false;
     private $position = 0;
+    private $content = null;
     private $extensionAttributes;
 
     public static function of(string $mediaType, string $label)
@@ -98,6 +99,7 @@ final class MediaGalleryEntry implements ValueObject
             ($this->file === $object->file) &&
             ($this->label === $object->label) &&
             ($this->extensionAttributes->equals($object->getExtensionAttributes())) &&
+            ($this->content->equals($object->getContent())) &&
             ($this->position === $object->position) &&
             (empty(array_diff($this->types, $object->types)) && empty(array_diff($object->types, $this->types)));
     }
@@ -112,6 +114,10 @@ final class MediaGalleryEntry implements ValueObject
 
         if (isset($json['extension_attributes'])) {
             $result = $result->withExtensionAttributes(ExtensionAttributeSet::fromJson($json['extension_attributes']));
+        }
+
+        if (isset($json['content'])) {
+            $result = $result->withContent(MediaGalleryEntryContent::fromJson($json['content']));
         }
 
         return $result;
@@ -129,6 +135,18 @@ final class MediaGalleryEntry implements ValueObject
         return $this->extensionAttributes;
     }
 
+    public function withContent(MediaGalleryEntryContent $content)
+    {
+        $result = clone $this;
+        $result->content = $content;
+        return $result;
+    }
+
+    public function getContent(): ?MediaGalleryEntryContent
+    {
+        return $this->content;
+    }
+
     public function toJson(): array
     {
         $json = [
@@ -143,6 +161,10 @@ final class MediaGalleryEntry implements ValueObject
             $json['extension_attributes'] = $this->extensionAttributes->toJson();
         }
 
+        if ($this->getContent()->getType()) {
+            $json['content'] = $this->content->toJson();
+        }
+
         if ($this->file !== null) {
             $json['file'] = $this->file;
         }
@@ -155,5 +177,6 @@ final class MediaGalleryEntry implements ValueObject
         $this->mediaType = $mediaType;
         $this->label = $label;
         $this->extensionAttributes = ExtensionAttributeSet::create();
+        $this->content = MediaGalleryEntryContent::create();
     }
 }
