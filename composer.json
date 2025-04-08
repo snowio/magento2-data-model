@@ -9,7 +9,7 @@
         }
     },
     "repositories": [
-        {"type": "composer", "url": "https://repo.packagist.com/snowio/"}
+        {"type": "composer", "url": "https://repo.packagist.com/idhl/snowio/"}
     ],
     "autoload-dev": {
         "psr-4": {

@@ -2,7 +2,7 @@ language: php
 php: 7.1
 before_install:
   - composer self-update
-  - composer config repositories.packagist.com composer https://repo.packagist.com/snowio/
+  - composer config repositories.packagist.com composer https://repo.packagist.com/idhl/snowio/
   - if [[ -n $PACKAGIST_TOKEN ]]; then composer config http-basic.repo.packagist.com token $PACKAGIST_TOKEN; fi
 cache:
   directories: $HOME/.composer/cache
